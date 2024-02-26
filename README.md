@@ -1,1 +1,1 @@
-# clubs-of-clubs-website
+# San Beda Clubs for Cubs Website
