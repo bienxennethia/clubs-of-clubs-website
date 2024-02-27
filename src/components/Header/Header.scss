@@ -1,0 +1,159 @@
+@import 'src/styles/index.scss';
+
+.navigation {
+  color: white;
+  text-transform: uppercase;
+  width: 100%;
+  z-index: 1000;
+  background-color: $base-color;
+  transition: top 0.3s ease;
+  position: relative;
+}
+
+.navigation.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navigation__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+
+  @include bp-tablet {
+    &::after {
+      content: "";
+      position: absolute;   
+      width: calc(100% - 40px);
+      height: 1px;
+      background-color: $black;
+      bottom: t-rem(20);
+    }
+  }
+
+  @include bp-desktop {
+    padding: 0 t-rem(80) t-rem(20);
+
+    &::after {
+      width: calc(100% - 160px);
+      bottom: t-rem(30);
+    }
+  }
+}
+
+.navigation__content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  svg {
+    width: t-rem(50);
+    height: auto;
+
+    @include bp-tablet {
+      width: t-rem(80);
+    }
+  }
+
+  h2 {
+    font-size: t-rem(16);
+    color: $highlight-color;
+
+    @include bp-desktop {
+      font-size: t-rem(24);
+    }
+  }
+}
+
+// MENU STYLING
+
+.menu-icon {
+  cursor: pointer;
+  display: none;
+}
+
+.bar {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  margin: 5px 0;
+  transition: all 0.3s ease;
+}
+
+.menu {
+  display: flex;
+  list-style-type: none;
+
+  @include bp-tablet {
+    margin-top: t-rem(40);
+  }
+
+  @include bp-desktop {
+    margin-top: t-rem(80);
+    margin-bottom: t-rem(30);
+  }
+}
+
+.menu li {
+  margin-right: 20px;
+  font-size: t-rem(14);
+  font-weight: 700;
+
+   a {
+    cursor: pointer;
+    color: white;
+   }
+
+   a.active {
+    font-size: t-rem(16);
+    color: $highlight-color;
+   }
+}
+
+/* Media query for mobile responsiveness */
+@media only screen and (max-width: 639px) {
+  .menu-icon {
+    display: block;
+  }
+
+  .menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    background-color: $base-color;
+    height: auto;
+    width: calc(100% - t-rem(40));
+    padding: t-rem(20);
+  }
+
+  .menu.open {
+    display: flex;
+  }
+
+  .menu li {
+    margin: t-rem(10) t-rem(20);
+  }
+
+  .menu-icon.open .bar:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+  }
+
+  .menu-icon.open .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-icon.open .bar:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
+  }
+
+  .menu-icon.open .bar {
+    transform: rotate(0deg);
+    transition: all 0.3s ease;
+  }
+}
