@@ -1,0 +1,132 @@
+@import 'src/styles/index.scss';
+
+.hero__container {
+  min-height: calc(100vh - t-rem(120));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @include bp-tablet {
+    min-height: 560px;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+  }
+  
+  @include bp-desktop {
+    min-height: 660px;
+    grid-template-columns: repeat(12, 1fr);
+    align-items: center;
+  }
+  
+  @include bp-xl-desktop {
+    grid-template-columns: repeat(16, 1fr);
+  }
+}
+
+.hero__image {
+  text-align: center;
+
+  @include bp-tablet {
+    grid-column: 1 / 4;
+  }
+
+  @include bp-desktop {
+    grid-column: 1 / 6;
+  }
+
+  @include bp-xl-desktop {
+    grid-column: 1 / 8;
+  }
+}
+
+.hero__logo {
+  width: 200px;
+  height: 100%;
+
+  @include bp-desktop {
+    width: 350px;
+  }
+
+  @include bp-xl-desktop {
+    width: 500px;
+  }
+}
+
+.hero__text {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-align: center;
+
+  @include bp-tablet {
+    grid-column: 4 / -1;
+    justify-content: center;
+  }
+
+  @include bp-desktop {
+    gap: 20px;
+    grid-column: 6 / -1;
+  }
+
+  @include bp-xl-desktop {
+    grid-column: 8 / 17;
+  }
+}
+
+.hero__title {
+  font-size: t-rem(35);
+  color: $highlight-color;
+  margin: 0;
+  text-shadow: 4px -6px 8px rgba(0, 0, 0, 0.5);
+
+  @include bp-tablet {
+    font-size: t-rem(40);
+  }
+
+  @include bp-desktop {
+    font-size: t-rem(59);
+  }
+
+  @include bp-xl-desktop {
+    font-size: t-rem(70);
+  }
+}
+
+.hero__subtext {
+  font-size: t-rem(20);
+  
+  span {
+    display: block;
+  }
+
+  @include bp-tablet {
+    font-size: t-rem(20);
+  }
+
+  @include bp-desktop {
+    font-size: t-rem(30);
+  }
+
+
+  @include bp-xl-desktop {
+    font-size: t-rem(35);
+  }
+}
+.hero__caption {
+  margin-bottom: t-rem(10);
+}
+
+.hero__subcaption {
+  margin-left: t-rem(20);
+  margin-right: t-rem(20);
+  line-height: t-rem(30);
+  color: $highlight-color-2;
+
+  @include bp-desktop {
+    margin-left: t-rem(50);
+    margin-right: t-rem(50);
+    line-height: t-rem(50);
+  }
+}
