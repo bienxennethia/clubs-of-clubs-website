@@ -1,0 +1,27 @@
+@import 'src/styles/index.scss';
+
+.about__container {
+  background-color: $base-color;
+
+  h4 {
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: t-rem(25);
+    font-size: t-rem(20);
+  }
+}
+
+.about__content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+
+  @include bp-tablet {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include bp-desktop {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+}
