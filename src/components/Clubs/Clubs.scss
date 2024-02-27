@@ -1,0 +1,56 @@
+@import 'src/styles/index.scss';
+
+.clubs {
+  font-style: italic;
+
+  @include bp-tablet {
+    padding: 40px;
+  }
+}
+
+.clubs__container {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  gap: 50px;
+
+  @include bp-tablet {
+    gap: 0;
+    flex-direction: row;
+  }
+
+  h2 {
+    font-size: t-rem(25);
+
+    @include bp-desktop {
+      font-size: t-rem(30);
+    }
+  }
+}
+
+.clubs__items {
+  display: flex;
+  gap: 50px;
+  flex-direction: column;
+  margin-top: t-rem(30);
+}
+
+.clubs__item {
+  display: flex;
+  align-items: center;
+
+  svg {
+    width: 20px;
+    fill: $highlight-color;
+    height: auto;
+  }
+}
+
+.clubs__text {
+  font-size: t-rem(16);
+  margin-left: t-rem(5);
+
+  @include bp-desktop {
+    font-size: t-rem(20);
+  }
+}
