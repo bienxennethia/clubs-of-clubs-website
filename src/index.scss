@@ -1,0 +1,21 @@
+@import 'src/styles/index.scss';
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background-color: $base-color;
+  color: $white;
+}
+
+a, p, h1, h2, h3, h4, h5, h6, ul {
+  margin: 0;
+  padding: 0;
+}
+
+*, ::before, ::after {
+  box-sizing: inherit;
+}
+
+html {
+  scroll-behavior: smooth;
+}
