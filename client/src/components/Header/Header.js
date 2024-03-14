@@ -36,7 +36,7 @@ const Header = () => {
                   <NavLink activeclassname="active" to={item.link}>
                     <div className="navigation__link">
                       <span className='navigation__link--text'>{item.name}</span>
-                      <Logo className="navigation__link--icon logo"></Logo>
+                      {item.icon}
                     </div>
                   </NavLink>
                 </li>

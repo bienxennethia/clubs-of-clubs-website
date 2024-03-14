@@ -1,8 +1,14 @@
+import Hero from "../components/Hero/Hero";
+import Login from "../components/Login/Login";
+
 const Home = () => {
   return (
-    <div className="about__content">
-      Home
-    </div>
+    <section className="home">
+      <div className="home__container container">
+        <Hero/>
+        <Login/>
+      </div>
+    </section>
   )
 };
 

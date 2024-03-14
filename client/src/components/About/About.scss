@@ -61,7 +61,7 @@
   }
 
   @include bp-xl-desktop {
-    margin-top: 0;
+    margin-top: t-rem(20);
     grid-template-columns: repeat(16, 1fr);
   }
 }
@@ -88,7 +88,7 @@
     }
 
     @include bp-xl-desktop {
-      width: t-rem(619);
+      width: t-rem(520);
     }
   }
 }

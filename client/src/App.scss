@@ -17,16 +17,10 @@
   }
 
   &::before {
-    background-image: url('./images/background.jpg');
+    background-image: url('./images/background.svg');
     background-size: cover;
     background-position: center;
-    opacity: 0.5;
-    filter: brightness(60%) contrast(80%);
-  }
-  
-  &::after {
-    background-color: $maroon;
-    opacity: 0.5;
+    background-attachment: fixed;
   }
 }
 
@@ -50,6 +44,10 @@ section {
 .container {
   margin: 0 t-rem(15);
   padding-top: t-rem(15);
+  
+  .home & {
+    padding-top: 0;
+  }
 
   @include bp-tablet {
     margin: 0 auto;
