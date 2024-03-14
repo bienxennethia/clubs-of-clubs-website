@@ -25,7 +25,7 @@
   }
   
   &::after {
-    background-color: $base-color;
+    background-color: $maroon;
     opacity: 0.5;
   }
 }
@@ -33,23 +33,28 @@
 section {
 
   @include bp-tablet {
-    max-width: 640px;
+    max-width: t-rem(768);
     margin-left: auto;
     margin-right: auto;
   }
 
   @include bp-desktop {
-    max-width: 980px;
+    max-width: t-rem(1200);
   }
 
   @include bp-xl-desktop {
-    max-width: 1440px;
+    max-width: t-rem(1600);
   }
 }
 
 .container {
   margin: 0 t-rem(15);
-  padding: t-rem(30);
+  padding-top: t-rem(15);
+
+  @include bp-tablet {
+    margin: 0 auto;
+    padding: t-rem(30);
+  }
 
   @include bp-xl-desktop {
     margin: 0 t-rem(60);
@@ -58,5 +63,13 @@ section {
 }
 
 .logo {
-  fill: $highlight-color;
+  fill: $white;
+}
+
+.cmp {
+  margin-top: 20px;
+
+  @include bp-tablet {
+    margin-top: 40px;
+  }
 }
