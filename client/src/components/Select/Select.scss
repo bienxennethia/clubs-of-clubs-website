@@ -1,0 +1,72 @@
+@import 'src/styles/index.scss';
+
+/* Dropdown container */
+.dropdown-container {
+  position: relative;
+}
+
+/* Dropdown header */
+.dropdown-header {
+  padding: t-rem(30);
+  padding-left: t-rem(20);
+  border: 1px solid $maroon;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: $maroon;
+  border-radius: 15px;
+  position: relative;
+  font-size: t-rem(12);
+  display: flex;
+  justify-content: space-between;
+  width: 250px;
+
+  svg {
+    width: t-rem(20);
+    height: auto;
+    rotate: 90deg;
+    fill: $white;
+    transition: rotate 0.3s ease;
+  }
+
+  &.open svg {
+    rotate: 270deg;
+  }
+}
+
+/* Dropdown options */
+.dropdown-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  overflow-y: auto;
+  border: 1px solid $deep-red;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  background-color: $deep-red;
+  z-index: 10;
+}
+
+/* Individual option */
+.dropdown-option {
+  padding: 20px 10px;
+  cursor: pointer;
+  color: $maroon;
+  font-weight: bold;
+  font-size: t-rem(14);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  svg {
+    width: 50px;
+    height: auto;
+    fill: $white;
+  }
+}
+
+/* Hover effect on option */
+.dropdown-option:hover {
+  background-color: $maroon;
+  color: $white;
+}

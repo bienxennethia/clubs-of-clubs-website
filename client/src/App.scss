@@ -110,3 +110,41 @@ label {
     margin-left: 5px;
   }
 }
+
+/* Apply styles to the select element */
+select.with-styling {
+  border: 1px solid $maroon;
+  border-radius: 4px;
+  background-color: $maroon;
+  padding: t-rem(20);
+  padding-right: t-rem(40);
+  font-size: t-rem(12) !important;
+  color: $white;
+  
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23fff" d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center; /* Adjust the position as needed */
+
+  &::-ms-expand {
+    display: none;
+  }
+
+  &:hover {
+    border-color: #999;
+  }
+  
+  /* Apply styles when select element is focused */
+  &:focus {
+    border-color: #66afe9;
+    box-shadow: 0 0 5px rgba(102, 175, 233, 0.6);
+    outline: none;
+  }
+
+  option {
+    background-color: $deep-red;
+    padding: t-rem(20);
+  }
+}

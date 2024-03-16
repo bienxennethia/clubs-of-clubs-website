@@ -12,7 +12,7 @@
   flex-direction: column;
   gap: 10px;
 
-  @include bp-desktop {
+  @include bp-tablet {
     flex-direction: row;
   }
 }
