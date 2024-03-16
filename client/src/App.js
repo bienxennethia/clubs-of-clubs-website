@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes  } from 'react-router-dom';
 import './App.scss';
 
 // components
@@ -11,6 +11,7 @@ import Forums from './structure/Forums';
 
 
 function App() {
+
   return (
     <div className="App">
     <Router>
@@ -18,15 +19,15 @@ function App() {
         <Header />
 
         <div className="content">
-        <div className='content__background'></div>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/clubs" element={<Clubs />} />
-          <Route path="/forums" element={<Forums />} />
-        </Routes>
-        <Footer />
-      </div>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/clubs" element={<Clubs />} />
+            <Route path="/forums" element={<Forums />} />
+          </Routes>
+          <div className='content__background'></div>
+          <Footer />
+        </div>
       </div>
     </Router>
     </div>
