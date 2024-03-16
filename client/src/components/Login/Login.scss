@@ -101,7 +101,6 @@
 
     @include bp-xl-desktop {
       grid-column: 3 /7;
-      margin-right: t-rem(20);
     }
   }
   
@@ -130,7 +129,6 @@
 
     @include bp-xl-desktop {
       grid-column: 7 / 11;
-      margin-left: t-rem(20);
     }
   }
 }
