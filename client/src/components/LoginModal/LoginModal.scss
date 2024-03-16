@@ -81,6 +81,7 @@
   svg {
     width: calc(100% - t-rem(50));
     height: auto;
+    max-width: t-rem(250);
   }
 
   @include bp-tablet {
@@ -88,6 +89,7 @@
 
     svg {
       width: 100%;
+      max-width: initial;
     }
   }
 

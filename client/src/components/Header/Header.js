@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink  } from 'react-router-dom';
 
 import "./Header.scss";
@@ -9,9 +9,32 @@ import { ReactComponent as Logo } from "../../icons/logo.svg";
 
 const Header = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const [isMobile, setMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setMobile(true);
+      } else {
+        setMobile(false);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    return isMobile ? setMenuOpen(false) : null;
   };
 
   return (
@@ -33,7 +56,7 @@ const Header = () => {
             <ul className={`navigation__items ${isMenuOpen ? 'open' : ''}`}>
               {navigationItems.map((item, index) => (
                 <li className='navigation__item' key={index}>
-                  <NavLink activeclassname="active" to={item.link}>
+                  <NavLink activeclassname="active" to={item.link} onClick={closeMenu}>
                     <div className="navigation__link">
                       <span className='navigation__link--text'>{item.name}</span>
                       {item.icon}

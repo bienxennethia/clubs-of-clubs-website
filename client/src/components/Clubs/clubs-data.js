@@ -1,21 +1,35 @@
 const clubs = [
   {
-    name: "Co-curricular Clubs",
-    items: [
-      "Bedan Chemical Society",
-      "Bedan Society of Young Astronomers",
-      "Math Aficionados",
-      "Red Cross Youth"
-    ]
+    name: "Bedan Chemical Society",
+    group: "Co-curricular",
   },
   {
-    name: "Interest Clubs",
-    items: [
-      "Athletico Bedista",
-      "Collective Action Towards Strays",
-      "Digital Arts Society",
-      "Red Lion Radio"
-    ]
+    name: "Bedan Society of Young Astronomers",
+    group: "Co-curricular",
+  },
+  {
+    name: "Math Aficionados",
+    group: "Co-curricular",
+  },
+  {
+    name: "Red Cross Youth",
+    group: "Co-curricular",
+  },
+  {
+    name: "Athletico Bedista",
+    group: "Interest",
+  },
+  {
+    name: "Collective Action Towards Strays",
+    group: "Interest",
+  },
+  {
+    name: "Digital Arts Society",
+    group: "Interest",
+  },
+  {
+    name: "Red Lion Radio",
+    group: "Interest",
   }
 ];
 

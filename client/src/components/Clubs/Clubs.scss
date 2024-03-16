@@ -1,56 +1,111 @@
 @import 'src/styles/index.scss';
 
-.clubs {
-  font-style: italic;
+.clubs__container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
 
-  @include bp-tablet {
-    padding: 40px;
+.clubs__header {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+
+  @include bp-desktop {
+    flex-direction: row;
   }
 }
 
-.clubs__container {
-  display: flex;
-  justify-content: space-evenly;
-  flex-direction: column;
-  gap: 50px;
+.clubs__title {
+  font-size: t-rem(80);
+  margin: 0;
+  font-weight: 900;
 
-  @include bp-tablet {
-    gap: 0;
-    flex-direction: row;
-  }
-
-  h2 {
-    font-size: t-rem(25);
-
-    @include bp-desktop {
-      font-size: t-rem(30);
-    }
+  @include bp-desktop {
+    font-size: t-rem(100);
   }
 }
 
 .clubs__items {
   display: flex;
-  gap: 50px;
-  flex-direction: column;
-  margin-top: t-rem(30);
+  flex-wrap: wrap;
+  gap: 30px;
 }
 
 .clubs__item {
   display: flex;
-  align-items: center;
+  align-items: stretch;
+  justify-content: center;
+  text-decoration: none;
+  color: $white;
+  position: relative;
+  flex: 100% 1;
 
+  &:hover .clubs__item-content::before {
+    background-color: rgba($maroon, 0.5);
+  }
+
+  @include bp-tablet {
+    flex: 33%;
+  }
+
+  @include bp-desktop {
+    flex: 48%;
+  }
+}
+
+.clubs__item-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  border-radius: 30px;
+  border: 1px solid $maroon;
+  overflow: hidden;
+  
+  background-size: cover;
+  background-position: center;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($maroon, 0.8);
+  }
+}
+
+.clubs__image {
+  position: absolute;
+  z-index: -1;
   svg {
-    width: 20px;
-    fill: $highlight-color;
+    width: 100%;
     height: auto;
   }
 }
 
 .clubs__text {
-  font-size: t-rem(16);
-  margin-left: t-rem(5);
+  padding: t-rem(60) t-rem(20);
+  font-weight: 900;
+  font-size: t-rem(30);
+  z-index: 1;
+  text-align: center;
+
+  @include bp-tablet {
+    padding: t-rem(60) t-rem(10);
+  }
 
   @include bp-desktop {
-    font-size: t-rem(20);
+    font-size: t-rem(50);
+    padding: t-rem(120) t-rem(40);
+  }
+
+  @include bp-desktop {
+    font-size: t-rem(60);
+    padding: t-rem(120) t-rem(40);
   }
 }

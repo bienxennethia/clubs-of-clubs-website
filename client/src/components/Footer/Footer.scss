@@ -3,5 +3,6 @@
 .footer {
   background-color: $maroon;
   text-align: center;
-  padding: 40px;
+  padding: t-rem(40);
+  margin-top: t-rem(20);
 }
