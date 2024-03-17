@@ -14,8 +14,8 @@ const Clubs = () => {
 
 
   return (
-    <section className="clubs">
-      <div className="clubs__container container">
+    <div className="clubs">
+      <div className="clubs__container">
         <div className="clubs__header">
           <h2 className="clubs__title">CLUBS</h2>
           <SelectField />
@@ -32,7 +32,7 @@ const Clubs = () => {
           </div>
         </div>
       </div>
-     </section>
+     </div>
   )
 }
 

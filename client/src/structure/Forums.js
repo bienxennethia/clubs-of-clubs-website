@@ -1,11 +1,11 @@
-import { useLocation } from "react-router-dom";
+
 const Forums = () => {
-  const location = useLocation();
-  const isForum = location.pathname === "/forums";
   return (
-    <div className={isForum ? "about__content noBackground" : "about__content"}>
-      Forum
-    </div>
+    <section className="forums noBackground">
+      <div className="forums__container container">
+
+      </div>
+    </section>
   )
 };
 

@@ -2,7 +2,11 @@ import CmpClubs from "../components/Clubs/Clubs";
 
 const Clubs = () => {
   return (
-    <CmpClubs />
+    <section className="clubs">
+      <div className="clubs__container container">
+        <CmpClubs />
+      </div>
+    </section>
   )
 };
 

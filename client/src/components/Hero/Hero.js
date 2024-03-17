@@ -8,7 +8,7 @@ import { ReactComponent as HeroImage } from "../../icons/hero.svg";
 
 const Hero = () => {
   return (
-    <section className="hero" id="hero">
+    <div className="hero" id="hero">
       <div className="hero__container">
         <div className="hero__logo">
           <Logo className="logo"/>
@@ -17,7 +17,7 @@ const Hero = () => {
           <HeroImage/>
         </div>
       </div>
-     </section>
+     </div>
   )
 }
 
