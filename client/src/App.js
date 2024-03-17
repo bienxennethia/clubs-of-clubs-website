@@ -16,7 +16,7 @@ import LoginModal from './components/LoginModal/LoginModal';
 import Modal from './components/Modal/Modal';
 function App() {
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
-  const toggleLoginModal = () => {
+  const toggleModal = () => {
     setLoginModalOpen(!isLoginModalOpen);
     
     if (!isLoginModalOpen) {
@@ -32,7 +32,7 @@ function App() {
       <Header />
       <div className="content">
         <Routes>
-          <Route path="/" element={<Home toggleLoginModal={toggleLoginModal} />} />
+          <Route path="/" element={<Home toggleModal={toggleModal} />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/clubs" element={<Clubs />} />
           <Route path="/forums" element={<Forums />} />
@@ -43,7 +43,7 @@ function App() {
       </div>
       
       { isLoginModalOpen && 
-        <Modal toggleLoginModal={toggleLoginModal}>
+        <Modal toggleModal={toggleModal}>
           <LoginModal isLoginModalOpen={isLoginModalOpen}/>
         </Modal> 
       }
