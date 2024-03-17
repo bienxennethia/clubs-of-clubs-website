@@ -1,8 +1,8 @@
+import CmpClubs from "../components/Clubs/Clubs";
+
 const Clubs = () => {
   return (
-    <div className="about__content">
-      Clubs
-    </div>
+    <CmpClubs />
   )
 };
 

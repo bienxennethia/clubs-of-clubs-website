@@ -4,7 +4,8 @@ import './App.scss';
 // components
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import Clubs from './components/Clubs/Clubs';
+import Clubs from './structure/Clubs';
+import Club from './structure/Club';
 import Home from './structure/Home';
 import AboutUs from './structure/About-Us';
 import Forums from './structure/Forums';
@@ -24,6 +25,7 @@ function App() {
             <Route path="/about" element={<AboutUs />} />
             <Route path="/clubs" element={<Clubs />} />
             <Route path="/forums" element={<Forums />} />
+            <Route path="/club/:id" element={<Club />} />
           </Routes>
           <div className='content__background'></div>
           <Footer />
