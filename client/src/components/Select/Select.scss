@@ -20,6 +20,10 @@
   justify-content: space-between;
   width: 250px;
 
+  .isForums & {
+    width: auto;
+  }
+
   svg {
     width: t-rem(20);
     height: auto;
@@ -45,6 +49,10 @@
   border-radius: 0 0 4px 4px;
   background-color: $deep-red;
   z-index: 10;
+
+  .isForums & {
+    position: initial;
+  }
 }
 
 /* Individual option */
@@ -58,10 +66,15 @@
   align-items: center;
   justify-content: space-between;
 
+  .isForums & {
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
   svg {
     width: 50px;
     height: auto;
-    fill: $white;
+    fill: $maroon;
   }
 }
 

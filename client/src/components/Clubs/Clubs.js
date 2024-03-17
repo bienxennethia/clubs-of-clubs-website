@@ -25,7 +25,7 @@ const Clubs = () => {
             {clubs.map((item, index) => (
               <Link to={`/club/${item.id}`} className="clubs__item" key={index}>
                 <div className="clubs__item-content" style={{ backgroundImage: `url(${imageUrl})` }}>
-                  <div className="clubs__text">{item.name}</div>
+                  <div className="clubs__text">{item.label}</div>
                 </div>
               </Link>
             ))}

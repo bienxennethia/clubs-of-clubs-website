@@ -48,9 +48,16 @@ section {
 .container {
   margin: 0 t-rem(15);
   padding-top: t-rem(15);
+  padding-bottom: t-rem(15);
   
   .home & {
     padding-top: 0;
+  }
+
+  &.forums__container {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
 
   @include bp-tablet {
@@ -58,9 +65,26 @@ section {
     padding: t-rem(30);
   }
 
+  @include bp-desktop {
+    .forums & {
+      padding: 0;
+    }
+
+    &.forums__container {
+      display: grid;
+      overflow: hidden;
+      grid-template-columns: repeat(10, 1fr);
+      align-items: stretch;
+    }
+  }
+
   @include bp-xl-desktop {
     margin: 0 t-rem(60);
     padding: t-rem(60);
+
+    &.forums__container {
+      grid-template-columns: repeat(12, 1fr);
+    }
   }
 }
 
