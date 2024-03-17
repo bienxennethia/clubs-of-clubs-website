@@ -5,11 +5,11 @@ import "./LoginModal.scss";
 import { ReactComponent as Logo } from "../../icons/logo.svg";
 import { fields } from "./fields";
 
-const LoginModal = ({ isLoginModalOpen}) => {
+const LoginModal = () => {
 
 
   return (
-    <div className={'login-modal ' + (isLoginModalOpen ? 'open' : '')}>
+    <div className="login-modal">
       <div className="login-modal__container">
         <div className="login-modal__logo">
           <Logo className="logo"/>

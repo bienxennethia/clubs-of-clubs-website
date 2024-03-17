@@ -1,5 +1,9 @@
 @import 'src/styles/index.scss';
 
+.app {
+  position: relative;
+}
+
 .content {
   position: relative;
 }
@@ -41,7 +45,7 @@ section {
   }
 
   @include bp-xl-desktop {
-    max-width: t-rem(1600);
+    max-width: t-rem(1620);
   }
 }
 
