@@ -7,14 +7,12 @@
     fill: $profile-1;
   }
 
-  // divisible by 2
   &:nth-child(2n) {
     .card__logo {
       fill: $profile-2;
     }
   }
 
-  // divisible by 3
   &:nth-child(3n) {
     .card__logo {
       fill: $profile-3;

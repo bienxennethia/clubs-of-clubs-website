@@ -1,11 +1,9 @@
 @import 'src/styles/index.scss';
 
-/* Dropdown container */
 .dropdown-container {
   position: relative;
 }
 
-/* Dropdown header */
 .dropdown-header {
   padding: t-rem(30);
   padding-left: t-rem(20);
@@ -37,7 +35,6 @@
   }
 }
 
-/* Dropdown options */
 .dropdown-options {
   position: absolute;
   top: 100%;
@@ -55,7 +52,6 @@
   }
 }
 
-/* Individual option */
 .dropdown-option {
   padding: 20px 10px;
   cursor: pointer;
@@ -78,7 +74,6 @@
   }
 }
 
-/* Hover effect on option */
 .dropdown-option:hover {
   background-color: $maroon;
   color: $white;

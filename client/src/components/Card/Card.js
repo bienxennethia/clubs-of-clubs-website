@@ -1,8 +1,6 @@
 import React from "react";
 
 import "./Card.scss";
-
-// images
 import { ReactComponent as Profile } from "../../icons/profile.svg";
 
 const Card = ({name, position}) => {

@@ -1,8 +1,6 @@
 import React from "react";
 
 import "./Hero.scss";
-
-// images
 import { ReactComponent as Logo } from "../../icons/logo.svg";
 import { ReactComponent as HeroImage } from "../../icons/hero.svg";
 

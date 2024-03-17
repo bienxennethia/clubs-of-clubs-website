@@ -1,11 +1,6 @@
 import React from "react";
 
 import "./About.scss";
-
-// components
-
-
-// data
 import { ReactComponent as Logo } from "../../icons/logo.svg";
 
 const About = () => {

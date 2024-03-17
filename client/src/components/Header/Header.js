@@ -3,7 +3,6 @@ import { NavLink, useLocation } from 'react-router-dom';
 
 import "./Header.scss";
 
-// components
 import { navigationItems } from './navigationItems';
 import { ReactComponent as Logo } from "../../icons/logo.svg";
 
@@ -41,7 +40,6 @@ const Header = () => {
   return (
     <div className="header">
       <div className="header__container">
-        {/* <nav className={`navigation ${isSticky ? 'sticky' : ''}`}> */}
         <nav className="navigation">
           <div className="navigation__container">
             <div className="navigation__content">
