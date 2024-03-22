@@ -15,8 +15,8 @@ const Creators = () => {
         </div>
         <div className="creators__content">
           <div className="creators__items">
-            {creatorsData.map((creator) => (
-              <div className="creators__item">
+            {creatorsData.map((creator, index) => (
+              <div className="creators__item" key={index}>
                 <div className="creators__image">
                   <Profile className="creators__logo" />
                 </div>
