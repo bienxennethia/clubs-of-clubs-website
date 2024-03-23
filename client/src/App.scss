@@ -1,5 +1,9 @@
 @import 'src/styles/index.scss';
 
+body.modal-open {
+  overflow: hidden;
+}
+
 .app {
   position: relative;
 }
@@ -117,7 +121,8 @@ section {
 }
 
 select,
-input {
+input:not([type='file']),
+textarea {
   border-radius: 20px;
   border: 0;
   padding: t-rem(10) t-rem(20);
@@ -125,10 +130,20 @@ input {
   max-width: t-rem(520);
 }
 
+input[type='file'] {
+  max-width: t-rem(250);
+}
+
+textarea {
+  resize: none;
+  height: t-rem(100);
+}
+
 label {
   font-weight: bold;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction: column;
 
   &.select {
     align-items: flex-start;

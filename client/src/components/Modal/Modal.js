@@ -1,12 +1,123 @@
 import "./Modal.scss";
-const Modal = ({ toggleModal, children }) => {
+import { useEffect } from "react";
+import { ReactComponent as Logo } from "../../icons/logo.svg";
+import { ReactComponent as Close } from "../../icons/close.svg";
+const Modal = ({ toggleModal, isModalOpen, content }) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleKeyDown = (event) => {
+    if (event.key === 'Escape') {
+      toggleModal();
+    }
+  };
+
+  // Add event listener when component mounts
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+
+    // Remove event listener when component unmounts
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleKeyDown, toggleModal]);
+
+  const clearFields = () => {
+    // Assuming each field has a unique name, you can clear the input fields by their name
+    content.fields.forEach(field => {
+      const input = document.querySelector(`input[name="${field.name}"]`);
+      if (input) {
+        input.value = ''; // Clear input value
+      }
+
+      const textarea = document.querySelector(`textarea[name="${field.name}"]`);
+      if (textarea) {
+        textarea.value = ''; // Clear textarea value
+      }
+
+      // Assuming the select element doesn't have a default empty option
+      const select = document.querySelector(`select[name="${field.name}"]`);
+      if (select) {
+        select.selectedIndex = 0; // Reset select to default option
+      }
+    });
+  };
+
+
   return (
-    <div className="modal">
-      <button onClick={toggleModal} className="modal__close-btn">X</button>
+    isModalOpen && <div className={`modal ${content.class ? content.class : ''}`}>
       <div className="modal__container container">
-        {children}
+        <div className="modal__container-content">
+          <button onClick={toggleModal} className="modal__close-btn"><Close /></button>
+          <div className="modal__logo">
+            <Logo className="logo"/>
+          </div>
+          <div className="modal__content">
+            <div className="modal__header">
+              {
+                content.title && <h1 className="modal__title">{content.title}</h1>
+              }
+              {
+                content.subtitle && <p className="modal__subtitle">{content.subtitle}</p>
+              }
+              {
+                content.description && <p className="modal__description">{content.description}</p>
+              }
+            </div>
+            <div className="modal__fields fields">
+                {content.fields.map((field) => (
+                  <div className="fields-modal__field field" key={field.name}>
+                    {
+                      field.label && (
+                        <label className="fields-modal__label">{field.label}
+                        {
+                          field.placeholderText && <span>({field.placeholderText})</span>
+                        }</label>
+                      )
+                    }
+                    {
+                      field.type === "select" ? (
+                        <select className="fields-modal__input" name={field.name} required>
+                          {field.options.map((option, index) => (
+                            <option key={index} value={option.value} className="fields-modal__input">
+                              {option.label}
+                            </option>
+                          ))}
+                        </select>
+                      ) : field.type === "file" ? (
+                        <input
+                          className="fields-modal__input"
+                          type={field.type}
+                          name={field.name}
+                          placeholder={field.placeholder}
+                          required
+                        />
+                      ) : field.type === "textarea" ? (
+                        <textarea
+                          className="fields-modal__input"
+                          name={field.name}
+                          placeholder={field.placeholder}
+                          required
+                        />
+                      ) : (
+                        <input
+                          className="fields-modal__input"
+                          type={field.type}
+                          name={field.name}
+                          placeholder={field.placeholder}
+                          required
+                        />
+                      )
+                    }
+                  </div>
+                ))}
+                <div className="modal__actions">
+                  <button className="modal__btn">Add</button>
+                  <button className="modal__btn" onClick={clearFields}>Clear</button>
+                </div>
+              </div>
+        </div>
+          </div>
+        </div>
       </div>
-    </div>
   )
 }
 

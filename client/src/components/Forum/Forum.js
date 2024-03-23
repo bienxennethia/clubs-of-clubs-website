@@ -1,4 +1,5 @@
 import { ReactComponent as Logo } from "../../icons/profile.svg";
+import AdminBtn from "../AdminBtn/AdminBtn";
 import './Forum.scss';
 const Forum = () => {
   return (
@@ -19,6 +20,7 @@ const Forum = () => {
         <p>Caption</p>
         <p>Caption</p>
       </div>
+      <AdminBtn />
     </div>
   </div>
   )

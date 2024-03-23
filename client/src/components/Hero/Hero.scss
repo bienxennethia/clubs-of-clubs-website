@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 20px;
+  gap: t-rem(20);
 
   @include bp-tablet {
     min-height: calc(100vh - t-rem(123));

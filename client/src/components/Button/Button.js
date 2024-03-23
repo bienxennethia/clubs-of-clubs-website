@@ -1,25 +1,28 @@
-import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import './Button.scss';
 
 import {ReactComponent as Edit } from "../../icons/edit.svg";
-import Modal from "../Modal/Modal";
-import LoginModal from "../LoginModal/LoginModal";
 
-
-const Button = () => {
-  const [isModalOpen, setModalOpen] = useState(false);
+const Button = ({toggleModal, setLocation }) => {
+  const location = useLocation();
+  
   const toggleButton = () => {
-    setModalOpen(!isModalOpen);
-  }
-  return (
-    <div className="button" >
-      <Edit onClick={toggleButton} />
+    setLocation(location.pathname);
+    console.log(location.pathname);
+    toggleModal();
+  };
 
-      {isModalOpen && (
-        <Modal toggleModal={toggleButton}>
-          <LoginModal />
-        </Modal>
-      )}
+  const pathsToShowButton = ["/forums", "/clubs"];
+
+  const isButtonVisible = pathsToShowButton.some(path => {
+    const pathRegex = new RegExp(`^${path.replace(/:[^/]+/, '[^/]+')}$`);
+    return pathRegex.test(location.pathname);
+  });
+
+  return (
+    isButtonVisible &&
+    <div className="button" onClick={toggleButton}>
+      <Edit />
     </div>
   );
 }

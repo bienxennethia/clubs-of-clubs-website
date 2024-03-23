@@ -2,18 +2,19 @@
 
 .button {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: t-rem(20);
+  right: t-rem(20);
   z-index: 999;
-  padding: 10px;
+  padding: t-rem(10);
   background-color: $deep-red;
-  border: 1px solid $maroon;
+  border: t-rem(1) solid $maroon;
   border-radius: 100%;
   cursor: pointer;
 
   svg {
-    width:50px;
+    width: t-rem(50);
     height: auto;
+    stroke: $maroon;
   }
 }
 

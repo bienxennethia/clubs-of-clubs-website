@@ -10,7 +10,7 @@
 .about__title {
   font-weight: bold;
   text-transform: uppercase;
-  text-shadow: -3px 5px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: t-rem(-2) t-rem(5) t-rem(4) rgba(0, 0, 0, 0.5);
 }
 
 .about__subtitle {
@@ -56,7 +56,7 @@
   @include bp-desktop {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    gap: 20px;
+    gap: t-rem(20);
     justify-items: center;
   }
 
@@ -96,13 +96,13 @@
 .about__text {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: t-rem(20);
   justify-content: center;
 
   p {
     font-size: t-rem(21);
     line-height: 1.5rem;
-    letter-spacing: 2px;
+    letter-spacing: t-rem(2);
     text-align: justify;
   }
 

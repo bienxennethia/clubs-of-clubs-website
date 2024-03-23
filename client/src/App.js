@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes  } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import React, { useState } from 'react';
 import './App.scss';
 
@@ -12,43 +12,56 @@ import AboutUs from './structure/About-Us';
 import Forums from './structure/Forums';
 import Button from './components/Button/Button';
 
-import LoginModal from './components/LoginModal/LoginModal';
 import Modal from './components/Modal/Modal';
+import { modals
+ } from './components/Button/modals';
+
 function App() {
-  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
+  const [isAdminModalOpen, setAdminModalOpen] = useState(false);
+  const [location, setLocation] = useState();
+
   const toggleModal = () => {
-    setLoginModalOpen(!isLoginModalOpen);
+    setAdminModalOpen(!isAdminModalOpen);
+    isModalOpen(!isAdminModalOpen);
+  };
+
+  const isModalOpen = (isOpen) => {
     
-    if (!isLoginModalOpen) {
-      document.body.style.overflow = 'hidden';
+    if (isOpen) {
+      document.body.classList.add('modal-open');
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.classList.remove('modal-open');
     }
-  }
+  };
 
   return (
-    <div className={`app ${isLoginModalOpen ? 'app__modal-open' : ''}`}>
+    <div className="app">
     <Router>
       <Header />
       <div className="content">
         <Routes>
-          <Route path="/" element={<Home toggleModal={toggleModal} />} />
+          <Route path="/" element={<Home toggleModal={toggleModal} setLocation={setLocation} />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/clubs" element={<Clubs />} />
           <Route path="/forums" element={<Forums />} />
-          <Route path="/club/:id" element={<Club />} />
+          <Route path="/item/:id" element={<Club />} />
         </Routes>
         <div className='content__background'></div>
         <Footer />
       </div>
-      
-      { isLoginModalOpen && 
-        <Modal toggleModal={toggleModal}>
-          <LoginModal isLoginModalOpen={isLoginModalOpen}/>
-        </Modal> 
-      }
 
-      <Button />
+      <Button toggleModal={toggleModal} setLocation={setLocation} />
+
+      {
+        // eslint-disable-next-line array-callback-return
+        modals.map((modal, index) => {
+          if (location && location.includes(modal.path)) {
+            return (
+            <Modal key={index} content={modal.content} toggleModal={toggleModal} isModalOpen={isAdminModalOpen}/>
+            )
+          }
+        })
+      }
     </Router>
     </div>
   );

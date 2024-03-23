@@ -3,19 +3,19 @@
 .creators__container {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: t-rem(30);
 }
 
 .creators__items {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: t-rem(25);
 
   @include bp-tablet {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     justify-items: center;
-    gap: 30px 20px;
+    gap: t-rem(30) t-rem(20);
   }
 
   @include bp-xl-desktop {
@@ -27,7 +27,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: t-rem(20);
 
   @include bp-xl-desktop {
     display: grid;
@@ -41,7 +41,7 @@
   text-align: center;
   font-size: t-rem(35);
   margin: 0;
-  text-shadow: -3px 5px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: t-rem(-2) t-rem(5) t-rem(4) rgba(0, 0, 0, 0.5);
   text-transform: uppercase;
 
   @include bp-tablet {
@@ -60,33 +60,33 @@
 .creators__image {
   border-radius: 100%;
   background-color: $maroon;
-  padding: 10px;
+  padding: t-rem(10);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 150px;
-  height: 150px;
+  width: t-rem(150);
+  height: t-rem(150);
 
   svg {
-    width: 120px;
+    width: t-rem(120);
     height: auto;
     fill: $deep-red;
   }
 
   @include bp-xl-desktop {
-    max-width: 285px;
+    max-width: t-rem(285);
     border-radius: 100%;
     background-color: $maroon;
-    padding: 20px;
+    padding: t-rem(20);
     display: flex;
     align-items: center;
     justify-content: center;
     grid-column: 1 / 6;
-    width: 250px;
-    height: 250px;
+    width: t-rem(250);
+    height: t-rem(250);
 
     svg {
-      width: 200px;
+      width: t-rem(200);
       height: auto;
       fill: $deep-red;
     }
@@ -97,7 +97,7 @@
   grid-column: 6 / -1;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: t-rem(15);
   justify-content: center;
   align-items: center;
 

@@ -3,9 +3,9 @@
 .sidebar__content {
   display: flex;
   flex-direction: column;
-  padding: 10px;
-  padding-top: 30px;
-  gap: 30px;
+  padding: t-rem(10);
+  padding-top: t-rem(30);
+  gap: t-rem(30);
 
   h1 {
     text-align: center;

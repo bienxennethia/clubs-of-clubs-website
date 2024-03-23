@@ -2,8 +2,8 @@
 
 .club__content {
   background-color: $maroon;
-  border-radius: 30px;
-  padding: 30px;
+  border-radius: t-rem(30);
+  padding: t-rem(30);
   margin-top: t-rem(30);
 
   &-header {
@@ -17,15 +17,15 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap: 20px;
+  gap: t-rem(20);
 
   &::after {
     content: '';
     position: absolute;
     width: 100%;
-    height: 1px;
+    height: t-rem(1);
     background-color: $white;
-    bottom: -20px;
+    bottom: t-rem(-20);
     left: 0;
   }
 
@@ -41,14 +41,14 @@
   padding: t-rem(30);
 
   svg {
-    width: 100px;
+    width: t-rem(100);
     height: auto;
     fill: $deep-red;
   }
 
   @include bp-desktop {
     svg {
-      width: 120px;
+      width: t-rem(120);
     }
   }
 }
@@ -94,7 +94,7 @@
 .club__header-actions {
   margin-top: t-rem(20);
   display: flex;
-  gap: 20px;
+  gap: t-rem(20);
   position: relative;
 
   &::after {
@@ -106,7 +106,7 @@
     left: 0;
     right: auto;
     background-color: $deep-red;
-    border-radius: 5px;
+    border-radius: t-rem(5);
     transition: left 0.3s ease-in-out;
   }
   
@@ -121,8 +121,9 @@
     border: 0;
     width: 100%;
     font-weight: 900;
-    padding: 20px;
+    padding: t-rem(20);
     font-size: t-rem(15);
+    cursor: pointer;
 
     &.active {
       color: $deep-red;

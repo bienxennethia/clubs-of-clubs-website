@@ -2,17 +2,21 @@
 
 .forum__items {
   background-color: $deep-red;
-  padding: 15px;
-  border-radius: 10px;
+  padding: t-rem(15);
+  border-radius: t-rem(10);
   &:not(:first-of-type) {
-    margin-top: 20px;
+    margin-top: t-rem(20);
   }
+}
+
+.forum__item {
+  position: relative;
 }
 
 .forum__header {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: t-rem(10);
 }
 
 .forum__text {
@@ -22,11 +26,11 @@
 
 .forum__image {
   background-color: $maroon;
-  padding: 10px;
+  padding: t-rem(10);
   border-radius: 100%;
 
   svg {
-    width: 30px;
+    width: t-rem(30);
     height: auto;
     fill: $dark-red;
   }
@@ -55,7 +59,7 @@
 }
 
 .forum__content {
-  margin-top: 20px;
+  margin-top: t-rem(20);
 
   p {
     text-transform: uppercase;

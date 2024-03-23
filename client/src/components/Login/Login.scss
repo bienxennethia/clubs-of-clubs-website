@@ -4,7 +4,7 @@
   text-align: center;
   font-size: t-rem(35);
   margin: 0;
-  text-shadow: -3px 5px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: t-rem(-2) t-rem(5) t-rem(4) rgba(0, 0, 0, 0.5);
   text-transform: uppercase;
 
   @include bp-tablet {
@@ -23,7 +23,7 @@
 .login__content {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: t-rem(20);
   justify-content: center;
   margin: t-rem(20) 0;
 
@@ -50,7 +50,7 @@
   color: $white;
   font-weight: bold;
   padding: t-rem(50) 0;
-  border-radius: 10px;
+  border-radius: t-rem(10);
   position: relative;
   z-index: 1;
   overflow: hidden;

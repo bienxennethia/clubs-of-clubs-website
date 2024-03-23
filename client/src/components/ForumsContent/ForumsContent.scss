@@ -3,10 +3,10 @@
 .forums__content {
   grid-column: 4 / -1;
   background-color: $dark-red;
-  padding: 30px;
+  padding: t-rem(30);
   flex: 1;
   overflow-y: auto;
-  margin-top: 20px;
+  margin-top: t-rem(20);
 
   @include bp-desktop {
     grid-column: 4 / -1;

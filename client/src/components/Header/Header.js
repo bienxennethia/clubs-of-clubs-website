@@ -57,7 +57,7 @@ const Header = () => {
                 <li className='navigation__item' key={index}>
                   <NavLink className={({ isActive }) =>
                     [
-                      isActive || (item.link === '/clubs' && location.pathname.includes('/club')) ? "active" : "",
+                      isActive || (item.link === '/clubs' && location.pathname.includes('/item')) ? "active" : "",
                     ].join(" ")}to={item.link} onClick={closeMenu}>
                     <div className="navigation__link">
                       <span className='navigation__link--text'>{item.name}</span>

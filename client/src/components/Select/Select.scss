@@ -7,16 +7,16 @@
 .dropdown-header {
   padding: t-rem(30);
   padding-left: t-rem(20);
-  border: 1px solid $maroon;
-  border-radius: 4px;
+  border: t-rem(1) solid $maroon;
+  border-radius: t-rem(4);
   cursor: pointer;
   background-color: $maroon;
-  border-radius: 15px;
+  border-radius: t-rem(15);
   position: relative;
   font-size: t-rem(12);
   display: flex;
   justify-content: space-between;
-  width: 250px;
+  width: t-rem(250);
 
   .isForums & {
     width: auto;
@@ -41,9 +41,9 @@
   left: 0;
   width: 100%;
   overflow-y: auto;
-  border: 1px solid $deep-red;
+  border: t-rem(1) solid $deep-red;
   border-top: none;
-  border-radius: 0 0 4px 4px;
+  border-radius: 0 0 t-rem(4) t-rem(4);
   background-color: $deep-red;
   z-index: 10;
 
@@ -53,7 +53,7 @@
 }
 
 .dropdown-option {
-  padding: 20px 10px;
+  padding: t-rem(20) t-rem(10);
   cursor: pointer;
   color: $maroon;
   font-weight: bold;
@@ -64,11 +64,11 @@
 
   .isForums & {
     justify-content: flex-start;
-    gap: 10px;
+    gap: t-rem(10);
   }
 
   svg {
-    width: 50px;
+    width: t-rem(50);
     height: auto;
     fill: $maroon;
   }
@@ -77,4 +77,8 @@
 .dropdown-option:hover {
   background-color: $maroon;
   color: $white;
+
+  svg {
+    fill: $white;
+  }
 }

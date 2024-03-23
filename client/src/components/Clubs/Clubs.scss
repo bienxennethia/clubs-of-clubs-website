@@ -3,14 +3,14 @@
 .clubs__container {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: t-rem(30);
 }
 
 .clubs__header {
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap: 20px;
+  gap: t-rem(20);
 
   @include bp-tablet {
     flex-direction: row;
@@ -30,7 +30,7 @@
 .clubs__items {
   display: flex;
   flex-wrap: wrap;
-  gap: 30px;
+  gap: t-rem(30);
 }
 
 .clubs__item {
@@ -61,8 +61,8 @@
   justify-content: center;
   position: relative;
   width: 100%;
-  border-radius: 30px;
-  border: 1px solid $maroon;
+  border-radius: t-rem(30);
+  border: t-rem(1) solid $maroon;
   overflow: hidden;
   
   background-size: cover;
