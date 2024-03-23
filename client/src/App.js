@@ -14,7 +14,7 @@ import Button from './components/Button/Button';
 
 import Modal from './components/Modal/Modal';
 import { modals
- } from './components/Button/modals';
+ } from './components/Modal/modals';
 
 function App() {
   const [isAdminModalOpen, setAdminModalOpen] = useState(false);
