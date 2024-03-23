@@ -1,7 +1,7 @@
 import { ReactComponent as Logo } from "../../icons/profile.svg";
 import AdminBtn from "../AdminBtn/AdminBtn";
 import './Forum.scss';
-const Forum = () => {
+const Forum = ({toggleModal}) => {
   return (
     <div className="forum__items">
     <div className="forum__item">
@@ -20,7 +20,7 @@ const Forum = () => {
         <p>Caption</p>
         <p>Caption</p>
       </div>
-      <AdminBtn />
+      <AdminBtn editModal={toggleModal} editModalId="editForum" />
     </div>
   </div>
   )

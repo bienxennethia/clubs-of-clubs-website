@@ -1,8 +1,9 @@
 export const modals = [
   {
+    id: "login",
     path: "/login",
+    class: "modal--login",
     content: {
-      class: "modal--login",
       title: "LOG IN",
       description: "I. As a MODERATOR, you have access to posting on the forums for the VISITORs to see",
       subtitle: "as MODERATOR",
@@ -40,9 +41,10 @@ export const modals = [
     }
   },
   {
+    id: "addClub",
     path: "/clubs",
+    class: "modal--clubs",
     content: {
-      class: "modal--clubs",
       title: "ADD CLUB",
       description: "Please fill out the form below to add a new club.",
       subtitle: "",
@@ -82,9 +84,10 @@ export const modals = [
     }
   },
   {
+    id: "editClub",
     path: "/item",
+    class: "modal--club",
     content: {
-      class: "modal--club",
       title: "EDIT CLUB",
       description: "Please fill out the form below to edit club.",
       subtitle: "",
@@ -124,13 +127,58 @@ export const modals = [
     }
   },
   {
+    id: "addForum",
     path: "/forums",
+    class: "modal--forum",
     content: {
-      class: "modal--forum",
       title: "ADD FORUM",
       description: "Please fill out the form below to add a new forum.",
       subtitle: "",
       type: "add-forum",
+      fields: [
+        {
+          name: "type",
+          type: "select",
+          placeholder: "Select type",
+          options: [
+            { value: "/", label: "Select club" },
+            { value: "corricular", label: "Bedan Chemical Society" },
+            { value: "interest", label: "Bedan Society of Young Astronomers" },
+            { value: "interest", label: "Math Aficionados" },
+            { value: "interest", label: "Red Cross Youth" },
+            { value: "interest", label: "Athletico Bedista" },
+            { value: "interest", label: "Collective Action Towards Strays" },
+            { value: "interest", label: "Digital Arts Society" },
+            { value: "interest", label: "Red Lion Radio" }
+          ]
+        },
+        {
+          name: "title",
+          type: "text",
+          placeholder: "Title"
+        },
+        {
+          name: "description",
+          type: "textarea",
+          placeholder: "Description"
+        },
+        {
+          name: "image",
+          type: "file",
+          placeholder: "Image"
+        }
+      ]
+    }
+  },
+  {
+    id: "editForum",
+    path: "/forums",
+    class: "modal--forum",
+    content: {
+      title: "EDIT FORUM",
+      description: "Please fill out the form below to edit forum.",
+      subtitle: "",
+      type: "edit-forum",
       fields: [
         {
           name: "type",

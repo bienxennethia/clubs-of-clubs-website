@@ -3,24 +3,17 @@ import './Button.scss';
 
 import {ReactComponent as Edit } from "../../icons/edit.svg";
 
-const Button = ({toggleModal, setLocation }) => {
+const Button = ({toggleModal }) => {
   const location = useLocation();
   
   const toggleButton = () => {
-    setLocation(location.pathname);
-    console.log(location.pathname);
-    toggleModal();
+    toggleModal(location.pathname === "/forums" ? "addForum" : "addClub");
   };
 
   const pathsToShowButton = ["/forums", "/clubs"];
 
-  const isButtonVisible = pathsToShowButton.some(path => {
-    const pathRegex = new RegExp(`^${path.replace(/:[^/]+/, '[^/]+')}$`);
-    return pathRegex.test(location.pathname);
-  });
-
   return (
-    isButtonVisible &&
+    pathsToShowButton.includes(location.pathname) &&
     <div className="button" onClick={toggleButton}>
       <Edit />
     </div>

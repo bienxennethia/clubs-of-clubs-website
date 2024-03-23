@@ -2,11 +2,11 @@ import "./Modal.scss";
 import { useEffect } from "react";
 import { ReactComponent as Logo } from "../../icons/logo.svg";
 import { ReactComponent as Close } from "../../icons/close.svg";
-const Modal = ({ toggleModal, isModalOpen, content }) => {
+const Modal = ({ closeModal, isModalOpen, item }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleKeyDown = (event) => {
     if (event.key === 'Escape') {
-      toggleModal();
+      closeModal();
     }
   };
 
@@ -18,11 +18,11 @@ const Modal = ({ toggleModal, isModalOpen, content }) => {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [handleKeyDown, toggleModal]);
+  }, [handleKeyDown, closeModal]);
 
   const clearFields = () => {
     // Assuming each field has a unique name, you can clear the input fields by their name
-    content.fields.forEach(field => {
+    item.content.fields.forEach(field => {
       const input = document.querySelector(`input[name="${field.name}"]`);
       if (input) {
         input.value = ''; // Clear input value
@@ -43,27 +43,27 @@ const Modal = ({ toggleModal, isModalOpen, content }) => {
 
 
   return (
-    isModalOpen && <div className={`modal ${content.class ? content.class : ''}`}>
+    isModalOpen && <div className={`modal ${item.class ? item.class : ''}`}>
       <div className="modal__container container">
         <div className="modal__container-content">
-          <button onClick={toggleModal} className="modal__close-btn"><Close /></button>
+          <button onClick={closeModal} className="modal__close-btn"><Close /></button>
           <div className="modal__logo">
             <Logo className="logo"/>
           </div>
           <div className="modal__content">
             <div className="modal__header">
               {
-                content.title && <h1 className="modal__title">{content.title}</h1>
+                item.content.title && <h1 className="modal__title">{item.content.title}</h1>
               }
               {
-                content.subtitle && <p className="modal__subtitle">{content.subtitle}</p>
+                item.content.subtitle && <p className="modal__subtitle">{item.content.subtitle}</p>
               }
               {
-                content.description && <p className="modal__description">{content.description}</p>
+                item.content.description && <p className="modal__description">{item.content.description}</p>
               }
             </div>
             <div className="modal__fields fields">
-                {content.fields.map((field) => (
+                {item.content.fields.map((field) => (
                   <div className="fields-modal__field field" key={field.name}>
                     {
                       field.label && (

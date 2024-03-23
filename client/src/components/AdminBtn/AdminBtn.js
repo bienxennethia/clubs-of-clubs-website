@@ -4,10 +4,10 @@ import {ReactComponent as Delete } from "../../icons/delete.svg";
 
 import './AdminBtn.scss';
 
-const AdminBtn = ({ toggleModal }) => {
+const AdminBtn = ({ editModal, editModalId }) => {
   return (
     <div className="admin-btns">
-      <div className="admin-btns__btn">
+      <div className="admin-btns__btn" onClick={() => editModal(editModalId)}>
         <Edit />
       </div>
       <div className="admin-btns__btn">

@@ -17,15 +17,31 @@ import { modals
  } from './components/Modal/modals';
 
 function App() {
-  const [isAdminModalOpen, setAdminModalOpen] = useState(false);
-  const [location, setLocation] = useState();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState();
 
-  const toggleModal = () => {
-    setAdminModalOpen(!isAdminModalOpen);
-    isModalOpen(!isAdminModalOpen);
+  const toggleModal = (modalId) => {
+    setIsModalOpen(!isModalOpen);
+    addStyling(!isModalOpen);
+    
+    if (modalId) {
+      const modal = modals.find((modal) => modal.id === modalId);
+      setModalContent(modal);
+    } else {
+      setModalContent(null);
+    }
   };
 
-  const isModalOpen = (isOpen) => {
+  const closeModal = () => {
+    setIsModalOpen(false);
+    addStyling(false);
+
+    if (modalContent) {
+      setModalContent(null);
+    }
+  };
+
+  const addStyling = (isOpen) => {
     
     if (isOpen) {
       document.body.classList.add('modal-open');
@@ -40,27 +56,21 @@ function App() {
       <Header />
       <div className="content">
         <Routes>
-          <Route path="/" element={<Home toggleModal={toggleModal} setLocation={setLocation} />} />
+          <Route path="/" element={<Home toggleModal={toggleModal} />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/clubs" element={<Clubs />} />
-          <Route path="/forums" element={<Forums />} />
-          <Route path="/item/:id" element={<Club />} />
+          <Route path="/forums" element={<Forums toggleModal={toggleModal} />} />
+          <Route path="/item/:id" element={<Club toggleModal={toggleModal} />} />
         </Routes>
         <div className='content__background'></div>
         <Footer />
       </div>
 
-      <Button toggleModal={toggleModal} setLocation={setLocation} />
+      <Button toggleModal={toggleModal}/>
 
       {
-        // eslint-disable-next-line array-callback-return
-        modals.map((modal, index) => {
-          if (location && location.includes(modal.path)) {
-            return (
-            <Modal key={index} content={modal.content} toggleModal={toggleModal} isModalOpen={isAdminModalOpen}/>
-            )
-          }
-        })
+        modalContent && isModalOpen &&
+        <Modal item={modalContent} closeModal={closeModal} isModalOpen={isModalOpen}/>
       }
     </Router>
     </div>

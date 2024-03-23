@@ -2,13 +2,13 @@ import Forum from "../Forum/Forum";
 
 import './ForumsContent.scss';
 
-const ForumsContent = () => {
+const ForumsContent = ({toggleModal}) => {
   return (
     <div className="forums__content">
-      <Forum />
-      <Forum />
-      <Forum />
-      <Forum />
+      <Forum toggleModal={toggleModal} />
+      <Forum toggleModal={toggleModal} />
+      <Forum toggleModal={toggleModal} />
+      <Forum toggleModal={toggleModal} />
     </div>
   )
 };

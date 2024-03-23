@@ -3,11 +3,7 @@ import React from "react";
 import "./Login.scss";
 import { ReactComponent as Logo } from "../../icons/login.svg";
 
-const Login = ({toggleModal, setLocation}) => {
-  const toggleButton = () => {
-    toggleModal();
-    setLocation('/login');
-  };
+const Login = ({toggleModal}) => {
 
   return (
     <div className="login">
@@ -16,7 +12,7 @@ const Login = ({toggleModal, setLocation}) => {
           <h1 className="login__title">which are you?</h1>
         </div>
         <div className="login__content">
-          <button className="login__action" onClick={toggleButton}>
+          <button className="login__action" onClick={() => toggleModal('login')}>
             <Logo />
             <span>moderator</span>
           </button>
