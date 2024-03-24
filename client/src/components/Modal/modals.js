@@ -54,15 +54,7 @@ export const modals = [
           type: "select",
           placeholder: "Select type",
           options: [
-            { value: "/", label: "Select club" },
-            { value: "corricular", label: "Bedan Chemical Society" },
-            { value: "interest", label: "Bedan Society of Young Astronomers" },
-            { value: "interest", label: "Math Aficionados" },
-            { value: "interest", label: "Red Cross Youth" },
-            { value: "interest", label: "Athletico Bedista" },
-            { value: "interest", label: "Collective Action Towards Strays" },
-            { value: "interest", label: "Digital Arts Society" },
-            { value: "interest", label: "Red Lion Radio" }
+            { value: "/", label: "Select type" },
           ]
         },
         {
@@ -96,17 +88,7 @@ export const modals = [
           name: "type",
           type: "select",
           placeholder: "Select type",
-          options: [
-            { value: "/", label: "Select club" },
-            { value: "corricular", label: "Bedan Chemical Society" },
-            { value: "interest", label: "Bedan Society of Young Astronomers" },
-            { value: "interest", label: "Math Aficionados" },
-            { value: "interest", label: "Red Cross Youth" },
-            { value: "interest", label: "Athletico Bedista" },
-            { value: "interest", label: "Collective Action Towards Strays" },
-            { value: "interest", label: "Digital Arts Society" },
-            { value: "interest", label: "Red Lion Radio" }
-          ]
+          options: []
         },
         {
           name: "name",

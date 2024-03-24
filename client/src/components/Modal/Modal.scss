@@ -226,4 +226,9 @@
   &:hover {
     background-color: $dark-red;
   }
+
+  &[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 }

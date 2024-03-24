@@ -1,8 +1,9 @@
 import "./Modal.scss";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ReactComponent as Logo } from "../../icons/logo.svg";
 import { ReactComponent as Close } from "../../icons/close.svg";
-const Modal = ({ closeModal, isModalOpen, item }) => {
+const Modal = ({ closeModal, isModalOpen, item, saveModal }) => {
+  const [response, setResponse] = useState('');
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleKeyDown = (event) => {
     if (event.key === 'Escape') {
@@ -10,37 +11,64 @@ const Modal = ({ closeModal, isModalOpen, item }) => {
     }
   };
 
-  // Add event listener when component mounts
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
 
-    // Remove event listener when component unmounts
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [handleKeyDown, closeModal]);
 
   const clearFields = () => {
-    // Assuming each field has a unique name, you can clear the input fields by their name
     item.content.fields.forEach(field => {
       const input = document.querySelector(`input[name="${field.name}"]`);
       if (input) {
-        input.value = ''; // Clear input value
+        input.value = '';
       }
 
       const textarea = document.querySelector(`textarea[name="${field.name}"]`);
       if (textarea) {
-        textarea.value = ''; // Clear textarea value
+        textarea.value = '';
       }
 
-      // Assuming the select element doesn't have a default empty option
       const select = document.querySelector(`select[name="${field.name}"]`);
       if (select) {
-        select.selectedIndex = 0; // Reset select to default option
+        select.selectedIndex = 0;
       }
     });
   };
-
+  
+  const toggleSave = async () => {
+    const fields = {};
+    let isValid = true;
+  
+    item.content.fields.forEach(field => {
+      const inputElement = document.querySelector(`.fields-modal__input[name="${field.name}"]`);
+        if (inputElement) {
+        const value = inputElement.value.trim();
+        if (inputElement.required && value === '') {
+          isValid = false;
+          inputElement.classList.add('error');
+          return;
+        } else {
+          fields[field.name] = value;
+          inputElement.classList.remove('error');
+        }
+      }
+    });
+  
+    if (isValid) {
+      const results = await saveModal(fields);
+      if (results) {
+        setResponse('Saved successfully!');
+        clearFields();
+      } else {
+        setResponse('Failed to save.');
+      }
+    } else {
+      setResponse('Please fill in all required fields.');
+    }
+  };
 
   return (
     isModalOpen && <div className={`modal ${item.class ? item.class : ''}`}>
@@ -77,8 +105,8 @@ const Modal = ({ closeModal, isModalOpen, item }) => {
                       field.type === "select" ? (
                         <select className="fields-modal__input" name={field.name} required>
                           {field.options.map((option, index) => (
-                            <option key={index} value={option.value} className="fields-modal__input">
-                              {option.label}
+                            <option key={index} value={option.id}>
+                              {option.name}
                             </option>
                           ))}
                         </select>
@@ -88,7 +116,6 @@ const Modal = ({ closeModal, isModalOpen, item }) => {
                           type={field.type}
                           name={field.name}
                           placeholder={field.placeholder}
-                          required
                         />
                       ) : field.type === "textarea" ? (
                         <textarea
@@ -109,8 +136,11 @@ const Modal = ({ closeModal, isModalOpen, item }) => {
                     }
                   </div>
                 ))}
+                <div className="modal__footer">
+                  <p className="modal__response">{response}</p>
+                </div>
                 <div className="modal__actions">
-                  <button className="modal__btn">Add</button>
+                  <button className="modal__btn" onClick={toggleSave}>Add</button>
                   <button className="modal__btn" onClick={clearFields}>Clear</button>
                 </div>
               </div>

@@ -1,54 +1,64 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./Select.scss";
 import { ReactComponent as DownArrow } from "../../icons/arrow.svg";
 import { ReactComponent as Icon } from "../../icons/home.svg";
+import { fetchClubTypes } from "../../data/utils";
 
-const options = [
-  { value: 'option1', label: 'All Clubs (Alphabetically)' },
-  { value: 'option2', label: 'Co-Curricular' },
-  { value: 'option3', label: 'Interest' },
-];
-
-
-const SelectField = ({isForum = false, data = options}) => {
+const SelectField = ({isForum = false, data = [], toggleFilter = null}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
+  const [options, setOptions] = useState(data);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
   const handleOptionClick = (option) => {
+    toggleFilter && toggleFilter(option.id);
     setSelectedOption(option);
     setIsOpen(false);
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const options = await fetchClubTypes();
+        setOptions(options);
+      } catch (error) {
+        console.error('Error fetching club types:', error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+  
+
   return (
     <div className={`dropdown-container ${isForum ? 'isForums' : ''}`}>
       <div className={`dropdown-header ${isOpen ? 'open' : ''}`} onClick={toggleDropdown}>
-        {selectedOption ? selectedOption.label : options[0].label}
+        {selectedOption ? selectedOption.name : options[0]?.name}
         <DownArrow />
       </div>
       {isOpen && (
         <div className="dropdown-options">
-          {data.map(option => (
+          {options.map(option => (
               isForum ? (
                 <div
-                  key={option.value}
+                  key={option.id}
                   className="dropdown-option"
                   onClick={() => handleOptionClick(option)}
                 >
                 <Icon />
-                  {option.label}
+                  {option.name}
                 </div>
               ) : (
                 <div
-                  key={option.value}
+                  key={option.id}
                   className="dropdown-option"
                   onClick={() => handleOptionClick(option)}
                 >
-                  {option.label}
-                  <Icon />
+                  {option.name}
+                  <div className={`dropdown-option-icon ${option.id}`}></div>
                 </div>
               )
           ))}

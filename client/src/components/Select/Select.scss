@@ -78,7 +78,33 @@
   background-color: $maroon;
   color: $white;
 
-  svg {
-    fill: $white;
+  .all {
+    background-image: url('../../icons/a-to-z-white.svg');
+  }
+
+  .curricular {
+    background-image: url('../../icons/curricular-white.svg');
+  }
+
+  .interest {
+    background-image: url('../../icons/interest-white.svg');
+  }
+}
+
+.dropdown-option-icon {
+  width: 50px; /* Adjust width and height as needed */
+  height: 50px;
+  background-size: cover;
+
+  &.all {
+    background-image: url('../../icons/a-to-z-red.svg');
+  }
+
+  &.curricular {
+    background-image: url('../../icons/curricular-red.svg');
+  }
+
+  &.interest {
+    background-image: url('../../icons/interest-red.svg');
   }
 }
