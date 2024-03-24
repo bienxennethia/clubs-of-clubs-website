@@ -2,7 +2,7 @@ import { ReactComponent as Logo } from "../../icons/profile.svg";
 import AdminBtn from "../AdminBtn/AdminBtn";
 import './Club.scss';
 
-const ClubHeader = ({handleTabs, activeTab, toggleModal}) => {
+const ClubHeader = ({handleTabs, activeTab, toggleModal, clubData = []}) => {
 
   return (
     <div className="club__content club__content-header">
@@ -11,10 +11,13 @@ const ClubHeader = ({handleTabs, activeTab, toggleModal}) => {
           <Logo />
         </div>
         <div className="club__header-text">
-          <h2 className="club__header-title">Collective Action Towards Strays</h2>
-          <p className="club__header-subtitle">Co-Curricular / Interest</p>
+          {console.log(clubData)}
+          {
+            clubData[0]?.name && <h2 className="club__header-title">{clubData[0]?.name}</h2>
+          }
+          { clubData[0]?.type_name && <p className="club__header-subtitle">{clubData[0]?.type_name}</p> }
           <p className="club__header-name">Moderator:</p>
-          <AdminBtn editModal={toggleModal} editModalId="editClub" />
+          <AdminBtn editModal={toggleModal} editModalId="editClub" id={clubData[0]?.id}/>
         </div>
       </div>
       <div className={ activeTab ? `club__header-actions about` : 'club__header-actions forum'}>

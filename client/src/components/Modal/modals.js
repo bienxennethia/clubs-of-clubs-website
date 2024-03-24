@@ -60,17 +60,28 @@ export const modals = [
         {
           name: "name",
           type: "text",
-          placeholder: "Name"
+          placeholder: "Name *"
         },
         {
           name: "description",
           type: "textarea",
-          placeholder: "Description"
+          placeholder: "Description *"
+        },
+        {
+          name: "mission",
+          type: "textarea",
+          placeholder: "Mission"
+        },
+        {
+          name: "vision",
+          type: "textarea",
+          placeholder: "Vision"
         },
         {
           name: "image",
           type: "file",
-          placeholder: "Image"
+          placeholder: "Club Image",
+          label: "Club Image"
         }
       ]
     }

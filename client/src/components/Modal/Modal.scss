@@ -198,6 +198,10 @@
   text-align: left;
   letter-spacing: t-rem(2);
 
+  & + & {
+    margin-top: t-rem(10);
+  }
+
   @include bp-desktop {
     letter-spacing: t-rem(2);
   }

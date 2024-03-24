@@ -43,7 +43,7 @@ function App() {
 
             const updatedOptions = options.map(option => {
               if (option.id === 'all') {
-                return { ...option, id: '', name: 'Select type' };
+                return { ...option, id: '', name: 'Select type *' };
               }
               return option;
             });

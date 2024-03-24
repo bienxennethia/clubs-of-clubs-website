@@ -89,6 +89,10 @@ const Modal = ({ closeModal, isModalOpen, item, saveModal }) => {
               {
                 item.content.description && <p className="modal__description">{item.content.description}</p>
               }
+              {
+                item.id === "addClub" && <p className="modal__description">Note: Officers can be add on the club detail page.</p>
+              }
+              <p className="modal__description">*required fields</p>
             </div>
             <div className="modal__fields fields">
                 {item.content.fields.map((field) => (

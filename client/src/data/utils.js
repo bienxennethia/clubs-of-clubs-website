@@ -32,13 +32,16 @@ export const saveClubs = (clubData) => {
   });
 };
 
-export const getClubs = (type = null) => {
+export const getClubs = (id = null, type = null) => {
   if (type === 'all') { type = null; } 
   
   let url = 'http://localhost:3001/clubs';
-  if (type) {
+  if (id) {
+    url += `?id=${id}`;
+  } else if (type) {
     url += `?type=${type}`; // Append type parameter to the URL
   }
+
   return fetch(url)
     .then(response => {
       if (!response.ok) {

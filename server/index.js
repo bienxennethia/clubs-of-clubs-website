@@ -44,14 +44,20 @@ app.get('/club-types', (req, res) => {
   });
 });
 
-app.get('/clubs', (req, res) => {const { type } = req.query;
-  let query = 'SELECT * FROM club_table';
+app.get('/clubs', (req, res) => {const { type, id } = req.query;
+  let query = `
+    SELECT club_table.*, club_type_table.name AS type_name
+    FROM club_table 
+    LEFT JOIN club_type_table ON club_table.type = club_type_table.id`;
 
-  if (type) {
-    query += ` WHERE type = '${type}'`; // Modify query to filter by type if provided
+
+  if (id) {
+    query += ` WHERE club_table.id = ${id}`; // Modify query to filter by ID if provided
+  } else if (type) {
+    query += ` WHERE club_type_table.id = '${type}'`; // Modify query to filter by type if provided
   }
 
-  query += ' ORDER BY name ASC';
+  query += ' ORDER BY club_table.name ASC';
   connection.query(query, (err, results) => {
     if (err) {
       console.error('Error executing MySQL query:', err);
@@ -63,14 +69,14 @@ app.get('/clubs', (req, res) => {const { type } = req.query;
 });
 
 app.put('/clubs', (req, res) => {
-  const { name, description, type, image } = req.body;
+  const { name, description, type, image, mission, vision } = req.body;
 
   if (!name || !type) {
     return res.status(400).json({ message: 'Name and club type ID are required' });
   }
 
-  const query = 'INSERT INTO club_table (name, description, type, image) VALUES (?, ?, ?, ?)';
-  const values = [name, description, type, image];
+  const query = 'INSERT INTO club_table (name, description, type, image, mission, vision) VALUES (?, ?, ?, ?, ?, ?)';
+  const values = [name, description, type, image, mission, vision];
 
   connection.query(query, values, (err, results) => {
     if (err) {
