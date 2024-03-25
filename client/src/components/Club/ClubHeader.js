@@ -19,9 +19,9 @@ const ClubHeader = ({handleTabs, activeTab, toggleModal, clubData = []}) => {
           <AdminBtn toggleModal={toggleModal} editModalId="editClub" deleteModalId="deleteClub" id={clubData[0]?.id}/>
         </div>
       </div>
-      <div className={ activeTab ? `club__header-actions about` : 'club__header-actions forum'}>
-        <button type="button" className={ activeTab ? `active` : ''} onClick={handleTabs}>ABOUT</button>
-        <button type="button" className={ !activeTab ? `active` : ''} onClick={handleTabs}>FORUM</button>
+      <div className={ activeTab === 'about' ? `club__header-actions about` : 'club__header-actions forum'}>
+        <button type="button" className={ activeTab === 'about' ? `active` : ''} onClick={() => handleTabs('about')}>ABOUT</button>
+        <button type="button" className={ activeTab === 'forum' ? `active` : ''} onClick={() => handleTabs('forum')}>FORUM</button>
       </div>
     </div>
   )

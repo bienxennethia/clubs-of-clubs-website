@@ -36,10 +36,10 @@ function App() {
       return;
     }
     setModalIdOpen(modalId);
+    
+    const modal = modals.find((modal) => modal.id === modalId);
   
     if (modalId === 'addClub' || modalId === 'editClub') {
-      const modal = modals.find((modal) => modal.id === modalId);
-
       try {
         const updatedFields = await Promise.all(modal.content.fields.map(async (field) => { 
           if (field.type === 'select') {
@@ -78,7 +78,7 @@ function App() {
       setIsDeleteModal(!isDeleteModal);
       setItemId(clubId);
     } else {
-      setModalContent(null);
+      setModalContent(modal);
     }
   };
   

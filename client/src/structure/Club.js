@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { getClubs } from "../data/utils";
 
 const Club = ({toggleModal, clubData = {}, setClub}) => {
-  const [activeTab, setActiveTab] = useState(true);
+  const [activeTab, setActiveTab] = useState('about');
   const { id } = useParams();
 
   useEffect(() => {
@@ -23,8 +23,12 @@ const Club = ({toggleModal, clubData = {}, setClub}) => {
     fetchClubData();
   }, [id, setClub]); 
 
-  const handleTabs = () => {
-    setActiveTab(!activeTab);
+  const handleTabs = (tab) => {
+    if (tab === 'about') {
+      setActiveTab('about');
+    } else if (tab === 'forum') {
+      setActiveTab('forum');
+    }
   }
 
   return (

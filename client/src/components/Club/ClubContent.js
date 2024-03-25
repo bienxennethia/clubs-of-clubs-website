@@ -3,7 +3,7 @@ import Forum from "../Forum/Forum";
 const ClubContent = ({activeTab, clubData}) => {
   return (
     <div className="club__content">
-      {activeTab ? (
+      {activeTab === 'about' ? (
         <div className="club__content-about">
           { clubData[0]?.description && <h1>ABOUT:</h1> }
           { clubData[0]?.description && <p>{clubData[0]?.description}</p> }
