@@ -105,14 +105,20 @@ export const deleteClub = (clubId) => {
 
 
 // forums
-export const getForums = (id = null, type = null) => {
-  if (type === 'all') { type = null; } 
-  
+export const getForums = (id = null, type = null, type2 = null) => {
+  if (type === 'all') { type = null; }
+  if (type2 === 'all') { type2 = null; }
+
   let url = 'http://localhost:3001/forums';
   if (id) {
     url += `?id=${id}`;
   } else if (type) {
-    url += `?type=${type}`; // Append type parameter to the URL
+    url += `?club_id=${type}`;
+  }
+
+  if (type2) {
+    url += (type && type2) ? `&` : `?`;
+    url += `club_id_2=${type2}`;
   }
 
   return fetch(url)

@@ -6,14 +6,14 @@ import "./Clubs.scss";
 import imageUrl from "../../images/background.jpg";
 import SelectField from "../Select/Select";
 
-const Clubs = ({clubs = [], toggleFilter = null, deleteMessage = null}) => {
+const Clubs = ({clubs = [], toggleFilter = null, deleteMessage = null, clubTypes = null}) => {
 
   return (
     <div className="clubs">
       <div className="clubs__container">
         <div className="clubs__header">
           <h2 className="clubs__title">CLUBS</h2>
-          <SelectField toggleFilter={toggleFilter} />
+          <SelectField toggleFilter={toggleFilter} options={clubTypes} />
         </div>
         <div className="clubs__content">
           { deleteMessage && <div className="clubs__delete-text">{deleteMessage}!</div>}

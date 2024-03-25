@@ -6,8 +6,13 @@ const ForumsContent = ({toggleModal, forums}) => {
   return (
     <div className="forums__content">
       {
-        forums.map((forum) => (
-          <Forum key={forum._id} toggleModal={toggleModal} forum={forum} />
+        forums.length === 0 && (
+          <div className="clubs__text">No forums found</div>
+        )
+      }
+      {
+        forums.map((forum, index) => (
+          <Forum key={index} toggleModal={toggleModal} forum={forum} />
         ))
       }
     </div>

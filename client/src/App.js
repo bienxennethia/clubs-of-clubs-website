@@ -27,6 +27,8 @@ function App() {
   const [club, setClub] = useState({});
   const [deleteMessage, setDeleteMessage] = useState('');
   const [forums, setForums] = useState([]);
+  const [clubTypes, setClubTypes] = useState([]);
+  const [currentPage, setCurrentPage] = useState('');
 
   const toggleModal = async (modalId, paramId = null) => {
     setIsModalOpen(!isModalOpen);
@@ -44,13 +46,12 @@ function App() {
       try {
         const updatedFields = await Promise.all(modal.content.fields.map(async (field) => { 
           if (field.type === 'select') {
-            const options = await fetchClubTypes();
 
-            const updatedOptions = options.map(option => {
-              if (option.id === 'all') {
-                return { ...option, id: '', name: 'Select type' };
+            const updatedOptions = clubTypes.map(type => {
+              if (type.id === 'all') {
+                return { ...type, id: '', name: 'Select type' };
               }
-              return option;
+              return type;
             });
           
             return { ...field, options: updatedOptions };
@@ -76,7 +77,6 @@ function App() {
         console.error('Error fetching club types:', error);
       }
     } else if (modalId === 'addForum' || modalId === 'editForum') {
-      console.log(paramId, modalId);
       try {
         const updatedFields = await Promise.all(modal.content.fields.map(async (field) => { 
           if (field.type === 'select') {
@@ -156,6 +156,15 @@ function App() {
     }
   };
 
+  const fetchClubType = async () => {
+    try {
+      const result = await fetchClubTypes();
+      setClubTypes(result);
+    } catch (error) {
+      console.error('Error fetching clubs:', error);
+    }
+  };
+
   const fetchClubs = async () => {
     try {
       const result = await getClubs();
@@ -204,18 +213,28 @@ function App() {
   useEffect(() => {
   
     fetchClubs();
+    fetchClubType();
     fetchForums();
   }, []);
   
-  const toggleFilter = async (type) => {
+  const toggleFilter = async (type, type2 = null) => {
 
-    if (type === 'all') { type = null; }
-  
-    try {
-      const result = await getClubs(null, type);
-      setClubs(result);
-    } catch (error) {
-      console.error('Error fetching clubs:', error);
+    if (currentPage === "clubs") {
+      if (type === 'all') { type = null; }
+    
+      try {
+        const result = await getClubs(null, type);
+        setClubs(result);
+      } catch (error) {
+        console.error('Error fetching clubs:', error);
+      }
+    } else if (currentPage === "forums") {
+      try {
+        const result = await getForums(null, type, type2);
+        setForums(result);
+      } catch (error) {
+        console.error('Error fetching forums:', error);
+      }
     }
   };
   
@@ -246,17 +265,17 @@ function App() {
     <div className="app">
     <Router>
       <Header />
-      <div className="content">
+      <div className={`content ${currentPage}`}>
         <Routes>
           <Route path="/" element={<Home toggleModal={toggleModal} />} />
           <Route path="/about" element={<AboutUs />} />
-          <Route path="/clubs" element={<Clubs clubs={clubs} toggleFilter={toggleFilter} deleteMessage={deleteMessage} />} />
-          <Route path="/forums" element={<Forums toggleModal={toggleModal} forums={forums} />} />
+          <Route path="/clubs" element={<Clubs clubs={clubs} toggleFilter={toggleFilter} deleteMessage={deleteMessage} clubTypes={clubTypes} setCurrentPage={setCurrentPage} />} />
+          <Route path="/forums" element={<Forums toggleFilter={toggleFilter} toggleModal={toggleModal} forums={forums} clubs={clubs} setCurrentPage={setCurrentPage} />}/>
           <Route path="/item/:id" element={<Club toggleModal={toggleModal} clubData={club} setClub={setClub} setDeleteMessage={setDeleteMessage} />} />
         </Routes>
         <div className='content__background'></div>
-        <Footer />
       </div>
+      <Footer />
 
       <Button toggleModal={toggleModal}/>
 
