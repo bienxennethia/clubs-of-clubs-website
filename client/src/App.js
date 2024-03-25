@@ -29,6 +29,10 @@ function App() {
   const [forums, setForums] = useState([]);
   const [clubTypes, setClubTypes] = useState([]);
   const [currentPage, setCurrentPage] = useState('');
+  const [searchString, setSearchString] = useState('');
+  const [interestType, setInterestType] = useState('');
+  const [curricularType, setCurricularType] = useState('');
+  const [clubType, setClubType] = useState('');
 
   const toggleModal = async (modalId, paramId = null) => {
     setIsModalOpen(!isModalOpen);
@@ -62,7 +66,7 @@ function App() {
 
         if (modalId === 'editClub') {
           setItemId(paramId);
-          const results = await getClubs(itemId);
+          const results = await getClubs(paramId);
           updatedModal.content.fields.map((field) => {
             results[0][field.name] = results[0][field.name] || null;
             field.value = results[0][field.name];
@@ -94,7 +98,7 @@ function App() {
 
         if (modalId === 'editForum') {
           setItemId(paramId);
-          const results = await getForums(itemId);
+          const results = await getForums(paramId);
           updatedModal.content.fields.map((field) => {
             results[0][field.name] = results[0][field.name] || null;
             field.value = results[0][field.name];
@@ -148,6 +152,7 @@ function App() {
       try {
         const { result } = await updateForum(itemId, data);
         setForums(result);
+        fetchClubs();
         return result;
       } catch (error) {
         console.error('Error saving forum:', error);
@@ -214,23 +219,21 @@ function App() {
   
     fetchClubs();
     fetchClubType();
-    fetchForums();
-  }, []);
+  }, [currentPage]);
   
-  const toggleFilter = async (type, type2 = null) => {
+  const toggleFilter = async () => {
 
     if (currentPage === "clubs") {
-      if (type === 'all') { type = null; }
-    
       try {
-        const result = await getClubs(null, type);
+        const result = await getClubs(null, clubType);
         setClubs(result);
       } catch (error) {
         console.error('Error fetching clubs:', error);
       }
     } else if (currentPage === "forums") {
+
       try {
-        const result = await getForums(null, type, type2);
+        const result = await getForums(null, interestType, curricularType, searchString);
         setForums(result);
       } catch (error) {
         console.error('Error fetching forums:', error);
@@ -238,6 +241,23 @@ function App() {
     }
   };
   
+  const searchToggle = (stringName) => {
+    setSearchString(stringName);
+  };
+  
+  useEffect(() => {
+    if (currentPage === "forums") {
+      toggleFilter();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchString, interestType, curricularType]);
+  
+  useEffect(() => {
+    if (currentPage === "clubs") {
+      toggleFilter();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [clubType]);
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -267,10 +287,10 @@ function App() {
       <Header />
       <div className={`content ${currentPage}`}>
         <Routes>
-          <Route path="/" element={<Home toggleModal={toggleModal} />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/clubs" element={<Clubs clubs={clubs} toggleFilter={toggleFilter} deleteMessage={deleteMessage} clubTypes={clubTypes} setCurrentPage={setCurrentPage} />} />
-          <Route path="/forums" element={<Forums toggleFilter={toggleFilter} toggleModal={toggleModal} forums={forums} clubs={clubs} setCurrentPage={setCurrentPage} />}/>
+          <Route path="/" element={<Home toggleModal={toggleModal} setCurrentPage={setCurrentPage} />} />
+          <Route path="/about" element={<AboutUs setCurrentPage={setCurrentPage} />} />
+          <Route path="/clubs" element={<Clubs clubs={clubs} setClubType={setClubType} deleteMessage={deleteMessage} clubTypes={clubTypes} setCurrentPage={setCurrentPage} />} />
+          <Route path="/forums" element={<Forums toggleModal={toggleModal} forums={forums} clubs={clubs} setCurrentPage={setCurrentPage} searchToggle={searchToggle} setCurricularType={setCurricularType} setInterestType={setInterestType} />}/>
           <Route path="/item/:id" element={<Club toggleModal={toggleModal} clubData={club} setClub={setClub} setDeleteMessage={setDeleteMessage} />} />
         </Routes>
         <div className='content__background'></div>

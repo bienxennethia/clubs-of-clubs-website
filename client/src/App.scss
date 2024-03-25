@@ -43,6 +43,7 @@ body.modal-open {
 }
 
 section {
+  flex: 1;
 
   @include bp-tablet {
     max-width: t-rem(768);

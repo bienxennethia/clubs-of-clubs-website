@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./Select.scss";
 import { ReactComponent as DownArrow } from "../../icons/arrow.svg";
 import { ReactComponent as Icon } from "../../icons/home.svg";
 
-const SelectField = ({isForum = false, toggleFilter = null, options = null, setTypes = null, id = null}) => {
+const SelectField = ({isForum = false, options = null, setType = null}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
 
@@ -12,14 +12,14 @@ const SelectField = ({isForum = false, toggleFilter = null, options = null, setT
   };
 
   const handleOptionClick = (option) => {
-    if (isForum) {
-      setTypes && setTypes(prevTypes => ({ ...prevTypes, [id]: option.id }));
-    } else {
-      toggleFilter && toggleFilter(option.id);
-    }
+    setType && setType(option.id);
     setSelectedOption(option);
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    setSelectedOption(options[0]);
+  }, [options]);
   
 
   return (

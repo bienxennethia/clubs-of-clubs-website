@@ -3,14 +3,11 @@ import ForumsContent from "../components/ForumsContent/ForumsContent";
 import SidebarForum from "../components/SidebarForum/SidebarForum";
 
 
-const Forums = ({ toggleModal, forums = null, clubs = null, setCurrentPage = null,  toggleFilter }) => {
+const Forums = ({ toggleModal, forums = null, clubs = null, setCurrentPage = null, searchToggle = null, setCurricularType = null, setInterestType = null }) => {
   const [interestLists, setInterestLists] = useState([]);
   const [coCurricularLists, setCoCurricularLists] = useState([]);
 
   useEffect(() => {
-    if (setCurrentPage) {
-      setCurrentPage('forums');
-    }
 
     if (clubs) {
       const interestClubs = clubs.filter(club => club.type_name === "Interest");
@@ -18,12 +15,21 @@ const Forums = ({ toggleModal, forums = null, clubs = null, setCurrentPage = nul
       setInterestLists([{ id: 'all', name: 'Interest' }, ...interestClubs]);
       setCoCurricularLists([{ id: 'all', name: 'Co-Curricular' }, ...coCurricularClubs]);
     }
-  }, [clubs, setCurrentPage]);
+  }, [clubs]);
+
+  useEffect(() => {
+    if (setCurrentPage) {
+      setCurrentPage('forums');
+    } 
+    setCurricularType('all');
+    setInterestType('all');
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setCurrentPage]);
 
   return (
     <section className="forums noBackground">
       <div className="forums__container container">
-        <SidebarForum interestLists={interestLists} coCurricularLists={coCurricularLists} toggleFilter={toggleFilter} />
+        <SidebarForum interestLists={interestLists} coCurricularLists={coCurricularLists} searchToggle={searchToggle} setCurricularType={setCurricularType} setInterestType={setInterestType} />
         <ForumsContent toggleModal={toggleModal} forums={forums} />
       </div>
     </section>

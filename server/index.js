@@ -159,7 +159,7 @@ app.delete('/clubs/:id', (req, res) => {
 });
 
 // Forums
-app.get('/forums', (req, res) => {const { club_id, id, club_id_2 } = req.query;
+app.get('/forums', (req, res) => {const { club_id, id, club_id_2, string_name } = req.query;
   let query = `
     SELECT forum_table.*, club_table.*, forum_table.created_at AS forum_created , club_table.name AS club_name
     FROM forum_table 
@@ -173,9 +173,16 @@ app.get('/forums', (req, res) => {const { club_id, id, club_id_2 } = req.query;
     query += ` WHERE forum_table.club_id = '${club_id_2}'`;
   } else if (club_id && club_id_2) {
     query += ` WHERE forum_table.club_id = '${club_id}' OR forum_table.club_id = '${club_id_2}'`;
+  } 
+  
+  if (string_name) {
+    if (query.includes('WHERE')) {
+      query += ` AND forum_table.forum_name LIKE '%${string_name}%'`;
+    } else {
+      query += ` WHERE forum_table.forum_name LIKE '%${string_name}%'`;
+    }
   }
     
-
   query += ' ORDER BY forum_table.created_at DESC';
   connection.query(query, (err, results) => {
     if (err) {

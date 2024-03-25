@@ -105,20 +105,25 @@ export const deleteClub = (clubId) => {
 
 
 // forums
-export const getForums = (id = null, type = null, type2 = null) => {
-  if (type === 'all') { type = null; }
-  if (type2 === 'all') { type2 = null; }
+export const getForums = (id = null, interestType = null, curricularType = null, stringName = null) => {
+  if (interestType === 'all') { interestType = null; }
+  if (curricularType === 'all') { curricularType = null; }
 
   let url = 'http://localhost:3001/forums';
   if (id) {
     url += `?id=${id}`;
-  } else if (type) {
-    url += `?club_id=${type}`;
+  } else if (interestType && !curricularType) {
+    url += `?club_id_2=${interestType}`;
+  } else if (!interestType && curricularType) {
+    url += `?club_id=${curricularType}`;
+  } else if (interestType && curricularType) {
+    url += `?club_id=${curricularType}&club_id_2=${interestType}`;
   }
 
-  if (type2) {
-    url += (type && type2) ? `&` : `?`;
-    url += `club_id_2=${type2}`;
+  if (url.includes('?') && stringName) {
+    url += `&string_name=${stringName}`;
+  } else if (!url.includes('?') && stringName) {
+    url += `?string_name=${stringName}`;
   }
 
   return fetch(url)

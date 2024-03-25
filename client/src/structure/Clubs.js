@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import CmpClubs from "../components/Clubs/Clubs";
 
-const Clubs = ({setCurrentPage = null, clubs = [], toggleFilter = null, deleteMessage = null, clubTypes = null}) => {
+const Clubs = ({setCurrentPage = null, clubs = null, setClubType = null, deleteMessage = null, clubTypes = null}) => {
   useEffect(() => {
     if (setCurrentPage) {
       setCurrentPage('clubs');
@@ -11,7 +11,7 @@ const Clubs = ({setCurrentPage = null, clubs = [], toggleFilter = null, deleteMe
   return (
     <section className="clubs">
       <div className="clubs__container container">
-        <CmpClubs clubs={clubs} toggleFilter={toggleFilter} deleteMessage={deleteMessage} clubTypes={clubTypes} />
+        <CmpClubs clubs={clubs} setClubType={setClubType} deleteMessage={deleteMessage} clubTypes={clubTypes} />
       </div>
     </section>
   )
