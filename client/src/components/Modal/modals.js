@@ -112,6 +112,16 @@ export const modals = [
           placeholder: "Description"
         },
         {
+          name: "mission",
+          type: "textarea",
+          placeholder: "Mission"
+        },
+        {
+          name: "vision",
+          type: "textarea",
+          placeholder: "Vision"
+        },
+        {
           name: "image",
           type: "file",
           placeholder: "Image"

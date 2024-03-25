@@ -2,7 +2,9 @@ import "./Modal.scss";
 import { useEffect, useState } from "react";
 import { ReactComponent as Logo } from "../../icons/logo.svg";
 import { ReactComponent as Close } from "../../icons/close.svg";
-const Modal = ({ closeModal, isModalOpen, item, saveModal }) => {
+import InputField from "./InputField";
+import SelectField from "./SelectField";
+const Modal = ({ closeModal, isModalOpen, item, saveModal, modalIdOpen = null }) => {
   const [response, setResponse] = useState('');
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleKeyDown = (event) => {
@@ -21,22 +23,23 @@ const Modal = ({ closeModal, isModalOpen, item, saveModal }) => {
 
   const clearFields = () => {
     item.content.fields.forEach(field => {
-      const input = document.querySelector(`input[name="${field.name}"]`);
+      const input = document.querySelector(`.fields-modal__input[name="${field.name}"]`);
       if (input) {
         input.value = '';
       }
-
-      const textarea = document.querySelector(`textarea[name="${field.name}"]`);
+  
+      const textarea = document.querySelector(`.fields-modal__input[name="${field.name}"]`);
       if (textarea) {
         textarea.value = '';
       }
-
-      const select = document.querySelector(`select[name="${field.name}"]`);
+  
+      const select = document.querySelector(`.fields-modal__input[name="${field.name}"]`);
       if (select) {
         select.selectedIndex = 0;
       }
     });
   };
+  
   
   const toggleSave = async () => {
     const fields = {};
@@ -62,6 +65,10 @@ const Modal = ({ closeModal, isModalOpen, item, saveModal }) => {
       if (results) {
         setResponse('Saved successfully!');
         clearFields();
+
+        if (modalIdOpen === 'editClub') {
+          closeModal();
+        }
       } else {
         setResponse('Failed to save.');
       }
@@ -107,35 +114,9 @@ const Modal = ({ closeModal, isModalOpen, item, saveModal }) => {
                     }
                     {
                       field.type === "select" ? (
-                        <select className="fields-modal__input" name={field.name} required>
-                          {field.options.map((option, index) => (
-                            <option key={index} value={option.id}>
-                              {option.name}
-                            </option>
-                          ))}
-                        </select>
-                      ) : field.type === "file" ? (
-                        <input
-                          className="fields-modal__input"
-                          type={field.type}
-                          name={field.name}
-                          placeholder={field.placeholder}
-                        />
-                      ) : field.type === "textarea" ? (
-                        <textarea
-                          className="fields-modal__input"
-                          name={field.name}
-                          placeholder={field.placeholder}
-                          required
-                        />
+                        <SelectField field={field} />
                       ) : (
-                        <input
-                          className="fields-modal__input"
-                          type={field.type}
-                          name={field.name}
-                          placeholder={field.placeholder}
-                          required
-                        />
+                        <InputField field={field} />
                       )
                     }
                   </div>
@@ -144,8 +125,8 @@ const Modal = ({ closeModal, isModalOpen, item, saveModal }) => {
                   <p className="modal__response">{response}</p>
                 </div>
                 <div className="modal__actions">
-                  <button className="modal__btn" onClick={toggleSave}>Add</button>
-                  <button className="modal__btn" onClick={clearFields}>Clear</button>
+                  <button className="modal__btn" onClick={toggleSave}>{item.id.includes('add') ? 'Save' : 'Update'}</button>
+                  <button className="modal__btn clear" onClick={clearFields}>Clear</button>
                 </div>
               </div>
         </div>

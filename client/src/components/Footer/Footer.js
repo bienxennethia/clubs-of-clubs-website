@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <div className="footer">
       <div className="footer__container">
-        <p>© {year} Clubs of Cubs</p>
+        <p>© {year} Club for Cubs</p>
       </div>
      </div>
   )

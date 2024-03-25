@@ -97,4 +97,48 @@ app.put('/clubs', (req, res) => {
   });
 });
 
+app.put('/clubs/:id', (req, res) => {
+  const { id } = req.params;
+  const { name, description, type, image, mission, vision } = req.body;
+
+  if (!name || !type) {
+    return res.status(400).json({ message: 'Name and club type ID are required' });
+  }
+
+  // Construct the UPDATE query
+  const query = `
+    UPDATE club_table 
+    SET name = ?, description = ?, type = ?, image = ?, mission = ?, vision = ? 
+    WHERE id = ?`;
+
+  const values = [name, description, type, image, mission, vision, id];
+
+  // Execute the query
+  connection.query(query, values, (err, results) => {
+    if (err) {
+      console.error('Error executing MySQL query:', err);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+
+    // Fetch the updated club
+    
+    let fetchQuery = `
+    SELECT club_table.*, club_type_table.name AS type_name
+    FROM club_table 
+    LEFT JOIN club_type_table ON club_table.type = club_type_table.id  
+    WHERE club_table.id = ?`;
+
+    connection.query(fetchQuery, [id], (fetchErr, club) => {
+      if (fetchErr) {
+        console.error('Error executing MySQL query:', fetchErr);
+        return res.status(500).json({ message: 'Internal server error' });
+      }
+      
+      // Return the updated club
+      res.status(200).json({ message: 'Club updated successfully', result: club });
+    });
+  });
+});
+
+
 

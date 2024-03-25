@@ -15,15 +15,17 @@ import Button from './components/Button/Button';
 import Modal from './components/Modal/Modal';
 import { modals
  } from './components/Modal/modals';
-import { fetchClubTypes, saveClubs, getClubs } from './data/utils';
+import { fetchClubTypes, saveClubs, getClubs, updateClub } from './data/utils';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState();
-  const [id, setId] = useState();
+  const [modalIdOpen, setModalIdOpen] = useState();
+  const [itemId, setItemId] = useState();
   const [clubs, setClubs] = useState([]);
+  const [club, setClub] = useState({});
 
-  const toggleModal = async (modalId) => {
+  const toggleModal = async (modalId, clubId = null) => {
     setIsModalOpen(!isModalOpen);
     addStyling(!isModalOpen);
     
@@ -31,7 +33,7 @@ function App() {
       setModalContent(null);
       return;
     }
-    setId(modalId);
+    setModalIdOpen(modalId);
   
     const modal = modals.find((modal) => modal.id === modalId);
   
@@ -53,7 +55,19 @@ function App() {
           return field;
         }));
         const updatedModal = { ...modal, content: { ...modal.content, fields: updatedFields }};
-        setModalContent(updatedModal);
+
+        if (modalId === 'editClub') {
+          setItemId(clubId);
+          const results = await getClubs(clubId);
+          updatedModal.content.fields.map((field) => {
+            results[0][field.name] = results[0][field.name] || null;
+            field.value = results[0][field.name];
+            return field;
+          });
+          setModalContent({ ...updatedModal, content: { ...updatedModal.content, ...results } });
+        } else {
+          setModalContent(updatedModal);
+        }
 
       } catch (error) {
         console.error('Error fetching club types:', error);
@@ -64,10 +78,19 @@ function App() {
   };
   
   const saveModal = async (data) => {
-    if (id === 'addClub') {
+    if (modalIdOpen === 'addClub') {
       try {
         const { result } = await saveClubs(data);
         setClubs(result);
+        return result;
+      } catch (error) {
+        console.error('Error saving clubs:', error);
+        return null;
+      }
+    } else if (modalIdOpen === 'editClub') {
+      try {
+        const { result } = await updateClub(itemId, data);
+        setClub(result);
         return result;
       } catch (error) {
         console.error('Error saving clubs:', error);
@@ -131,7 +154,7 @@ function App() {
           <Route path="/about" element={<AboutUs />} />
           <Route path="/clubs" element={<Clubs clubs={clubs} toggleFilter={toggleFilter} />} />
           <Route path="/forums" element={<Forums toggleModal={toggleModal} />} />
-          <Route path="/item/:id" element={<Club toggleModal={toggleModal} />} />
+          <Route path="/item/:id" element={<Club toggleModal={toggleModal} clubData={club} setClub={setClub} />} />
         </Routes>
         <div className='content__background'></div>
         <Footer />
@@ -144,7 +167,8 @@ function App() {
         <Modal item={modalContent}
           saveModal={saveModal}
           closeModal={closeModal}
-          isModalOpen={isModalOpen}/>
+          isModalOpen={isModalOpen}
+          modalIdOpen={modalIdOpen}/>
       }
     </Router>
     </div>

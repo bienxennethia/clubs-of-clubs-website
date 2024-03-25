@@ -4,9 +4,8 @@ import { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import { getClubs } from "../data/utils";
 
-const Club = ({toggleModal}) => {
+const Club = ({toggleModal, clubData = {}, setClub}) => {
   const [activeTab, setActiveTab] = useState(true);
-  const [clubData, setClubData] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
@@ -14,10 +13,7 @@ const Club = ({toggleModal}) => {
       try {
         if (id) {
           const club = await getClubs(id);
-          setClubData(club);
-        } else {
-          const clubs = await getClubs();
-          setClubData(clubs);
+          setClub(club);
         }
       } catch (error) {
         console.error('Error fetching club:', error);
@@ -25,7 +21,7 @@ const Club = ({toggleModal}) => {
     };
 
     fetchClubData();
-  }, [id]);
+  }, [id, setClub]);
 
   const handleTabs = () => {
     setActiveTab(!activeTab);

@@ -11,7 +11,6 @@ const ClubHeader = ({handleTabs, activeTab, toggleModal, clubData = []}) => {
           <Logo />
         </div>
         <div className="club__header-text">
-          {console.log(clubData)}
           {
             clubData[0]?.name && <h2 className="club__header-title">{clubData[0]?.name}</h2>
           }
