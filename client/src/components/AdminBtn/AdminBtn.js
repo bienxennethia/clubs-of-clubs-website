@@ -6,14 +6,14 @@ import { useParams } from 'react-router-dom';
 
 import './AdminBtn.scss';
 
-const AdminBtn = ({ editModal, editModalId }) => {
+const AdminBtn = ({ toggleModal, editModalId, deleteModalId }) => {
   const clubId = useParams()?.id;
   return (
     <div className="admin-btns">
-      <div className="admin-btns__btn" onClick={() => editModal(editModalId, clubId)}>
+      <div className="admin-btns__btn" onClick={() => toggleModal(editModalId, clubId)}>
         <Edit />
       </div>
-      <div className="admin-btns__btn">
+      <div className="admin-btns__btn" onClick={() => toggleModal(deleteModalId, clubId)}>
         <Delete />
       </div>
     </div>

@@ -21,7 +21,7 @@ const Club = ({toggleModal, clubData = {}, setClub}) => {
     };
 
     fetchClubData();
-  }, [id, setClub]);
+  }, [id, setClub]); 
 
   const handleTabs = () => {
     setActiveTab(!activeTab);

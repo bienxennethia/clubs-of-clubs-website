@@ -16,7 +16,7 @@ const ClubHeader = ({handleTabs, activeTab, toggleModal, clubData = []}) => {
           }
           { clubData[0]?.type_name && <p className="club__header-subtitle">{clubData[0]?.type_name}</p> }
           <p className="club__header-name">Moderator:</p>
-          <AdminBtn editModal={toggleModal} editModalId="editClub" id={clubData[0]?.id}/>
+          <AdminBtn toggleModal={toggleModal} editModalId="editClub" deleteModalId="deleteClub" id={clubData[0]?.id}/>
         </div>
       </div>
       <div className={ activeTab ? `club__header-actions about` : 'club__header-actions forum'}>

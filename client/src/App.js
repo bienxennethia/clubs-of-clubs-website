@@ -15,15 +15,17 @@ import Button from './components/Button/Button';
 import Modal from './components/Modal/Modal';
 import { modals
  } from './components/Modal/modals';
-import { fetchClubTypes, saveClubs, getClubs, updateClub } from './data/utils';
+import { fetchClubTypes, saveClubs, getClubs, updateClub, deleteClub } from './data/utils';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState();
   const [modalIdOpen, setModalIdOpen] = useState();
+  const [isDeleteModal, setIsDeleteModal] = useState(false);
   const [itemId, setItemId] = useState();
   const [clubs, setClubs] = useState([]);
   const [club, setClub] = useState({});
+  const [deleteMessage, setDeleteMessage] = useState('');
 
   const toggleModal = async (modalId, clubId = null) => {
     setIsModalOpen(!isModalOpen);
@@ -35,9 +37,9 @@ function App() {
     }
     setModalIdOpen(modalId);
   
-    const modal = modals.find((modal) => modal.id === modalId);
-  
     if (modalId === 'addClub' || modalId === 'editClub') {
+      const modal = modals.find((modal) => modal.id === modalId);
+
       try {
         const updatedFields = await Promise.all(modal.content.fields.map(async (field) => { 
           if (field.type === 'select') {
@@ -72,8 +74,11 @@ function App() {
       } catch (error) {
         console.error('Error fetching club types:', error);
       }
+    } else if (modalId === 'deleteClub') {
+      setIsDeleteModal(!isDeleteModal);
+      setItemId(clubId);
     } else {
-      setModalContent(modal);
+      setModalContent(null);
     }
   };
   
@@ -98,27 +103,48 @@ function App() {
       }
     }
   };
-  
+
+  const fetchClubs = async () => {
+    try {
+      const result = await getClubs();
+      setClubs(result);
+    } catch (error) {
+      console.error('Error fetching clubs:', error);
+    }
+  };
+
+
+  const deleteModal = async (locationNav) => {
+    if (modalIdOpen === 'deleteClub') {
+      const { message } = await deleteClub(itemId);
+      if (message) {
+        setDeleteMessage(message);
+        fetchClubs();
+      }
+    }
+  };
 
   useEffect(() => {
-    const fetchClubs = async () => {
-      try {
-        const result = await getClubs();
-        setClubs(result);
-      } catch (error) {
-        console.error('Error fetching clubs:', error);
-      }
-    };
+    if (deleteMessage) {
+      const timer = setTimeout(() => {
+        setDeleteMessage('');
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [deleteMessage]);
+
+  useEffect(() => {
   
     fetchClubs();
   }, []);
   
-  const toggleFilter = async (id) => {
+  const toggleFilter = async (type) => {
 
-    if (id === 'all') { id = null; }
+    if (type === 'all') { type = null; }
   
     try {
-      const result = await getClubs(id);
+      const result = await getClubs(null, type);
       setClubs(result);
     } catch (error) {
       console.error('Error fetching clubs:', error);
@@ -129,6 +155,10 @@ function App() {
   const closeModal = () => {
     setIsModalOpen(false);
     addStyling(false);
+
+    if (isDeleteModal) {
+      setIsDeleteModal(false);
+    }
 
     if (modalContent) {
       setModalContent(null);
@@ -152,7 +182,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home toggleModal={toggleModal} />} />
           <Route path="/about" element={<AboutUs />} />
-          <Route path="/clubs" element={<Clubs clubs={clubs} toggleFilter={toggleFilter} />} />
+          <Route path="/clubs" element={<Clubs clubs={clubs} toggleFilter={toggleFilter} deleteMessage={deleteMessage} />} />
           <Route path="/forums" element={<Forums toggleModal={toggleModal} />} />
           <Route path="/item/:id" element={<Club toggleModal={toggleModal} clubData={club} setClub={setClub} />} />
         </Routes>
@@ -163,9 +193,11 @@ function App() {
       <Button toggleModal={toggleModal}/>
 
       {
-        modalContent && isModalOpen &&
+        isModalOpen &&
         <Modal item={modalContent}
+          isDeleteModal={isDeleteModal}
           saveModal={saveModal}
+          deleteModal={deleteModal}
           closeModal={closeModal}
           isModalOpen={isModalOpen}
           modalIdOpen={modalIdOpen}/>

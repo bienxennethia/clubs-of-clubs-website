@@ -130,6 +130,11 @@ export const modals = [
     }
   },
   {
+    id: "deleteClub",
+    class: "modal--club",
+    content: {}
+  },
+  {
     id: "addForum",
     path: "/forums",
     class: "modal--forum",

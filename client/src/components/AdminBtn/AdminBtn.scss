@@ -1,11 +1,16 @@
 @import 'src/styles/index.scss';
 
 .admin-btns {
-  position: absolute;
   bottom: 0;
   right: t-rem(10);
   z-index: 999;
   display: flex;
+  margin-top: t-rem(10);
+
+  @include bp-tablet {
+    position: absolute;
+    margin-top: 0;
+  }
 }
 
 .admin-btns__btn {
@@ -14,9 +19,15 @@
   cursor: pointer;
 
   svg {
-    width: t-rem(50);
+    width: t-rem(30);
     height: auto;
     stroke: $deep-red;
+  }
+
+  @include bp-desktop {
+    svg {
+      width: t-rem(50);
+    }
   }
 
   &:hover svg {
@@ -26,6 +37,7 @@
 
 
 .forum__item .admin-btns {
+  position: absolute;
   top: 0;
   right: 0;
   bottom: auto;

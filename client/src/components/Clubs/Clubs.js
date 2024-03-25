@@ -6,7 +6,7 @@ import "./Clubs.scss";
 import imageUrl from "../../images/background.jpg";
 import SelectField from "../Select/Select";
 
-const Clubs = ({clubs = [], toggleFilter}) => {
+const Clubs = ({clubs = [], toggleFilter = null, deleteMessage = null}) => {
 
   return (
     <div className="clubs">
@@ -16,15 +16,19 @@ const Clubs = ({clubs = [], toggleFilter}) => {
           <SelectField toggleFilter={toggleFilter} />
         </div>
         <div className="clubs__content">
-          <div className="clubs__items">
-            {clubs.map((item) => (
-              <Link to={`/item/${item.id}`} className="clubs__item" key={item.id}>
-                <div className="clubs__item-content" style={{ backgroundImage: `url(${imageUrl})` }}>
-                  <div className="clubs__text">{item.name}</div>
-                </div>
-              </Link>
-            ))}
-          </div>
+          { deleteMessage && <div className="clubs__delete-text">Club deleted successfully!</div>}
+          { clubs.length === 0 && <div className="clubs__text">No clubs found</div>}
+          { clubs.length > 0 && 
+            <div className="clubs__items">
+              {clubs.map((item) => (
+                <Link to={`/item/${item.id}`} className="clubs__item" key={item.id}>
+                  <div className="clubs__item-content" style={{ backgroundImage: `url(${imageUrl})` }}>
+                    <div className="clubs__text">{item.name}</div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          }
         </div>
       </div>
      </div>

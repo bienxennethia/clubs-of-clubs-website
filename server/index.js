@@ -141,4 +141,28 @@ app.put('/clubs/:id', (req, res) => {
 });
 
 
+app.delete('/clubs/:id', (req, res) => {
+  const clubId = req.params.id;
+
+  if (!clubId) {
+    return res.status(400).json({ message: 'Club ID is required' });
+  }
+
+  const query = 'DELETE FROM club_table WHERE id = ?';
+
+  connection.query(query, [clubId], (err, results) => {
+    if (err) {
+      console.error('Error executing MySQL query:', err);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+
+    // Check if any rows were affected by the deletion
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ message: 'Club not found' });
+    }
+
+    // Club successfully deleted
+    res.status(200).json({ message: 'Club deleted successfully' });
+  });
+});
 

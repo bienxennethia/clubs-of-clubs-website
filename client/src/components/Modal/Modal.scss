@@ -212,6 +212,10 @@
   justify-content: flex-end;
   gap: t-rem(10);
   margin-top: t-rem(30);
+
+  .modal--delete & {
+    justify-content: center;
+  }
 }
 
 .modal__btn {

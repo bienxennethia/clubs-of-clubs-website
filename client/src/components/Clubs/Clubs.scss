@@ -109,3 +109,12 @@
     padding: t-rem(120) t-rem(40);
   }
 }
+
+.clubs__delete-text {
+  color: $white;
+  background-color: $maroon;
+  padding: t-rem(20) t-rem(15);
+  border-radius: t-rem(10);
+  animation: slideIn 0.3s forwards, slideOut 0.3s forwards 8.5s;
+  margin-bottom: t-rem(20);
+}

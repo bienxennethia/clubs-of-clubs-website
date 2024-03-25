@@ -76,3 +76,19 @@ export const updateClub = (id, clubData) => {
       throw error;
     });
 };
+
+export const deleteClub = (clubId) => {
+  return fetch(`http://localhost:3001/clubs/${clubId}`, {
+    method: 'DELETE'
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to delete club');
+      }
+      return response.json();
+    })
+    .catch(error => {
+      console.error('Error deleting club:', error);
+      throw error;
+    });
+};
