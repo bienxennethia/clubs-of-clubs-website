@@ -105,7 +105,7 @@ export const deleteClub = (clubId) => {
 
 
 // forums
-export const getForums = (id = null, interestType = null, curricularType = null, stringName = null) => {
+export const getForums = (id = null, interestType = null, curricularType = null, stringName = null, clubId = null) => {
   if (interestType === 'all') { interestType = null; }
   if (curricularType === 'all') { curricularType = null; }
 
@@ -118,6 +118,8 @@ export const getForums = (id = null, interestType = null, curricularType = null,
     url += `?club_id=${curricularType}`;
   } else if (interestType && curricularType) {
     url += `?club_id=${curricularType}&club_id_2=${interestType}`;
+  } else if (clubId) {
+    url += `?club_id=${clubId}`;
   }
 
   if (url.includes('?') && stringName) {

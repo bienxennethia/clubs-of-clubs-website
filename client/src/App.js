@@ -33,6 +33,7 @@ function App() {
   const [interestType, setInterestType] = useState('');
   const [curricularType, setCurricularType] = useState('');
   const [clubType, setClubType] = useState('');
+  const [clubId, setClubId] = useState('');
 
   const toggleModal = async (modalId, paramId = null) => {
     setIsModalOpen(!isModalOpen);
@@ -230,10 +231,10 @@ function App() {
       } catch (error) {
         console.error('Error fetching clubs:', error);
       }
-    } else if (currentPage === "forums") {
+    } else if (currentPage === "forums" || currentPage === "club") {
 
       try {
-        const result = await getForums(null, interestType, curricularType, searchString);
+        const result = await getForums(null, interestType, curricularType, searchString, clubId);
         setForums(result);
       } catch (error) {
         console.error('Error fetching forums:', error);
@@ -247,17 +248,18 @@ function App() {
   
   useEffect(() => {
     if (currentPage === "forums") {
+      setClubId(null);
       toggleFilter();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchString, interestType, curricularType]);
+  }, [searchString, interestType, curricularType, currentPage]);
   
   useEffect(() => {
-    if (currentPage === "clubs") {
+    if (currentPage === "clubs" || currentPage === "club") {
       toggleFilter();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clubType]);
+  }, [clubType, clubId]);
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -291,7 +293,7 @@ function App() {
           <Route path="/about" element={<AboutUs setCurrentPage={setCurrentPage} />} />
           <Route path="/clubs" element={<Clubs clubs={clubs} setClubType={setClubType} deleteMessage={deleteMessage} clubTypes={clubTypes} setCurrentPage={setCurrentPage} />} />
           <Route path="/forums" element={<Forums toggleModal={toggleModal} forums={forums} clubs={clubs} setCurrentPage={setCurrentPage} searchToggle={searchToggle} setCurricularType={setCurricularType} setInterestType={setInterestType} />}/>
-          <Route path="/item/:id" element={<Club toggleModal={toggleModal} clubData={club} setClub={setClub} setDeleteMessage={setDeleteMessage} />} />
+          <Route path="/item/:id" element={<Club toggleModal={toggleModal} clubData={club} setClub={setClub} setDeleteMessage={setDeleteMessage} setCurrentPage={setCurrentPage} forums={forums} setClubId={setClubId} />} />
         </Routes>
         <div className='content__background'></div>
       </div>

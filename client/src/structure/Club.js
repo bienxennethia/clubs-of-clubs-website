@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import { getClubs } from "../data/utils";
 
-const Club = ({toggleModal, clubData = {}, setClub, setDeleteMessage = null}) => {
+const Club = ({toggleModal, clubData = {}, setClub = null, setDeleteMessage = null, setCurrentPage = null, forums = null, setClubId = null}) => {
   const [activeTab, setActiveTab] = useState('about');
   const { id } = useParams();
   const navigate = useNavigate();
@@ -28,6 +28,15 @@ const Club = ({toggleModal, clubData = {}, setClub, setDeleteMessage = null}) =>
     fetchClubData();
   }, [id, setClub, setDeleteMessage, navigate]); 
 
+  useEffect(() => {
+    if (setCurrentPage) {
+      setCurrentPage('club');
+    }
+    if (setClubId) {
+      setClubId(id);
+    }
+  }, [id, setClubId, setCurrentPage]);
+
   const handleTabs = (tab) => {
     if (tab === 'about') {
       setActiveTab('about');
@@ -40,7 +49,7 @@ const Club = ({toggleModal, clubData = {}, setClub, setDeleteMessage = null}) =>
     <section className="club noBackground">
       <div className="club__container container">
         <ClubHeader handleTabs={handleTabs} activeTab={activeTab} toggleModal={toggleModal} clubData={clubData} />
-        <ClubContent activeTab={activeTab} clubData={clubData} />
+        <ClubContent activeTab={activeTab} clubData={clubData} forums={forums} toggleModal={toggleModal} />
       </div>
     </section>
   )

@@ -1,6 +1,6 @@
 import Forum from "../Forum/Forum";
 
-const ClubContent = ({activeTab, clubData}) => {
+const ClubContent = ({activeTab, clubData = null, forums = null, toggleModal = null}) => {
   return (
     <div className="club__content">
       {activeTab === 'about' ? (
@@ -14,8 +14,11 @@ const ClubContent = ({activeTab, clubData}) => {
         </div>
       ) : (
         <div className="club__content-forum">
-          <Forum />
-          <Forum />
+          {
+            forums.map((forum, index) => (
+              <Forum key={index} toggleModal={toggleModal} forum={forum} />
+            ))
+          }
         </div>
       )}
     </div>
