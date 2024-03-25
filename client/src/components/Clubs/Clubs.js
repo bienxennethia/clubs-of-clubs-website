@@ -16,7 +16,7 @@ const Clubs = ({clubs = [], toggleFilter = null, deleteMessage = null}) => {
           <SelectField toggleFilter={toggleFilter} />
         </div>
         <div className="clubs__content">
-          { deleteMessage && <div className="clubs__delete-text">Club deleted successfully!</div>}
+          { deleteMessage && <div className="clubs__delete-text">{deleteMessage}!</div>}
           { clubs.length === 0 && <div className="clubs__text">No clubs found</div>}
           { clubs.length > 0 && 
             <div className="clubs__items">

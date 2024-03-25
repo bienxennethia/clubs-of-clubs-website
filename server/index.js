@@ -52,9 +52,9 @@ app.get('/clubs', (req, res) => {const { type, id } = req.query;
 
 
   if (id) {
-    query += ` WHERE club_table.id = ${id}`; // Modify query to filter by ID if provided
+    query += ` WHERE club_table.id = ${id}`;
   } else if (type) {
-    query += ` WHERE club_type_table.id = '${type}'`; // Modify query to filter by type if provided
+    query += ` WHERE club_type_table.id = '${type}'`;
   }
 
   query += ' ORDER BY club_table.name ASC';
@@ -105,7 +105,6 @@ app.put('/clubs/:id', (req, res) => {
     return res.status(400).json({ message: 'Name and club type ID are required' });
   }
 
-  // Construct the UPDATE query
   const query = `
     UPDATE club_table 
     SET name = ?, description = ?, type = ?, image = ?, mission = ?, vision = ? 
@@ -113,14 +112,11 @@ app.put('/clubs/:id', (req, res) => {
 
   const values = [name, description, type, image, mission, vision, id];
 
-  // Execute the query
   connection.query(query, values, (err, results) => {
     if (err) {
       console.error('Error executing MySQL query:', err);
       return res.status(500).json({ message: 'Internal server error' });
     }
-
-    // Fetch the updated club
     
     let fetchQuery = `
     SELECT club_table.*, club_type_table.name AS type_name
@@ -134,7 +130,6 @@ app.put('/clubs/:id', (req, res) => {
         return res.status(500).json({ message: 'Internal server error' });
       }
       
-      // Return the updated club
       res.status(200).json({ message: 'Club updated successfully', result: club });
     });
   });
@@ -156,12 +151,10 @@ app.delete('/clubs/:id', (req, res) => {
       return res.status(500).json({ message: 'Internal server error' });
     }
 
-    // Check if any rows were affected by the deletion
     if (results.affectedRows === 0) {
       return res.status(404).json({ message: 'Club not found' });
     }
 
-    // Club successfully deleted
     res.status(200).json({ message: 'Club deleted successfully' });
   });
 });

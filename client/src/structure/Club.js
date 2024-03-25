@@ -1,18 +1,23 @@
 import ClubHeader from "../components/Club/ClubHeader";
 import ClubContent from "../components/Club/ClubContent";
 import { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getClubs } from "../data/utils";
 
-const Club = ({toggleModal, clubData = {}, setClub}) => {
+const Club = ({toggleModal, clubData = {}, setClub, setDeleteMessage = null}) => {
   const [activeTab, setActiveTab] = useState('about');
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchClubData = async () => {
       try {
         if (id) {
           const club = await getClubs(id);
+          if (club.length === 0) {
+            setDeleteMessage('Club not found');
+            navigate('/clubs');
+          }
           setClub(club);
         }
       } catch (error) {
@@ -21,7 +26,7 @@ const Club = ({toggleModal, clubData = {}, setClub}) => {
     };
 
     fetchClubData();
-  }, [id, setClub]); 
+  }, [id, setClub, setDeleteMessage, navigate]); 
 
   const handleTabs = (tab) => {
     if (tab === 'about') {

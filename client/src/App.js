@@ -114,7 +114,7 @@ function App() {
   };
 
 
-  const deleteModal = async (locationNav) => {
+  const deleteModal = async () => {
     if (modalIdOpen === 'deleteClub') {
       const { message } = await deleteClub(itemId);
       if (message) {
@@ -184,7 +184,7 @@ function App() {
           <Route path="/about" element={<AboutUs />} />
           <Route path="/clubs" element={<Clubs clubs={clubs} toggleFilter={toggleFilter} deleteMessage={deleteMessage} />} />
           <Route path="/forums" element={<Forums toggleModal={toggleModal} />} />
-          <Route path="/item/:id" element={<Club toggleModal={toggleModal} clubData={club} setClub={setClub} />} />
+          <Route path="/item/:id" element={<Club toggleModal={toggleModal} clubData={club} setClub={setClub} setDeleteMessage={setDeleteMessage} />} />
         </Routes>
         <div className='content__background'></div>
         <Footer />
