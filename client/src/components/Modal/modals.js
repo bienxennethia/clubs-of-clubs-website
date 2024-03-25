@@ -81,7 +81,7 @@ export const modals = [
           name: "image",
           type: "file",
           placeholder: "Club Image",
-          label: "Club Image"
+          label: "Club Image:"
         }
       ]
     }
@@ -124,7 +124,8 @@ export const modals = [
         {
           name: "image",
           type: "file",
-          placeholder: "Image"
+          placeholder: "Club Image",
+          label: "Club Image:"
         }
       ]
     }
@@ -145,35 +146,26 @@ export const modals = [
       type: "add-forum",
       fields: [
         {
-          name: "type",
+          name: "club_id",
           type: "select",
-          placeholder: "Select type",
-          options: [
-            { value: "/", label: "Select club" },
-            { value: "corricular", label: "Bedan Chemical Society" },
-            { value: "interest", label: "Bedan Society of Young Astronomers" },
-            { value: "interest", label: "Math Aficionados" },
-            { value: "interest", label: "Red Cross Youth" },
-            { value: "interest", label: "Athletico Bedista" },
-            { value: "interest", label: "Collective Action Towards Strays" },
-            { value: "interest", label: "Digital Arts Society" },
-            { value: "interest", label: "Red Lion Radio" }
-          ]
+          placeholder: "Select club",
+          options: []
         },
         {
-          name: "title",
+          name: "forum_name",
           type: "text",
-          placeholder: "Title"
+          placeholder: "Title *"
         },
         {
-          name: "description",
+          name: "forum_description",
           type: "textarea",
-          placeholder: "Description"
+          placeholder: "Description *"
         },
         {
-          name: "image",
+          name: "forum_image",
           type: "file",
-          placeholder: "Image"
+          placeholder: "Forum Image",
+          label: "Forum Image:"
         }
       ]
     }
@@ -189,35 +181,26 @@ export const modals = [
       type: "edit-forum",
       fields: [
         {
-          name: "type",
+          name: "club_id",
           type: "select",
-          placeholder: "Select type",
-          options: [
-            { value: "/", label: "Select club" },
-            { value: "corricular", label: "Bedan Chemical Society" },
-            { value: "interest", label: "Bedan Society of Young Astronomers" },
-            { value: "interest", label: "Math Aficionados" },
-            { value: "interest", label: "Red Cross Youth" },
-            { value: "interest", label: "Athletico Bedista" },
-            { value: "interest", label: "Collective Action Towards Strays" },
-            { value: "interest", label: "Digital Arts Society" },
-            { value: "interest", label: "Red Lion Radio" }
-          ]
+          placeholder: "Select club",
+          options: []
         },
         {
-          name: "title",
+          name: "forum_name",
           type: "text",
-          placeholder: "Title"
+          placeholder: "Title *"
         },
         {
-          name: "description",
+          name: "forum_description",
           type: "textarea",
-          placeholder: "Description"
+          placeholder: "Description *"
         },
         {
-          name: "image",
+          name: "forum_image",
           type: "file",
-          placeholder: "Image"
+          placeholder: "Forum Image",
+          label: "Forum Image:"
         }
       ]
     }

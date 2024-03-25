@@ -1,7 +1,12 @@
 import { ReactComponent as Logo } from "../../icons/profile.svg";
+import backgroundJpg from "../../images/background.jpg";
+
+
 import AdminBtn from "../AdminBtn/AdminBtn";
 import './Forum.scss';
-const Forum = ({toggleModal}) => {
+import { formatDate } from "../../data/utils";
+
+const Forum = ({toggleModal, forum}) => {
   return (
     <div className="forum__items">
     <div className="forum__item">
@@ -9,18 +14,24 @@ const Forum = ({toggleModal}) => {
         <div className="forum__image">
           <Logo />
         </div>
-        <div className="forum__text">
-          <h2 className="forum__title">Bedan Society of Young Astronomers</h2>
-          <p className="forum__subtitle">Mar 17, 2024 10:00 AM</p>
+        {
+          forum.forum_name && forum.forum_created &&
+          <div className="forum__text">
+            <h2 className="forum__title">{forum.forum_name}</h2>
+            <p className="forum__subtitle">{formatDate(forum.forum_created)}</p>
+          </div>
+        }
+      </div>
+      
+      { forum.forum_description && 
+        <div className="forum__content">
+          <p>{forum.forum_description}</p>
+          <div className="forum__content-image">
+            <img src={backgroundJpg} alt="forum"/>
+          </div>
         </div>
-      </div>
-      <div className="forum__content">
-        <p>Caption</p>
-        <p>Caption</p>
-        <p>Caption</p>
-        <p>Caption</p>
-      </div>
-      <AdminBtn editModal={toggleModal} editModalId="editForum" />
+      }
+      <AdminBtn toggleModal={toggleModal} editModalId="editForum" deleteModalId="deleteForum" id={forum.forum_id}/>
     </div>
   </div>
   )

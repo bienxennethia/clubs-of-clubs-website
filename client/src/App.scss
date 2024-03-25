@@ -158,3 +158,13 @@ label {
     margin-left: 5px;
   }
 }
+
+select option:not(:first-of-type) {
+  text-transform: uppercase;
+}
+
+// disabled first option
+select option:first-of-type {
+  pointer-events: none;
+  color: #999;
+}

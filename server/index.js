@@ -135,7 +135,6 @@ app.put('/clubs/:id', (req, res) => {
   });
 });
 
-
 app.delete('/clubs/:id', (req, res) => {
   const clubId = req.params.id;
 
@@ -159,3 +158,122 @@ app.delete('/clubs/:id', (req, res) => {
   });
 });
 
+// Forums
+app.get('/forums', (req, res) => {const { type, id } = req.query;
+  let query = `
+    SELECT forum_table.*, club_table.*, forum_table.created_at AS forum_created , club_table.name AS club_name
+    FROM forum_table 
+    LEFT JOIN club_table ON forum_table.club_id = club_table.id`;
+ 
+
+  if (id) {
+    query += ` WHERE forum_table.forum_id = ${id}`;
+  }
+  //  else if (type) {
+  //   query += ` WHERE club_type_table.id = '${type}'`;
+  // }
+
+  query += ' ORDER BY forum_table.created_at DESC';
+  connection.query(query, (err, results) => {
+    if (err) {
+      console.error('Error executing MySQL query:', err);
+      res.status(500).json({ message: 'Internal server error' });
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.put('/forums', (req, res) => {
+  const { club_id, forum_name, forum_description, forum_image } = req.body;
+
+  if (!forum_name || !club_id) {
+    return res.status(400).json({ message: 'Name and club ID are required' });
+  }
+
+  const query = 'INSERT INTO forum_table (club_id, forum_name, forum_description, forum_image) VALUES (?, ?, ?, ?)';
+  const values = [club_id, forum_name, forum_description, forum_image];
+
+  connection.query(query, values, (err, results) => {
+    if (err) {
+      console.error('Error executing MySQL query:', err);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+
+    let fetchQuery = `
+      SELECT forum_table.*, club_table.*, forum_table.created_at AS forum_created , club_table.name AS club_name
+      FROM forum_table 
+      LEFT JOIN club_table ON forum_table.club_id = club_table.id
+      ORDER BY forum_table.created_at DESC`;
+
+    connection.query(fetchQuery, (fetchErr, clubs) => {
+      if (fetchErr) {
+        console.error('Error executing MySQL query:', fetchErr);
+        return res.status(500).json({ message: 'Internal server error' });
+      }
+      // Return success message along with the newly added forum's ID and all clubs
+      res.status(201).json({ id: results.insertId, message: 'Froum added successfully', result: clubs });
+    });
+  });
+});
+
+app.put('/forums/:id', (req, res) => {
+  const { id } = req.params;
+  const { club_id, forum_name, forum_description, forum_image } = req.body;
+
+  if (!forum_name || !club_id) {
+    return res.status(400).json({ message: 'Name and club ID are required' });
+  }
+
+  const query = `
+    UPDATE forum_table 
+    SET forum_name = ?, forum_description = ?, club_id = ?, forum_image = ?
+    WHERE forum_id = ?`;
+
+  const values = [forum_name, forum_description, club_id, forum_image, id];
+
+  connection.query(query, values, (err, results) => {
+    if (err) {
+      console.error('Error executing MySQL query:', err);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+    
+  let fetchQuery = `
+    SELECT forum_table.*, club_table.*, forum_table.created_at AS forum_created , club_table.name AS club_name
+    FROM forum_table 
+    LEFT JOIN club_table ON forum_table.club_id = club_table.id
+    ORDER BY forum_table.created_at DESC`;
+
+    connection.query(fetchQuery, [id], (fetchErr, club) => {
+      if (fetchErr) {
+        console.error('Error executing MySQL query:', fetchErr);
+        return res.status(500).json({ message: 'Internal server error' });
+      }
+      
+      res.status(200).json({ message: 'Forum updated successfully', result: club });
+    });
+  });
+});
+
+app.delete('/forums/:id', (req, res) => {
+  const forumId = req.params.id;
+
+  if (!forumId) {
+    return res.status(400).json({ message: 'Forum ID is required' });
+  }
+
+  const query = 'DELETE FROM forum_table WHERE forum_id = ?';
+
+  connection.query(query, [forumId], (err, results) => {
+    if (err) {
+      console.error('Error executing MySQL query:', err);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ message: 'Forum not found' });
+    }
+
+    res.status(200).json({ message: 'Forum deleted successfully' });
+  });
+});

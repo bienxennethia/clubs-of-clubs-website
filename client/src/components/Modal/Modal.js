@@ -82,7 +82,11 @@ const Modal = ({ closeModal, isModalOpen = false, item = null, saveModal = null,
   const toggleDelete = async () => {
     closeModal();
     deleteModal();
-    navigate('/clubs');
+    if (item?.id === 'deleteClub') {
+      navigate('/clubs');
+    } else if (item?.id === 'deleteForum') {
+      navigate('/forums');
+    }
   };
 
   return (

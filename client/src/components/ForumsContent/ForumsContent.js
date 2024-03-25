@@ -2,13 +2,14 @@ import Forum from "../Forum/Forum";
 
 import './ForumsContent.scss';
 
-const ForumsContent = ({toggleModal}) => {
+const ForumsContent = ({toggleModal, forums}) => {
   return (
     <div className="forums__content">
-      <Forum toggleModal={toggleModal} />
-      <Forum toggleModal={toggleModal} />
-      <Forum toggleModal={toggleModal} />
-      <Forum toggleModal={toggleModal} />
+      {
+        forums.map((forum) => (
+          <Forum key={forum._id} toggleModal={toggleModal} forum={forum} />
+        ))
+      }
     </div>
   )
 };

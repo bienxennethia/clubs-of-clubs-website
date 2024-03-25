@@ -65,3 +65,12 @@
     text-transform: uppercase;
   }
 }
+
+.forum__content-image {
+  margin-top: t-rem(10);
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
