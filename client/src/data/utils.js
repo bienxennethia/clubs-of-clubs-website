@@ -1,3 +1,5 @@
+const apiUrl = process.env.REACT_APP_API_BASE_URL;
+
 export const formatDate = (dateTimeString) => {
   const optionsDate = { month: 'long', day: '2-digit', year: 'numeric' };
   const optionsTime = { hour: '2-digit', minute: '2-digit', hour12: true };
@@ -9,7 +11,7 @@ export const formatDate = (dateTimeString) => {
 
 
 export const getClubTypes = () => {
-  return fetch('http://localhost:3001/club-types')
+  return fetch(`${apiUrl}/club-types`)
     .then(response => {
       if (!response.ok) {
         throw new Error('Failed to fetch club types');
@@ -23,7 +25,7 @@ export const getClubTypes = () => {
 };
 
 export const saveClubs = (clubData) => {
-  return fetch('http://localhost:3001/clubs', {
+  return fetch(`${apiUrl}/clubs`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -46,7 +48,7 @@ export const getClubs = (params = null) => {
   let { id = null, type = null } = params;
   if (type === 'all') { type = null; } 
   
-  let url = 'http://localhost:3001/clubs';
+  let url = `${apiUrl}/clubs`;
   if (id) {
     url += `?id=${id}`;
   } else if (type) {
@@ -67,7 +69,7 @@ export const getClubs = (params = null) => {
 };
 
 export const updateClub = (id, clubData) => {
-  const url = `http://localhost:3001/clubs/${id}`;
+  const url = `${apiUrl}/clubs/${id}`;
 
   return fetch(url, {
     method: 'PUT',
@@ -89,7 +91,7 @@ export const updateClub = (id, clubData) => {
 };
 
 export const deleteClub = (clubId) => {
-  return fetch(`http://localhost:3001/clubs/delete/${clubId}`, {
+  return fetch(`${apiUrl}/clubs/delete/${clubId}`, {
     method: 'PUT'
   })
     .then(response => {
@@ -111,7 +113,7 @@ export const getForums = (params = null) => {
   if (interestType === 'all') { interestType = null; }
   if (curricularType === 'all') { curricularType = null; }
 
-  let url = 'http://localhost:3001/forums';
+  let url = `${apiUrl}/forums`;
   if (id) {
     url += `?id=${id}`;
   } else if (interestType && !curricularType) {
@@ -144,7 +146,7 @@ export const getForums = (params = null) => {
 };
 
 export const saveForum = (clubData) => {
-  return fetch('http://localhost:3001/forums', {
+  return fetch(`${apiUrl}/forums`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -186,7 +188,7 @@ export const updateForum = (id, forumData) => {
 };
 
 export const deleteForum = (forumId) => {
-  return fetch(`http://localhost:3001/forums/${forumId}`, {
+  return fetch(`${apiUrl}/forums/${forumId}`, {
     method: 'DELETE'
   })
     .then(response => {
