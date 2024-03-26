@@ -1,12 +1,8 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  user: process.env.POSTGRES_USER, // replace with your PostgreSQL username
-  password: process.env.POSTGRES_PASSWORD, // replace with your PostgreSQL password
-  host: process.env.POSTGRES_HOST, // replace with your PostgreSQL host
-  port: process.env.PGPORT || 5432, // use the port from the environment variable or default to 5432
-  database: process.env.POSTGRES_DATABASE, // replace with your PostgreSQL database name
-});
+  connectionString: "postgres://default:F1fIsVLuHK9r@ep-young-wave-a4ncn299-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require",
+})
 
 pool.on('error', (err, client) => {
   console.error('Unexpected error on idle PostgreSQL client', err);
