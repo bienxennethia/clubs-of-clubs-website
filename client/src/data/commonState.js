@@ -140,7 +140,6 @@ export const CommonStateProvider = ({ children }) => {
   
           if (modalIdOpen === 'editForum' || modalIdOpen === 'editClub') {
             const selectedItem = modalIdOpen === 'editForum' ? forumLists.find((forum) => forum.forum_id === modalContentId) : clubLists[0];
-            console.log("selectedItem", clubLists);
             selectedItem[newFields.name] = selectedItem[newFields.name] || null;
             newFields = { ...newFields, value: selectedItem[newFields.name] };
           }
@@ -151,7 +150,6 @@ export const CommonStateProvider = ({ children }) => {
     };
 
     if (modalIdOpen) {
-      console.log(modalIdOpen, modalContentId);
       getModal();
     }
   }, [clubLists, clubTypes, modalIdOpen, modalContentId, forumLists]);
@@ -188,7 +186,13 @@ export const CommonStateProvider = ({ children }) => {
         results = result;
         setClubLists(result);
         isEdit = true;
-      } else if (modalIdOpen === 'addForum') {
+      } else if (modalIdOpen === 'addForumClub') {
+        const paramId = location.pathname.split('/').pop();
+        const { result } = await saveForum({...fields, club_id: paramId});
+        fetchClubs({id: paramId});
+        fetchForums({clubId: paramId});
+        results = result;
+      }else if (modalIdOpen === 'addForum') {
         const { result } = await saveForum(fields);
         results = result;
         setForumLists(result);

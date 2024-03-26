@@ -204,5 +204,34 @@ export const modals = [
         }
       ]
     }
-  }
+  },
+  {
+    id: "addForumClub",
+    path: "/forums",
+    class: "modal--forum",
+    content: {
+      title: "ADD FORUM",
+      description: "Please fill out the form below to add a new forum.",
+      subtitle: "",
+      type: "add-forum",
+      fields: [
+        {
+          name: "forum_name",
+          type: "text",
+          placeholder: "Title *"
+        },
+        {
+          name: "forum_description",
+          type: "textarea",
+          placeholder: "Description *"
+        },
+        {
+          name: "forum_image",
+          type: "file",
+          placeholder: "Forum Image",
+          label: "Forum Image:"
+        }
+      ]
+    }
+  },
 ];

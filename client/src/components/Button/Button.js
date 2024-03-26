@@ -11,11 +11,11 @@ const Button = () => {
   const [isVisible, setIsVisible] = useState(false);
   
   const toggleButton = () => {
-    toggleModal(currentPage === "/forums" ? "addForum" : "addClub");
+    toggleModal(currentPage?.includes("forums") ? "addForum" : currentPage.includes("item") ? "addForumClub" : "addClub");
   };
 
   useEffect(() => {
-    if (currentPage && (currentPage.includes("forums") || currentPage.includes("clubs"))) {
+    if (currentPage && (currentPage.includes("forums") || currentPage.includes("clubs") || currentPage.includes("item"))) {
       setIsVisible(true);
     } else {
       setIsVisible(false);
