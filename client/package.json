@@ -41,5 +41,5 @@
     ]
   },
   
-  "proxy": "https://clubs-of-cubs-website-server.vercel.app"
+  "proxy": "https://clubs-of-cubs-website.vercel.app"
 }
