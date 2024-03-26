@@ -258,4 +258,4 @@ router.delete('/forums/:id', async (req, res) => {
 });
 
 
-module.exports = routers;
+module.exports = router;
