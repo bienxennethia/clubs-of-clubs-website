@@ -2,8 +2,11 @@ import { ReactComponent as Logo } from "../../icons/profile.svg";
 import AdminBtn from "../AdminBtn/AdminBtn";
 import './Club.scss';
 
-const ClubHeader = ({handleTabs, activeTab, toggleModal, clubData = []}) => {
+import { useCommonState } from "../../data/commonState";
 
+const ClubHeader = ({handleTabs, activeTab}) => {
+  const { clubLists: clubData } = useCommonState();
+  
   return (
     <div className="club__content club__content-header">
       <div className="club__header-content">
@@ -16,7 +19,7 @@ const ClubHeader = ({handleTabs, activeTab, toggleModal, clubData = []}) => {
           }
           { clubData[0]?.type_name && <p className="club__header-subtitle">{clubData[0]?.type_name}</p> }
           <p className="club__header-name">Moderator:</p>
-          <AdminBtn toggleModal={toggleModal} editModalId="editClub" deleteModalId="deleteClub" id={clubData[0]?.id}/>
+          <AdminBtn editModalId="editClub" deleteModalId="deleteClub" id={clubData[0]?.id}/>
         </div>
       </div>
       <div className={ activeTab === 'about' ? `club__header-actions about` : 'club__header-actions forum'}>

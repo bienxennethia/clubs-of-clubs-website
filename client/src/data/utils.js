@@ -8,7 +8,7 @@ export const formatDate = (dateTimeString) => {
 };
 
 
-export const fetchClubTypes = () => {
+export const getClubTypes = () => {
   return fetch('http://localhost:3001/club-types')
     .then(response => {
       if (!response.ok) {
@@ -42,7 +42,8 @@ export const saveClubs = (clubData) => {
   });
 };
 
-export const getClubs = (id = null, type = null) => {
+export const getClubs = (params = null) => {
+  let { id = null, type = null } = params;
   if (type === 'all') { type = null; } 
   
   let url = 'http://localhost:3001/clubs';
@@ -88,8 +89,8 @@ export const updateClub = (id, clubData) => {
 };
 
 export const deleteClub = (clubId) => {
-  return fetch(`http://localhost:3001/clubs/${clubId}`, {
-    method: 'DELETE'
+  return fetch(`http://localhost:3001/clubs/delete/${clubId}`, {
+    method: 'PUT'
   })
     .then(response => {
       if (!response.ok) {
@@ -105,7 +106,8 @@ export const deleteClub = (clubId) => {
 
 
 // forums
-export const getForums = (id = null, interestType = null, curricularType = null, stringName = null, clubId = null) => {
+export const getForums = (params = null) => {
+  let {id = null, interestType = null, curricularType = null, searchString = null, clubId = null} = params || {};
   if (interestType === 'all') { interestType = null; }
   if (curricularType === 'all') { curricularType = null; }
 
@@ -122,10 +124,10 @@ export const getForums = (id = null, interestType = null, curricularType = null,
     url += `?club_id=${clubId}`;
   }
 
-  if (url.includes('?') && stringName) {
-    url += `&string_name=${stringName}`;
-  } else if (!url.includes('?') && stringName) {
-    url += `?string_name=${stringName}`;
+  if (url.includes('?') && searchString) {
+    url += `&search_string=${searchString}`;
+  } else if (!url.includes('?') && searchString) {
+    url += `?search_string=${searchString}`;
   }
 
   return fetch(url)

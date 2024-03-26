@@ -44,20 +44,33 @@ app.get('/club-types', (req, res) => {
   });
 });
 
-app.get('/clubs', (req, res) => {const { type, id } = req.query;
+app.get('/clubs', (req, res) => {const { type, id, isActive } = req.query;
   let query = `
     SELECT club_table.*, club_type_table.name AS type_name
     FROM club_table 
     LEFT JOIN club_type_table ON club_table.type = club_type_table.id`;
-
 
   if (id) {
     query += ` WHERE club_table.id = ${id}`;
   } else if (type) {
     query += ` WHERE club_type_table.id = '${type}'`;
   }
-
-  query += ' ORDER BY club_table.name ASC';
+  
+  // Add filter by isActive
+  if (isActive === 'true') {
+    query += ' AND club_table.is_active = 1';
+  } else if (isActive === 'false') {
+    query += ' AND club_table.is_active = 0';
+  }
+  
+  // Check if WHERE clause already exists in the query
+  if (!query.includes('WHERE')) {
+    query += ' WHERE';
+  } else {
+    query += ' AND';
+  }
+  
+  query += ' club_table.isActive = 1 ORDER BY club_table.name ASC';
   connection.query(query, (err, results) => {
     if (err) {
       console.error('Error executing MySQL query:', err);
@@ -135,31 +148,27 @@ app.put('/clubs/:id', (req, res) => {
   });
 });
 
-app.delete('/clubs/:id', (req, res) => {
-  const clubId = req.params.id;
+app.put('/clubs/delete/:id', (req, res) => {
+  const { id } = req.params;
 
-  if (!clubId) {
-    return res.status(400).json({ message: 'Club ID is required' });
-  }
+  const query = `
+    UPDATE club_table 
+    SET isActive = ?
+    WHERE id = ?`;
 
-  const query = 'DELETE FROM club_table WHERE id = ?';
+  const values = [isActive = 0, id];
 
-  connection.query(query, [clubId], (err, results) => {
+  connection.query(query, values, (err, results) => {
     if (err) {
       console.error('Error executing MySQL query:', err);
       return res.status(500).json({ message: 'Internal server error' });
     }
-
-    if (results.affectedRows === 0) {
-      return res.status(404).json({ message: 'Club not found' });
-    }
-
     res.status(200).json({ message: 'Club deleted successfully' });
   });
 });
 
 // Forums
-app.get('/forums', (req, res) => {const { club_id, id, club_id_2, string_name } = req.query;
+app.get('/forums', (req, res) => {const { club_id, id, club_id_2, search_string } = req.query;
   let query = `
     SELECT forum_table.*, club_table.*, forum_table.created_at AS forum_created , club_table.name AS club_name
     FROM forum_table 
@@ -175,11 +184,11 @@ app.get('/forums', (req, res) => {const { club_id, id, club_id_2, string_name } 
     query += ` WHERE forum_table.club_id = '${club_id}' OR forum_table.club_id = '${club_id_2}'`;
   } 
   
-  if (string_name) {
+  if (search_string) {
     if (query.includes('WHERE')) {
-      query += ` AND forum_table.forum_name LIKE '%${string_name}%'`;
+      query += ` AND forum_table.forum_name LIKE '%${search_string}%'`;
     } else {
-      query += ` WHERE forum_table.forum_name LIKE '%${string_name}%'`;
+      query += ` WHERE forum_table.forum_name LIKE '%${search_string}%'`;
     }
   }
     

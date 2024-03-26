@@ -1,8 +1,27 @@
 import Select from "../Select/Select";
-
+import {useEffect, useState} from "react";
 import './SidebarForum.scss';
-const SidebarForum = ({interestLists, coCurricularLists, searchToggle = null, setCurricularType = null, setInterestType = null}) => {
+import {useCommonState} from "../../data/commonState";
 
+const SidebarForum = () => {
+
+  const {clubLists: clubs, setCurricularType, setInterestType, setSearchString} = useCommonState();
+  const [interestLists, setInterestLists] = useState([]);
+  const [coCurricularLists, setCoCurricularLists] = useState([]);
+
+  useEffect(() => {
+
+    if (clubs) {
+      const interestClubs = clubs.filter(club => club.type_name === "Interest");
+      const coCurricularClubs = clubs.filter(club => club.type_name === "Co-Curricular");
+      setInterestLists([{ id: 'all', name: 'Interest' }, ...interestClubs]);
+      setCoCurricularLists([{ id: 'all', name: 'Co-Curricular' }, ...coCurricularClubs]);
+    }
+  }, [clubs]);
+
+  const searchToggle = (value) => {
+    setSearchString(value);
+  }
   return (
     <div className="sidebar__content">
       <h1>CLUB FOR CUBS</h1>

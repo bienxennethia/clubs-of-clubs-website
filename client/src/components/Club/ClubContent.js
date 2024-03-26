@@ -1,6 +1,8 @@
 import Forum from "../Forum/Forum";
 
-const ClubContent = ({activeTab, clubData = null, forums = null, toggleModal = null}) => {
+import { useCommonState } from "../../data/commonState";
+const ClubContent = ({activeTab}) => {
+  const { clubLists: clubData, forumLists: forums } = useCommonState();
   return (
     <div className="club__content">
       {activeTab === 'about' ? (
@@ -15,8 +17,11 @@ const ClubContent = ({activeTab, clubData = null, forums = null, toggleModal = n
       ) : (
         <div className="club__content-forum">
           {
+            forums.length === 0 && <div className="club__text">No forums found</div>
+          }
+          {
             forums.map((forum, index) => (
-              <Forum key={index} toggleModal={toggleModal} forum={forum} />
+              <Forum key={index} forum={forum} />
             ))
           }
         </div>

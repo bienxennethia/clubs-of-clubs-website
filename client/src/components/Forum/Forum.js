@@ -6,7 +6,7 @@ import AdminBtn from "../AdminBtn/AdminBtn";
 import './Forum.scss';
 import { formatDate } from "../../data/utils";
 
-const Forum = ({toggleModal, forum}) => {
+const Forum = ({forum}) => {
   return (
     <div className="forum__items">
     <div className="forum__item">
@@ -31,7 +31,7 @@ const Forum = ({toggleModal, forum}) => {
           </div>
         </div>
       }
-      <AdminBtn toggleModal={toggleModal} editModalId="editForum" deleteModalId="deleteForum" id={forum.forum_id}/>
+      <AdminBtn editModalId="editForum" deleteModalId="deleteForum" id={forum.forum_id}/>
     </div>
   </div>
   )

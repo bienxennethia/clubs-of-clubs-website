@@ -1,41 +1,9 @@
 import ClubHeader from "../components/Club/ClubHeader";
 import ClubContent from "../components/Club/ClubContent";
-import { useState, useEffect } from "react";
-import { useNavigate, useParams } from 'react-router-dom';
-import { getClubs } from "../data/utils";
+import { useState } from "react";
 
-const Club = ({toggleModal, clubData = {}, setClub = null, setDeleteMessage = null, setCurrentPage = null, forums = null, setClubId = null}) => {
+const Club = () => {
   const [activeTab, setActiveTab] = useState('about');
-  const { id } = useParams();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchClubData = async () => {
-      try {
-        if (id) {
-          const club = await getClubs(id);
-          if (club.length === 0) {
-            setDeleteMessage('Club not found');
-            navigate('/clubs');
-          }
-          setClub(club);
-        }
-      } catch (error) {
-        console.error('Error fetching club:', error);
-      }
-    };
-
-    fetchClubData();
-  }, [id, setClub, setDeleteMessage, navigate]); 
-
-  useEffect(() => {
-    if (setCurrentPage) {
-      setCurrentPage('club');
-    }
-    if (setClubId) {
-      setClubId(id);
-    }
-  }, [id, setClubId, setCurrentPage]);
 
   const handleTabs = (tab) => {
     if (tab === 'about') {
@@ -48,8 +16,8 @@ const Club = ({toggleModal, clubData = {}, setClub = null, setDeleteMessage = nu
   return (
     <section className="club noBackground">
       <div className="club__container container">
-        <ClubHeader handleTabs={handleTabs} activeTab={activeTab} toggleModal={toggleModal} clubData={clubData} />
-        <ClubContent activeTab={activeTab} clubData={clubData} forums={forums} toggleModal={toggleModal} />
+        <ClubHeader handleTabs={handleTabs} activeTab={activeTab} />
+        <ClubContent activeTab={activeTab} />
       </div>
     </section>
   )

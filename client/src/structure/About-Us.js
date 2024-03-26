@@ -1,15 +1,7 @@
 import About from "../components/About/About";
 import Creators from "../components/Creators/Creators";
 
-import { useEffect } from "react";
-
-const AboutUs = ({setCurrentPage}) => {
-
-  useEffect(() => {
-    if (setCurrentPage) {
-      setCurrentPage('about');
-    }
-  }, [setCurrentPage]);
+const AboutUs = () => {
 
   return (
     <section className="about-us">

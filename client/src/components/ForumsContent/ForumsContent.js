@@ -2,7 +2,11 @@ import Forum from "../Forum/Forum";
 
 import './ForumsContent.scss';
 
-const ForumsContent = ({toggleModal, forums}) => {
+import {useCommonState} from "../../data/commonState";
+
+const ForumsContent = ({toggleModal}) => {
+  const {forumLists: forums} = useCommonState();
+  
   return (
     <div className="forums__content">
       {
@@ -12,7 +16,7 @@ const ForumsContent = ({toggleModal, forums}) => {
       }
       {
         forums.map((forum, index) => (
-          <Forum key={index} toggleModal={toggleModal} forum={forum} />
+          <Forum key={index} forum={forum} />
         ))
       }
     </div>
