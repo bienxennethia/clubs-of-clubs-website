@@ -17,6 +17,19 @@ const SelectField = ({isForum = false, options = null, setType = null}) => {
     setIsOpen(false);
   };
 
+  const handleEscape = (event) => {
+    if (event.keyCode === 27) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [isOpen]);
+
   useEffect(() => {
     setSelectedOption(options[0]);
   }, [options]);

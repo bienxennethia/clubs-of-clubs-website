@@ -12,7 +12,8 @@ body.modal-open {
   position: relative;
   min-height: calc(100vh - 200px);
 
-  &.forums {
+  &.forums,
+  & .forums {
     display: flex;
     align-items: stretch;
   }
@@ -64,7 +65,6 @@ section {
   margin: 0 t-rem(15);
   padding-top: t-rem(15);
   padding-bottom: t-rem(15);
-  height: 100%;
   
   .home & {
     padding-top: 0;
@@ -143,8 +143,8 @@ input[type='file'] {
 }
 
 textarea {
-  resize: none;
-  height: t-rem(100);
+  resize: vertical;
+  min-height: t-rem(150);
 }
 
 label {
@@ -165,6 +165,12 @@ label {
     font-style: italic;
     margin-left: 5px;
   }
+}
+
+select option {
+  overflow: hidden; /* Hide any overflowing content */
+  text-overflow: ellipsis; /* Add ellipsis for text that overflows */
+  white-space: nowrap; /* Prevent text from wrapping */
 }
 
 select option:not(:first-of-type) {

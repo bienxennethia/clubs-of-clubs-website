@@ -48,6 +48,7 @@
   border-radius: 0 0 t-rem(4) t-rem(4);
   background-color: $deep-red;
   z-index: 10;
+  max-height: t-rem(300);
 
   .isForums & {
     position: initial;

@@ -37,6 +37,7 @@ export const CommonStateProvider = ({ children }) => {
 
     if (location.pathname.includes('forums')) {
       document.querySelector('.content').classList.add('forums');
+      fetchClubs({});
       fetchForums();
     } else {
       document.querySelector('.content').classList.remove('forums');
@@ -257,6 +258,14 @@ export const CommonStateProvider = ({ children }) => {
       }
     });
   };
+
+  useEffect(() => {
+    if (response) {
+      setTimeout(() => {
+        setResponse(null);
+      }, 3000);
+    }
+  }, [response]);
 
   return (
     <CommonStateContext.Provider value={{ 

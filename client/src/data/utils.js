@@ -155,18 +155,18 @@ export const saveForum = (clubData) => {
   })
   .then(response => {
     if (!response.ok) {
-      throw new Error('Failed to save clubs');
+      throw new Error('Failed to save forums');
     }
     return response.json();
   })
   .catch(error => {
-    console.error('Error saving clubs:', error);
+    console.error('Error saving forums:', error);
     throw error;
   });
 };
 
 export const updateForum = (id, forumData) => {
-  const url = `http://localhost:3001/forums/${id}`;
+  const url = `${apiUrl}/forums/${id}`;
 
   return fetch(url, {
     method: 'PUT',

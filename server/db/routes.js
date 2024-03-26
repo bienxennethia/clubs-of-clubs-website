@@ -47,7 +47,7 @@ router.get('/clubs', async (req, res) => {
     query += ' AND';
   }
 
-  query += ' club_table.isActive = 1 ORDER BY club_table.name ASC';
+  query += ' club_table.isActive = 1 ORDER BY LOWER(club_table.name) ASC';
 
   try {
     const { rows } = await pool.query(query, values);
@@ -178,12 +178,15 @@ router.get('/forums', async (req, res) => {
 router.post('/forums', async (req, res) => {
   const { club_id, forum_name, forum_description, forum_image } = req.body;
 
-  if (!forum_name || !club_id) {
-    return res.status(400).json({ message: 'Name and club ID are required' });
+  // Ensure club_id is converted to an integer
+  const parsedClubId = parseInt(club_id);
+
+  if (!forum_name || !parsedClubId || isNaN(parsedClubId)) {
+    return res.status(400).json({ message: 'Valid name and club ID are required' });
   }
 
   const query = 'INSERT INTO forum_table (club_id, forum_name, forum_description, forum_image) VALUES ($1, $2, $3, $4) RETURNING *';
-  const values = [club_id, forum_name, forum_description, forum_image];
+  const values = [parsedClubId, forum_name, forum_description, forum_image];
 
   try {
     const { rows } = await pool.query(query, values);
