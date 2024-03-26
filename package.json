@@ -1,7 +1,7 @@
 {
-  "name": "my-project",
+  "name": "club-cor-cubs-site",
   "version": "1.0.0",
-  "description": "Description of my project",
+  "description": "Club for Cubs Website",
   "scripts": {
     "start-client": "cd client && npm start",
     "start-server": "cd server && npm start",
