@@ -74,6 +74,7 @@ section {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    flex: 1;
   }
 
   @include bp-tablet {
