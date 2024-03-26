@@ -41,6 +41,5 @@
     ]
   },
   
-  "proxy": "http://localhost:3001"
-  
+  "proxy": "https://clubs-of-cubs-website-server.vercel.app"
 }
