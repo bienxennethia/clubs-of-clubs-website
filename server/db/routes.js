@@ -137,36 +137,30 @@ router.get('/forums', async (req, res) => {
     FROM forum_table 
     LEFT JOIN club_table ON forum_table.club_id = club_table.id`;
  
-  if (id) {
-    query += ` WHERE forum_table.forum_id = $1`;
-  } else if (club_id && !club_id_2) {
-    query += ` WHERE forum_table.club_id = $1`;
-  } else if (!club_id && club_id_2) {
-    query += ` WHERE forum_table.club_id = $1`;
-  } else if (club_id && club_id_2) {
-    query += ` WHERE forum_table.club_id = $1 OR forum_table.club_id = $2`;
-  } 
-  
-  if (search_string) {
-    query += ` AND forum_table.forum_name LIKE '%' || $${id ? 2 : 1} || '%'`;
-  }
-    
-  query += ' ORDER BY forum_table.created_at DESC';
+    const parameters = [];
 
-  try {
-    let parameters = [];
     if (id) {
+      query += ` WHERE forum_table.forum_id = $1`;
       parameters.push(id);
-    }
-    if (club_id && !club_id_2) {
+    } else if (club_id && !club_id_2) {
+      query += ` WHERE forum_table.club_id = $1`;
       parameters.push(club_id);
-    }
-    if (!club_id && club_id_2) {
+    } else if (!club_id && club_id_2) {
+      query += ` WHERE forum_table.club_id = $1`;
       parameters.push(club_id_2);
-    }
-    if (club_id && club_id_2) {
+    } else if (club_id && club_id_2) {
+      query += ` WHERE forum_table.club_id = $1 OR forum_table.club_id = $2`;
       parameters.push(club_id, club_id_2);
+    } 
+    
+    if (search_string) {
+      query += ` AND forum_table.forum_name ILIKE '%' || $${parameters.length + 1} || '%'`;
+      parameters.push(search_string);
     }
+      
+    query += ' ORDER BY forum_table.created_at DESC';
+  
+    try {
     const { rows } = await pool.query(query, parameters);
     res.json(rows);
   } catch (err) {
