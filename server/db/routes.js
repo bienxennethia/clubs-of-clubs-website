@@ -142,22 +142,20 @@ router.get('/forums', async (req, res) => {
     if (id) {
       query += ` WHERE forum_table.forum_id = $1`;
       parameters.push(id);
-    } else if (club_id && !club_id_2) {
-      query += ` WHERE forum_table.club_id = $1`;
-      parameters.push(club_id);
-    } else if (!club_id && club_id_2) {
-      query += ` WHERE forum_table.club_id = $1`;
-      parameters.push(club_id_2);
-    } else if (club_id && club_id_2) {
-      query += ` WHERE forum_table.club_id = $1 OR forum_table.club_id = $2`;
-      parameters.push(club_id, club_id_2);
-    } 
+    } else if (club_id || club_id_2) {
+      query += ` WHERE forum_table.club_id IN ($1, $2)`;
+      parameters.push(club_id || club_id_2, club_id_2 || club_id);
+    }
     
     if (search_string) {
-      query += ` AND forum_table.forum_name ILIKE '%' || $${parameters.length + 1} || '%'`;
+      if (club_id || club_id_2) {
+        query += ` AND forum_table.forum_name ILIKE '%' || $${parameters.length + 1} || '%'`;
+      } else {
+        query += ` WHERE forum_table.forum_name ILIKE '%' || $${parameters.length + 1} || '%'`;
+      }
       parameters.push(search_string);
     }
-      
+    
     query += ' ORDER BY forum_table.created_at DESC';
   
     try {
