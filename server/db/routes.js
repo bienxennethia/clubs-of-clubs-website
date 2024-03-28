@@ -186,7 +186,7 @@ router.put('/forums', async (req, res) => {
     return res.status(400).json({ message: 'Valid name and club ID are required' });
   }
 
-  const query = 'INSERT INTO forum_table (club_id, forum_name, forum_description, forum_image) VALUES ($1, $2, $3, $4)';
+  const query = 'INSERT INTO forum_table (club_id, forum_name, forum_description, forum_image) VALUES ($1, $2, $3, $4) RETURNING *';
   const values = [parsedClubId, forum_name, forum_description, forum_image];
 
   try {
@@ -198,9 +198,9 @@ router.put('/forums', async (req, res) => {
       LEFT JOIN club_table ON forum_table.club_id = club_table.id
       ORDER BY forum_table.created_at DESC`;
 
-    const { rows: clubs } = await pool.query(fetchQuery);
+    const { rows: forums } = await pool.query(fetchQuery);
 
-    res.status(201).json({ id: rows[0].forum_id, message: 'Forum added successfully', result: clubs });
+    res.status(201).json({ id: rows[0].forum_id, message: 'Forum added successfully', result: forums });
   } catch (err) {
     console.error('Error executing PostgreSQL query:', err);
     res.status(500).json({ message: 'Internal server error' });
