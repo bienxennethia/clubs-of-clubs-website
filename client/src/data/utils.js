@@ -145,13 +145,14 @@ export const getForums = (params = null) => {
     });
 };
 
-export const saveForum = (clubData) => {
+export const saveForum = (forumData) => {
+  console.log(forumData)
   return fetch(`${apiUrl}/forums`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(clubData)
+    body: JSON.stringify(forumData)
   })
   .then(response => {
     if (!response.ok) {

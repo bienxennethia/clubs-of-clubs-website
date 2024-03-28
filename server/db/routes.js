@@ -176,6 +176,7 @@ router.get('/forums', async (req, res) => {
 });
 
 router.post('/forums', async (req, res) => {
+  console.log(req.body);
   const { club_id, forum_name, forum_description, forum_image } = req.body;
 
   // Ensure club_id is converted to an integer
@@ -185,7 +186,7 @@ router.post('/forums', async (req, res) => {
     return res.status(400).json({ message: 'Valid name and club ID are required' });
   }
 
-  const query = 'INSERT INTO forum_table (club_id, forum_name, forum_description, forum_image) VALUES ($1, $2, $3, $4) RETURNING *';
+  const query = 'INSERT INTO forum_table (club_id, forum_name, forum_description, forum_image) VALUES ($1, $2, $3, $4)';
   const values = [parsedClubId, forum_name, forum_description, forum_image];
 
   try {
