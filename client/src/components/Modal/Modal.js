@@ -81,7 +81,7 @@ const Modal = () => {
                     </div>
                   ))}
                   <div className="modal__footer">
-                    <p className="modal__response">{response}</p>
+                    <p className="modal__response">{response?.message}</p>
                   </div>
                   <div className="modal__actions">
                     <button className="modal__btn" onClick={saveModalHandler}>{modalContent?.id.includes('add') ? 'Save' : 'Update'}</button>

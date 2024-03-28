@@ -20,8 +20,8 @@ export const CommonStateProvider = ({ children }) => {
   const [clubTypes, setClubTypes] = useState([]);
   const [forumLists, setForumLists] = useState([]);
   const [selectedClubType, setSelectedClubType] = useState(null);
-  const [warningMessage, setWarningMessage] = useState(null);
-  const [response, setResponse] = useState(null);
+  const [warningMessage, setWarningMessage] = useState({id: null, message: null});
+  const [response, setResponse] = useState({id: null, message: null});
   const [curricularType, setCurricularType] = useState('all');
   const [interestType, setInterestType] = useState('all');
   const [searchString, setSearchString] = useState('');
@@ -52,7 +52,7 @@ export const CommonStateProvider = ({ children }) => {
 
     if (location.pathname.includes('item')) {
       if (clubLists.length === 0) {
-        setWarningMessage('Club not found!');
+        setWarningMessage({id: currentPage, message: 'Club not found!'});
         navigate('/clubs');
       }
     }
@@ -200,18 +200,18 @@ export const CommonStateProvider = ({ children }) => {
       } else if (modalIdOpen === 'editForum') {
         const { result } = await updateForum(modalContentId, fields);
         results = result;
-        setForumLists(result);
+        fetchForums();
         isEdit = true;
       }
 
       if (results) {
-        setResponse(isEdit ? 'Updated successfully!' : 'Saved successfully!');
+        setResponse({id: currentPage, message: isEdit ? 'Updated successfully!' : 'Saved successfully!'});
         clearFields();
       } else {
-        setResponse(isEdit ? 'Failed to update.' : 'Failed to save.');
+        setResponse({id: currentPage, message: isEdit ? 'Failed to update.' : 'Failed to save.'});
       }
     } else {
-      setResponse('Please fill in all required fields.');
+      setResponse({id: currentPage, message: 'Please fill in all required fields.'});
     }
   };
 
@@ -219,13 +219,13 @@ export const CommonStateProvider = ({ children }) => {
     if (modalIdOpen === 'deleteClub') {
       const { message } = await deleteClub(modalContentId);
       if (message) {
-        setWarningMessage(message);
+        setWarningMessage({id: currentPage, message: message});
         navigate('/clubs');
       }
     } else if (modalIdOpen === 'deleteForum') {
       const { message } = await deleteForum(modalContentId);
       if (message) {
-        setWarningMessage(message);
+        setWarningMessage({id: currentPage, message: message});
         fetchForums();
         navigate('/forums');
       }

@@ -15,7 +15,7 @@ const InputField = ({ field }) => {
   return field.type === 'textarea' ? (
     <textarea {...inputProps} />
   ) : (
-    <input type={field.type} {...inputProps} />
+    <input type={field.type} {...inputProps} {...(field.type === 'file' ? { accept: 'image/*' } : {})}  />
   );
 };
 

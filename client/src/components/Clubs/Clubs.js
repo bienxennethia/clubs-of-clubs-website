@@ -9,7 +9,7 @@ import SelectField from "../Select/Select";
 import { useCommonState } from "../../data/commonState";
 
 const Clubs = () => {
-  const { clubLists: clubs, clubTypes, setSelectedClubType, warningMessage, currentPage, setWarningMessage } = useCommonState();
+  const { clubLists: clubs, clubTypes, setSelectedClubType, warningMessage, setWarningMessage } = useCommonState();
 
   useEffect(() => {
     if (warningMessage) {
@@ -27,7 +27,8 @@ const Clubs = () => {
           <SelectField setType={setSelectedClubType} options={clubTypes} />
         </div>
         <div className="clubs__content">
-          { warningMessage && currentPage?.includes("clubs") && <div className="clubs__delete-text">{warningMessage}!</div>}
+          {console.log(warningMessage)}
+          { warningMessage && warningMessage?.id?.includes("item") && <div className="clubs__delete-text">{warningMessage?.message}!</div>}
           { clubs.length === 0 && <div className="clubs__text">No clubs found</div>}
           { clubs.length > 0 && 
             <div className="clubs__items">
