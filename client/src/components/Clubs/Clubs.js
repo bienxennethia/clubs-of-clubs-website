@@ -27,7 +27,6 @@ const Clubs = () => {
           <SelectField setType={setSelectedClubType} options={clubTypes} />
         </div>
         <div className="clubs__content">
-          {console.log(warningMessage)}
           { warningMessage && warningMessage?.id?.includes("item") && <div className="clubs__delete-text">{warningMessage?.message}!</div>}
           { clubs.length === 0 && <div className="clubs__text">No clubs found</div>}
           { clubs.length > 0 && 

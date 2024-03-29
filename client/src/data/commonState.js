@@ -19,7 +19,7 @@ export const CommonStateProvider = ({ children }) => {
   const [clubLists, setClubLists] = useState([]);
   const [clubTypes, setClubTypes] = useState([]);
   const [forumLists, setForumLists] = useState([]);
-  const [selectedClubType, setSelectedClubType] = useState(null);
+  const [selectedClubType, setSelectedClubType] = useState('all');
   const [warningMessage, setWarningMessage] = useState({id: null, message: null});
   const [response, setResponse] = useState({id: null, message: null});
   const [curricularType, setCurricularType] = useState('all');
@@ -29,24 +29,32 @@ export const CommonStateProvider = ({ children }) => {
   const [isDeleteModal, setIsDeleteModal] = useState(false);
 
   useEffect(() => {
-    setCurrentPage(location.pathname);
+    const fetchClubTypes = async () => {
+      try {
+        const result = await getClubTypes();
+        setClubTypes(result);
+      } catch (error) {
+        console.error('Error fetching club types:', error);
+      }
+    };
+    fetchClubTypes();
+  }, []);
 
-    if (location.pathname.includes('clubs') || location.pathname.includes('item')) {
-      fetchClubTypes();
-    }
+  useEffect(() => {
+    setCurrentPage(location.pathname);
+    setSelectedClubType(null);
 
     if (location.pathname.includes('forums')) {
       document.querySelector('.content').classList.add('forums');
-      fetchClubs({});
+      setCurricularType('all');
+      setInterestType('all');
+      setSearchString('');
+      fetchClubs({type: 'all'});
       fetchForums();
     } else {
       document.querySelector('.content').classList.remove('forums');
     }
-
-    if (location.pathname.includes('clubs')) {
-      fetchClubs({ type: selectedClubType });
-    }
-  }, [location.pathname, selectedClubType]);
+  }, [location.pathname]);
 
   useEffect(() => {
 
@@ -58,55 +66,11 @@ export const CommonStateProvider = ({ children }) => {
     }
   }, [clubLists]);
 
-  const toggleModal = (modalId) => {
-    setModalIdOpen(modalId);
-  };
-
-  const addStyling = (isOpen) => {
-    
-    if (isOpen) {
-      document.body.classList.add('modal-open');
-    } else {
-      document.body.classList.remove('modal-open');
-    }
-  };
-
-  const fetchClubs = async (params = null) => {
-    try {
-      const result = await getClubs(params);
-      setClubLists(result);
-    } catch (error) {
-      console.error('Error fetching clubs:', error);
-    }
-  };
-  
-  const fetchClubTypes = async () => {
-    try {
-      const result = await getClubTypes();
-      setClubTypes(result);
-    } catch (error) {
-      console.error('Error fetching club types:', error);
-    }
-  };
-
-  const fetchForums = async (params = null) => {
-    try {
-      const result = await getForums(params);
-      setForumLists(result);
-    } catch (error) {
-      console.error('Error fetching forums:', error);
-    }
-  };
-
   useEffect(() => {
-    let paramId = null;
-
-    if (location.pathname.includes('item')) {
-      paramId = location.pathname.split('/').pop();
-      fetchClubs({id: paramId});
-      fetchForums({clubId: paramId});
-    }
-  }, [location.pathname]);
+    const itemID = location.pathname.includes('item') ? location.pathname.split('/').pop() : null;
+    
+    fetchClubs({ id: itemID, type: selectedClubType });
+  }, [location.pathname, selectedClubType]);
 
   useEffect(() => {
     if (location.pathname.includes('forums')) {
@@ -155,6 +119,36 @@ export const CommonStateProvider = ({ children }) => {
     }
   }, [clubLists, clubTypes, modalIdOpen, modalContentId, forumLists]);
 
+  const toggleModal = (modalId) => {
+    setModalIdOpen(modalId);
+  };
+
+  const addStyling = (isOpen) => {
+    
+    if (isOpen) {
+      document.body.classList.add('modal-open');
+    } else {
+      document.body.classList.remove('modal-open');
+    }
+  };
+
+  const fetchClubs = async (params = null) => {
+    try {
+      const result = await getClubs(params);
+      setClubLists(result);
+    } catch (error) {
+      console.error('Error fetching clubs:', error);
+    }
+  };
+
+  const fetchForums = async (params = null) => {
+    try {
+      const result = await getForums(params);
+      setForumLists(result);
+    } catch (error) {
+      console.error('Error fetching forums:', error);
+    }
+  };
   
   const toggleSave = async () => {
     const fields = {};
@@ -188,19 +182,19 @@ export const CommonStateProvider = ({ children }) => {
         setClubLists(result);
         isEdit = true;
       } else if (modalIdOpen === 'addForumClub') {
-        const paramId = location.pathname.split('/').pop();
-        const { result } = await saveForum({...fields, club_id: paramId});
-        fetchClubs({id: paramId});
-        fetchForums({clubId: paramId});
+        const itemID = location.pathname.includes('item') ? location.pathname.split('/').pop() : null;
+        const { result } = await saveForum({...fields, club_id: itemID});
+        fetchClubs({id: itemID});
+        fetchForums({clubId: itemID});
         results = result;
       }else if (modalIdOpen === 'addForum') {
         const { result } = await saveForum(fields);
         results = result;
-        setForumLists(result);
+        fetchForums({id: null, interestType, curricularType, searchString});
       } else if (modalIdOpen === 'editForum') {
         const { result } = await updateForum(modalContentId, fields);
         results = result;
-        fetchForums();
+        fetchForums({id: null, interestType, curricularType, searchString});
         isEdit = true;
       }
 
@@ -226,7 +220,7 @@ export const CommonStateProvider = ({ children }) => {
       const { message } = await deleteForum(modalContentId);
       if (message) {
         setWarningMessage({id: currentPage, message: message});
-        fetchForums();
+        fetchForums({id: null, interestType, curricularType, searchString});
         navigate('/forums');
       }
     }
@@ -258,14 +252,6 @@ export const CommonStateProvider = ({ children }) => {
       }
     });
   };
-
-  useEffect(() => {
-    if (response) {
-      setTimeout(() => {
-        setResponse(null);
-      }, 3000);
-    }
-  }, [response]);
 
   return (
     <CommonStateContext.Provider value={{ 

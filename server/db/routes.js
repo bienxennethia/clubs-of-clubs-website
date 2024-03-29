@@ -168,7 +168,6 @@ router.get('/forums', async (req, res) => {
 });
 
 router.put('/forums', async (req, res) => {
-  console.log(req.body);
   const { club_id, forum_name, forum_description, forum_image } = req.body;
 
   // Ensure club_id is converted to an integer

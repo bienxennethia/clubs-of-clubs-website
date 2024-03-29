@@ -8,7 +8,7 @@ const InputField = ({ field }) => {
     name: field.name,
     placeholder: field.placeholder,
     required: field.required,
-    value: value,
+    value: field.type === 'file' ? '' : value,
     onChange: (e) => setValue(e.target.value),
   };
 

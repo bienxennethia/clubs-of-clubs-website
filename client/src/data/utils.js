@@ -52,7 +52,7 @@ export const getClubs = (params = null) => {
   if (id) {
     url += `?id=${id}`;
   } else if (type) {
-    url += `?type=${type}`; // Append type parameter to the URL
+    url += `?type=${type}`;
   }
 
   return fetch(url)
@@ -146,7 +146,6 @@ export const getForums = (params = null) => {
 };
 
 export const saveForum = (forumData) => {
-  console.log(forumData)
   return fetch(`${apiUrl}/forums`, {
     method: 'PUT',
     headers: {
