@@ -1,15 +1,7 @@
 import { useState } from 'react';
 
-import { useCommonState } from '../../data/commonState';
-
 const InputField = ({ field }) => {
-  const { handleField } = useCommonState();
   const [value, setValue] = useState(field.value || '');
-
-  const handleChange = (e) => {
-    setValue(e.target.value);
-    handleField(e);
-  };
 
   const inputProps = {
     className: "fields-modal__input",
@@ -17,7 +9,7 @@ const InputField = ({ field }) => {
     placeholder: field.placeholder,
     required: field.required,
     value: field.type === 'file' ? '' : value,
-    onChange: (e) => handleChange(e),
+    onChange: (e) => setValue(e.target.value),
   };
 
   return field.type === 'textarea' ? (
