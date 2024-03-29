@@ -85,7 +85,7 @@ export const CommonStateProvider = ({ children }) => {
       }
       return type;
     });;
-    const clubOptions = [{ id: 'all', name: 'Select club', label: 'Select club' }, ...clubLists];
+    const clubOptions = [{ id: '', name: 'Select club', label: 'Select club' }, ...clubLists];
 
     const getModal = async () => {
       addStyling(true);

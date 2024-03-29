@@ -11,30 +11,23 @@ export const modals = [
         {
           label: "CLUB NAME:",
           name: "club",
+          required: true,
           placeholderText: "Select the name of the Club officiating below",
           type: "select",
-          options: [
-            { value: "/", label: "Select club" },
-            { value: "corricular", label: "Bedan Chemical Society" },
-            { value: "interest", label: "Bedan Society of Young Astronomers" },
-            { value: "interest", label: "Math Aficionados" },
-            { value: "interest", label: "Red Cross Youth" },
-            { value: "interest", label: "Athletico Bedista" },
-            { value: "interest", label: "Collective Action Towards Strays" },
-            { value: "interest", label: "Digital Arts Society" },
-            { value: "interest", label: "Red Lion Radio" }
-          ]
+          options: []
         },
         {
           label: "EMAIL:",
           name: "email",
           placeholder: "Personal email only",
           type: "email",
+          required: true
         },
         {
           label: "PASSWORD:",
           name: "password",
           placeholder: "Enter your password",
+          required: true,
           type: "password",
         }
       ]
@@ -51,6 +44,7 @@ export const modals = [
       fields: [
         {
           name: "type",
+          required: true,
           type: "select",
           placeholder: "Select type",
           options: [
@@ -59,11 +53,13 @@ export const modals = [
         },
         {
           name: "name",
+          required: true,
           type: "text",
           placeholder: "Name *"
         },
         {
           name: "description",
+          required: true,
           type: "textarea",
           placeholder: "Description *"
         },
@@ -97,19 +93,22 @@ export const modals = [
       fields: [
         {
           name: "type",
+          required: true,
           type: "select",
           placeholder: "Select type",
           options: []
         },
         {
           name: "name",
+          required: true,
           type: "text",
-          placeholder: "Name"
+          placeholder: "Name *"
         },
         {
           name: "description",
+          required: true,
           type: "textarea",
-          placeholder: "Description"
+          placeholder: "Description *"
         },
         {
           name: "mission",
@@ -148,16 +147,19 @@ export const modals = [
         {
           name: "club_id",
           type: "select",
+          required: true,
           placeholder: "Select club",
           options: []
         },
         {
           name: "forum_name",
+          required: true,
           type: "text",
           placeholder: "Title *"
         },
         {
           name: "forum_description",
+          required: true,
           type: "textarea",
           placeholder: "Description *"
         },
@@ -182,17 +184,20 @@ export const modals = [
       fields: [
         {
           name: "club_id",
+          required: true,
           type: "select",
           placeholder: "Select club",
           options: []
         },
         {
           name: "forum_name",
+          required: true,
           type: "text",
           placeholder: "Title *"
         },
         {
           name: "forum_description",
+          required: true,
           type: "textarea",
           placeholder: "Description *"
         },
@@ -217,11 +222,13 @@ export const modals = [
       fields: [
         {
           name: "forum_name",
+          required: true,
           type: "text",
           placeholder: "Title *"
         },
         {
           name: "forum_description",
+          required: true,
           type: "textarea",
           placeholder: "Description *"
         },

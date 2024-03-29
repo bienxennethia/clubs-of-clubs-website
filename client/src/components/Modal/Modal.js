@@ -14,14 +14,6 @@ const Modal = () => {
     }
   };
 
-  const saveModalHandler = () => {
-    toggleSave();
-  };
-
-  const clearFieldsHandler = () => {
-    clearFields();
-  };
-
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
 
@@ -29,6 +21,14 @@ const Modal = () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [handleKeyDown, closeModal]);
+
+  const saveModalHandler = () => {
+    toggleSave();
+  };
+
+  const clearFieldsHandler = () => {
+    clearFields();
+  };
 
   const toggleDelete = async () => {
     closeModal();

@@ -137,6 +137,10 @@ textarea {
   padding: t-rem(10) t-rem(20);
   font-size: t-rem(16) !important;
   max-width: t-rem(520);
+
+  &.error {
+    border: t-rem(3) solid red;
+  }
 }
 
 input[type='file'] {
