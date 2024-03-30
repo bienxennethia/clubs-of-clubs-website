@@ -288,25 +288,34 @@ router.post('/login', async (req, res) => {
 
 router.get('/user', async (req, res) => {
   const { user_id } = req.query;
+  
   let query = `
-    SELECT user_id, first_name, last_name, middle_name, email, year, section FROM user_table`;
+    SELECT 
+      u.user_id, 
+      u.first_name, 
+      u.last_name, 
+      u.middle_name, 
+      u.email, 
+      u.year, 
+      u.section,
+      c.club_id
+    FROM 
+      user_table u
+    LEFT JOIN 
+      clublist c ON u.user_id = c.user_id`;
 
   const values = [];
 
   if (user_id) {
-    query += ` WHERE user_table.user_id = $1`;
+    query += ` WHERE u.user_id = $1`;
     values.push(user_id);
   }
   
-  query += ' ORDER BY user_table.last_name ASC';
+  query += ' ORDER BY u.last_name ASC';
   
   try {
     const { rows } = await pool.query(query, values);
-    
-    const clubQuery = 'SELECT * FROM clublist WHERE user_id = $1';
-    const clubResult = await pool.query(clubQuery, [club_id]);
-
-    res.json({user: rows, clubList: clubResult});
+    res.json(rows);
   } catch (err) {
     console.error('Error executing PostgreSQL query:', err);
     res.status(500).json({ message: 'Internal server error' });
