@@ -39,6 +39,12 @@ export const CommonStateProvider = ({ children }) => {
   }, [isLoggedIn]);
 
   useEffect(() => {
+    const itemID = location.pathname.includes('item') ? location.pathname.split('/').pop() : null;
+    
+    fetchClubs({ id: itemID, type: selectedClubType });
+  }, [location.pathname, selectedClubType]);
+
+  useEffect(() => {
     const verifyLoggedIn = getWithExpiry('isLoggedIn');
     if (verifyLoggedIn === null) {
       const verifyVisitor = getWithExpiry('isVisitor');
@@ -48,6 +54,7 @@ export const CommonStateProvider = ({ children }) => {
       fetchUsers({user_id: verifyLoggedIn?.user?.user_id});
       setIsLoggedIn(verifyLoggedIn?.value === true);
     }
+
     const fetchClubTypes = async () => {
       try {
         const result = await getClubTypes();
@@ -86,12 +93,6 @@ export const CommonStateProvider = ({ children }) => {
       }
     }
   }, [clubLists]);
-
-  useEffect(() => {
-    const itemID = location.pathname.includes('item') ? location.pathname.split('/').pop() : null;
-    
-    fetchClubs({ id: itemID, type: selectedClubType });
-  }, [location.pathname, selectedClubType]);
 
   useEffect(() => {
     if (location.pathname.includes('forums')) {
@@ -342,7 +343,7 @@ export const CommonStateProvider = ({ children }) => {
         localStorage.removeItem(key);
         return null;
     }
-    return {...item.value, user: item.user};
+    return item;
   }
 
   return (

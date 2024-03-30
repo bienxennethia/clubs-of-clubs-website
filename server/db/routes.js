@@ -255,7 +255,7 @@ router.delete('/forums/:id', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-  const { email, password, club: club_id } = req.body;
+  const { email, password, club_id } = req.body;
 
   try {
     const userQuery = 'SELECT user_id, first_name, last_name, middle_name, email, year, section, email FROM user_table WHERE email = $1 AND password = $2';
@@ -280,7 +280,7 @@ router.post('/login', async (req, res) => {
     res.cookie('user_token', token, { maxAge: 2 * 24 * 60 * 60 * 1000, httpOnly: true }); // Expires in 7 days
 
     // Return token and user details
-    res.status(200).json({ user });
+    res.status(200).json({ user, ...club });
   } catch (error) {
     console.error('Error logging in:', error);
     res.status(500).json({ message: 'Internal server error' });
@@ -290,7 +290,7 @@ router.post('/login', async (req, res) => {
 router.get('/user', async (req, res) => {
   const { user_id } = req.query;
   let query = `
-    SELECT * FROM user_table`;
+    SELECT user_id, first_name, last_name, middle_name, email, year, section FROM user_table`;
 
   const values = [];
 

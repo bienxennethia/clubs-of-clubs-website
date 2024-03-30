@@ -8,7 +8,7 @@ export const modals = [
       fields: [
         {
           label: "Club Name:",
-          name: "club",
+          name: "club_id",
           required: true,
           placeholderText: "Select the name of the Club officiating below",
           type: "select",
@@ -78,7 +78,7 @@ export const modals = [
       fields: [
         {
           label: "Club Name:",
-          name: "club",
+          name: "club_id",
           required: true,
           placeholderText: "Select the name of the Club officiating below",
           type: "select",
@@ -164,7 +164,7 @@ export const modals = [
       fields: [
         {
           label: "Club Name:",
-          name: "club",
+          name: "club_id",
           required: true,
           placeholderText: "Select the name of the Club officiating below",
           type: "select",
