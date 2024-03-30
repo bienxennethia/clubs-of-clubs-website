@@ -44,9 +44,9 @@ const Header = () => {
 
   const profileBtn = () => {
     if (isLoggedIn) {
-      setModalIdOpen("login");
+      setModalIdOpen("profile");
     } else {
-      setModalIdOpen("signup");
+      setModalIdOpen("login");
     }
   };
 
