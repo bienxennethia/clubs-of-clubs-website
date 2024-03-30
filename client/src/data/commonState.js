@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { modals } from '../components/Modal/modals';
-import { getClubs, getClubTypes, saveClubs, getForums, saveForum, updateForum, deleteForum, deleteClub, updateClub, login } from './utils';
+import { getClubs, getClubTypes, saveClubs, getForums, saveForum, updateForum, deleteForum, deleteClub, updateClub, login, getUsers } from './utils';
 const CommonStateContext = createContext();
 
 export const useCommonState = () => useContext(CommonStateContext);
@@ -29,7 +29,7 @@ export const CommonStateProvider = ({ children }) => {
   const [isDeleteModal, setIsDeleteModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isVisitor, setIsVisitor] = useState(false);
-  const [user, setUser] = useState(null);
+  const [users, setUsers] = useState(null);
 
   useEffect(() => {
     if (!isLoggedIn && !isVisitor) {
@@ -45,7 +45,8 @@ export const CommonStateProvider = ({ children }) => {
       setIsLoggedIn(false);
       setIsVisitor(verifyVisitor === true);
     } else {
-      setIsLoggedIn(verifyLoggedIn === true);
+      fetchUsers({user_id: verifyLoggedIn?.user?.user_id});
+      setIsLoggedIn(verifyLoggedIn?.value === true);
     }
     const fetchClubTypes = async () => {
       try {
@@ -116,7 +117,7 @@ export const CommonStateProvider = ({ children }) => {
         const updatedFields = await Promise.all(modal.content.fields.map((field) => {
           let newFields = field;
           if (field.type === 'select' && field.name !== 'year') {
-            if (modalIdOpen === 'login' || modalIdOpen === 'addForum' || modalIdOpen === 'editForum' || modalIdOpen === 'signup') {
+            if (modalIdOpen === 'login' || modalIdOpen === 'addForum' || modalIdOpen === 'editForum' || modalIdOpen === 'signup' || modalIdOpen === 'profile') {
               newFields ={ ...newFields, options: clubOptions };
             } else if (modalIdOpen === 'addClub' || modalIdOpen === 'editClub') {
               newFields = { ...newFields, options: clubTypeOptions };
@@ -127,6 +128,11 @@ export const CommonStateProvider = ({ children }) => {
             const selectedItem = modalIdOpen === 'editForum' ? forumLists.find((forum) => forum.forum_id === modalContentId) : clubLists[0];
             selectedItem[newFields.name] = selectedItem[newFields.name] || null;
             newFields = { ...newFields, value: selectedItem[newFields.name] };
+          }
+
+          if (modalIdOpen === 'profile') {
+            users[0][newFields.name] = users[0][newFields.name] || null;
+            newFields = { ...newFields, value: users[0][newFields.name] };
           }
           return newFields;
         }));
@@ -167,6 +173,15 @@ export const CommonStateProvider = ({ children }) => {
       setForumLists(result);
     } catch (error) {
       console.error('Error fetching forums:', error);
+    }
+  };
+
+  const fetchUsers = async (params = null) => {
+    try {
+      const result = await getUsers(params);
+      setUsers(result);
+    } catch (error) {
+      console.error('Error fetching users:', error);
     }
   };
   
@@ -233,12 +248,12 @@ export const CommonStateProvider = ({ children }) => {
         const { user, message } = await login({...fields});
         if (user) {
           setResponse({id: currentPage, message: "Login successfully!"});
-          setUser(user);
+          setUsers(user);
           setIsLoggedIn(true);
           setTimeout(() => {
             closeModal();
           }, 3000);
-          setWithExpiry('isLoggedIn', true, 1 * 24 * 60 * 60 * 1000);
+          setWithExpiry('isLoggedIn', true, 1 * 24 * 60 * 60 * 1000, { ...user, password: null, email: null });
           localStorage.removeItem('isVisitor');
         } else {
           setResponse({id: currentPage, message: message});
@@ -303,12 +318,16 @@ export const CommonStateProvider = ({ children }) => {
     navigate('/forums');
   };
 
-  const setWithExpiry = (key, value, ttl) => {
+  const setWithExpiry = (key, value, ttl, user = null) => {
     const now = new Date();
-    const item = {
+    let item = {
         value: value,
         expiry: now.getTime() + ttl
     };
+
+    if (key === 'isLoggedIn') {
+      item = {...item, user };
+    }
     localStorage.setItem(key, JSON.stringify(item));
   };
 
@@ -323,7 +342,7 @@ export const CommonStateProvider = ({ children }) => {
         localStorage.removeItem(key);
         return null;
     }
-    return item.value;
+    return {...item.value, user: item.user};
   }
 
   return (
@@ -345,7 +364,7 @@ export const CommonStateProvider = ({ children }) => {
       isDeleteModal, setIsDeleteModal,
       isLoggedIn, setIsLoggedIn,
       isVisitor, setIsVisitor,
-      user, setUser,
+      users, setUsers,
       setWithExpiry,
       toggleModal, closeModal, toggleSave, clearFields, deleteModal, visitorBtn }}>
       {children}

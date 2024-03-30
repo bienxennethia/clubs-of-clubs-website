@@ -122,7 +122,8 @@
 
   a:hover,
   a.active,
-  button:hover {
+  button:hover,
+  button.active {
 
    span {
     font-size: t-rem(26);

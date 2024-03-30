@@ -258,8 +258,7 @@ router.post('/login', async (req, res) => {
   const { email, password, club: club_id } = req.body;
 
   try {
-    // Check if user with provided email and password exists
-    const userQuery = 'SELECT * FROM user_table WHERE email = $1 AND password = $2';
+    const userQuery = 'SELECT user_id, first_name, last_name, middle_name, email, year, section, email FROM user_table WHERE email = $1 AND password = $2';
     const userResult = await pool.query(userQuery, [email, password]);
     const user = userResult.rows[0];
 
@@ -267,7 +266,6 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'Please verify the information provided and try again.' });
     }
 
-    // Check if user is associated with the specified club
     const clubQuery = 'SELECT * FROM clublist WHERE user_id = $1 AND club_id = $2';
     const clubResult = await pool.query(clubQuery, [user.user_id, club_id]);
     const club = clubResult.rows[0];
@@ -289,6 +287,27 @@ router.post('/login', async (req, res) => {
   }
 });
 
+router.get('/user', async (req, res) => {
+  const { user_id } = req.query;
+  let query = `
+    SELECT * FROM user_table`;
 
+  const values = [];
+
+  if (user_id) {
+    query += ` WHERE user_table.user_id = $1`;
+    values.push(user_id);
+  }
+  
+  query += ' ORDER BY user_table.last_name ASC';
+  
+  try {
+    const { rows } = await pool.query(query, values);
+    res.json(rows);
+  } catch (err) {
+    console.error('Error executing PostgreSQL query:', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 module.exports = router;

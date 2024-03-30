@@ -1,5 +1,75 @@
 export const modals = [
   {
+    id: "profile",
+    path: "/signup",
+    class: "modal--signup",
+    content: {
+      title: "PROFILE",
+      fields: [
+        {
+          label: "Club Name:",
+          name: "club",
+          required: true,
+          placeholderText: "Select the name of the Club officiating below",
+          type: "select",
+          options: []
+        },
+        {
+          label: "First Name:",
+          name: "first_name",
+          placeholder: "Enter your first name",
+          type: "text",
+          required: true
+        },
+        {
+          label: "Last Name:",
+          name: "last_name",
+          placeholder: "Enter your last name",
+          type: "text",
+          required: true
+        },
+        {
+          label: "Middle Name:",
+          name: "middle_name",
+          placeholder: "Enter your middle name",
+          type: "text",
+          required: false
+        },
+        {
+          label: "Email:",
+          name: "email",
+          placeholder: "Personal email only",
+          type: "email",
+          required: true
+        },
+        {
+          label: "Grade:",
+          name: "year",
+          placeholder: "Select your grade year",
+          type: "select",
+          required: true,
+          options: [
+            { id: "", name: "Select your grade" },
+            { id: "11", name: "Grade 11" },
+            { id: "12", name: "Grade 12" }
+          ]
+        },
+        {
+          label: "Section:",
+          name: "section",
+          placeholder: "Enter your section",
+          type: "text"
+        },
+        {
+          name: "image",
+          type: "file",
+          placeholder: "Image",
+          label: "Image:"
+        }
+      ]
+    }
+  },
+  {
     id: "signup",
     path: "/signup",
     class: "modal--signup",

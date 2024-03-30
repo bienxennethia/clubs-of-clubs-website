@@ -46,6 +46,7 @@ const Modal = () => {
         return "Add";
       case "editClub":
       case "editForum":
+      case "profile":
         return "Update";
       case "login":
         return "Login";

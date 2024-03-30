@@ -224,4 +224,23 @@ export const login = (params) => {
   });
 };
 
+export const getUsers = (params = null) => {
+  let { user_id = null } = params;
+  
+  let url = `${apiUrl}/user`;
+  if (user_id) {
+    url += `?user_id=${user_id}`;
+  }
 
+  return fetch(url)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch user');
+      }
+      return response.json();
+    })
+    .catch(error => {
+      console.error('Error fetching user:', error);
+      throw error;
+    });
+};
