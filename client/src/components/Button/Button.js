@@ -7,7 +7,7 @@ import {ReactComponent as Edit } from "../../icons/edit.svg";
 import { useCommonState } from '../../data/commonState';
 
 const Button = () => {
-  const { toggleModal, currentPage } = useCommonState();
+  const { toggleModal, currentPage, isLoggedIn } = useCommonState();
   const [isVisible, setIsVisible] = useState(false);
   
   const toggleButton = () => {
@@ -23,8 +23,8 @@ const Button = () => {
   }, [currentPage]);
 
   return (
-    isVisible &&
-    <div className="button" onClick={toggleButton}>
+    isVisible && isLoggedIn &&
+    <div className="button" onClick={toggleButton} title="Add new item">
       <Edit />
     </div>
   );

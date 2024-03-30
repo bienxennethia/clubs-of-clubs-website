@@ -5,8 +5,13 @@ import "./Header.scss";
 
 import { navigationItems } from './navigationItems';
 import { ReactComponent as Logo } from "../../icons/logo.svg";
+import { ReactComponent as HomeIcon } from "../../icons/home.svg";
+import { ReactComponent as ProfileIcon } from "../../icons/profile.svg";
+
+import {useCommonState} from "../../data/commonState";
 
 const Header = () => {
+  const { isLoggedIn, isVisitor } = useCommonState();
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isMobile, setMobile] = useState(false);
   const location = useLocation();
@@ -43,7 +48,7 @@ const Header = () => {
         <nav className="navigation">
           <div className="navigation__container">
             <div className="navigation__content">
-                <NavLink to="/" >
+                <NavLink to="/" title='Home'>
                   <Logo className="navigation__logo logo"></Logo>
                 </NavLink>
             </div>
@@ -53,12 +58,21 @@ const Header = () => {
               <div className="bar"></div>
             </div>
             <ul className={`navigation__items ${isMenuOpen ? 'open' : ''}`}>
+                <li className='navigation__item' key="home">
+                  <NavLink to="/" onClick={closeMenu} title='Home'>
+                    <div className="navigation__link">
+                      <span className='navigation__link--text'>Home</span>
+                      <HomeIcon className="navigation__link--icon logo" />
+                    </div>
+                  </NavLink>
+                </li>
               {navigationItems.map((item, index) => (
                 <li className='navigation__item' key={index}>
                   <NavLink className={({ isActive }) =>
                     [
                       isActive || (item.link === '/clubs' && location.pathname.includes('/item')) ? "active" : "",
-                    ].join(" ")}to={item.link} onClick={closeMenu}>
+                      !isLoggedIn && !isVisitor ? "disabled" : "",
+                    ].join(" ")}to={item.link} onClick={closeMenu} title={item.name}>
                     <div className="navigation__link">
                       <span className='navigation__link--text'>{item.name}</span>
                       {item.icon}
@@ -66,6 +80,15 @@ const Header = () => {
                   </NavLink>
                 </li>
               ))}
+              { isLoggedIn && <li className='navigation__item'>
+                <button type="button" className="navigation__link" disabled={!isLoggedIn} onClick={closeMenu} title='Profile'>
+                  <div className="navigation__link">
+                    <span className='navigation__link--text'>PROFILE</span>
+                    <ProfileIcon className="navigation__link--icon logo"/>
+                  </div>
+                </button>
+              </li>
+              }
             </ul>
           </div>
         </nav>

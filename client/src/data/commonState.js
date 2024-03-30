@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { modals } from '../components/Modal/modals';
-import { getClubs, getClubTypes, saveClubs, getForums, saveForum, updateForum, deleteForum, deleteClub, updateClub } from './utils';
+import { getClubs, getClubTypes, saveClubs, getForums, saveForum, updateForum, deleteForum, deleteClub, updateClub, login } from './utils';
 const CommonStateContext = createContext();
 
 export const useCommonState = () => useContext(CommonStateContext);
@@ -27,8 +27,20 @@ export const CommonStateProvider = ({ children }) => {
   const [searchString, setSearchString] = useState('');
   const [modalContentId, setModalContentId] = useState(null);
   const [isDeleteModal, setIsDeleteModal] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isVisitor, setIsVisitor] = useState(false);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
+    if (!isLoggedIn && !isVisitor) {
+      navigate('/');
+    }
+    
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    const verifyLoggedIn = getWithExpiry('isLoggedIn');
+    setIsLoggedIn(verifyLoggedIn === true);
     const fetchClubTypes = async () => {
       try {
         const result = await getClubTypes();
@@ -38,6 +50,7 @@ export const CommonStateProvider = ({ children }) => {
       }
     };
     fetchClubTypes();
+    addStyling(false);
   }, []);
 
   useEffect(() => {
@@ -54,6 +67,7 @@ export const CommonStateProvider = ({ children }) => {
     } else {
       document.querySelector('.content').classList.remove('forums');
     }
+    window.scrollTo(0, 0);
   }, [location.pathname]);
 
   useEffect(() => {
@@ -95,8 +109,8 @@ export const CommonStateProvider = ({ children }) => {
       } else {
         const updatedFields = await Promise.all(modal.content.fields.map((field) => {
           let newFields = field;
-          if (field.type === 'select') {
-            if (modalIdOpen === 'login' || modalIdOpen === 'addForum' || modalIdOpen === 'editForum') {
+          if (field.type === 'select' && field.name !== 'year') {
+            if (modalIdOpen === 'login' || modalIdOpen === 'addForum' || modalIdOpen === 'editForum' || modalIdOpen === 'signup') {
               newFields ={ ...newFields, options: clubOptions };
             } else if (modalIdOpen === 'addClub' || modalIdOpen === 'editClub') {
               newFields = { ...newFields, options: clubTypeOptions };
@@ -158,19 +172,32 @@ export const CommonStateProvider = ({ children }) => {
       const inputElement = document.querySelector(`.fields-modal__input[name="${field.name}"]`);
         if (inputElement) {
         const value = inputElement.value.trim();
+
+        if (field.type === 'email' && value !== '') {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(value)) {
+            isValid = false;
+            inputElement.nextElementSibling.textContent = 'Invalid email address';
+            inputElement.classList.add('error');
+            return;
+          }
+        }
+
         if (inputElement.required && value === '') {
           isValid = false;
           inputElement.classList.add('error');
+          inputElement.nextElementSibling.textContent = 'This field is required';
           return;
         } else {
           fields[field.name] = value;
           inputElement.classList.remove('error');
+          inputElement.nextElementSibling.textContent = '';
         }
       }
     });
   
     if (isValid) {
-      let results = {} ;
+      let results = {};
       let isEdit = false;
       if (modalIdOpen === 'addClub') {
         const { result } = await saveClubs(fields);
@@ -196,6 +223,20 @@ export const CommonStateProvider = ({ children }) => {
         results = result;
         fetchForums({id: null, interestType, curricularType, searchString});
         isEdit = true;
+      } else if (modalIdOpen === 'login') {
+        const { user, message } = await login({...fields});
+        if (user) {
+          setResponse({id: currentPage, message: "Login successfully!"});
+          setUser(user);
+          setIsLoggedIn(true);
+          setTimeout(() => {
+            closeModal();
+          }, 3000);
+          setWithExpiry('isLoggedIn', true, 2 * 24 * 60 * 60 * 1000);
+        } else {
+          setResponse({id: currentPage, message: message});
+        }
+        return;
       }
 
       if (results) {
@@ -204,8 +245,6 @@ export const CommonStateProvider = ({ children }) => {
       } else {
         setResponse({id: currentPage, message: isEdit ? 'Failed to update.' : 'Failed to save.'});
       }
-    } else {
-      setResponse({id: currentPage, message: 'Please fill in all required fields.'});
     }
   };
 
@@ -252,6 +291,33 @@ export const CommonStateProvider = ({ children }) => {
       }
     });
   };
+  const visitorBtn = () => {
+    setIsVisitor(true);
+    navigate('/forums');
+  };
+
+  const setWithExpiry = (key, value, ttl) => {
+    const now = new Date();
+    const item = {
+        value: value,
+        expiry: now.getTime() + ttl
+    };
+    localStorage.setItem(key, JSON.stringify(item));
+  };
+
+  const getWithExpiry = (key) => {
+    const itemStr = localStorage.getItem(key);
+    if (!itemStr) {
+        return null;
+    }
+    const item = JSON.parse(itemStr);
+    const now = new Date();
+    if (now.getTime() > item.expiry) {
+        localStorage.removeItem(key);
+        return null;
+    }
+    return item.value;
+  }
 
   return (
     <CommonStateContext.Provider value={{ 
@@ -270,7 +336,10 @@ export const CommonStateProvider = ({ children }) => {
       searchString, setSearchString,
       modalContentId, setModalContentId,
       isDeleteModal, setIsDeleteModal,
-      toggleModal, closeModal, toggleSave, clearFields, deleteModal }}>
+      isLoggedIn, setIsLoggedIn,
+      isVisitor, setIsVisitor,
+      user, setUser,
+      toggleModal, closeModal, toggleSave, clearFields, deleteModal, visitorBtn }}>
       {children}
     </CommonStateContext.Provider>
   );

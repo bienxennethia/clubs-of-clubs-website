@@ -5,14 +5,18 @@ import { ReactComponent as Logo } from "../../icons/login.svg";
 import { useCommonState } from "../../data/commonState";
 
 const Login = () => {
-  const { toggleModal } = useCommonState();
+  const { toggleModal, visitorBtn, isLoggedIn } = useCommonState();
 
   const handleClick = () => {
     toggleModal('login');
   };
 
+  const handleVisitor = () => {
+    visitorBtn();
+  };
+
   return (
-    <div className="login">
+    !isLoggedIn && <div className="login">
       <div className="login__container">
         <div className="login__header">
           <h1 className="login__title">which are you?</h1>
@@ -22,7 +26,7 @@ const Login = () => {
             <Logo />
             <span>moderator</span>
           </button>
-          <button className="login__action">
+          <button className="login__action" onClick={() => handleVisitor()}>
             <Logo />
             <span>visitor</span>
           </button>

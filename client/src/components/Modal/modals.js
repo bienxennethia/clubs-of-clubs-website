@@ -1,5 +1,89 @@
 export const modals = [
   {
+    id: "signup",
+    path: "/signup",
+    class: "modal--signup",
+    content: {
+      title: "SIGN UP",
+      fields: [
+        {
+          label: "Club Name:",
+          name: "club",
+          required: true,
+          placeholderText: "Select the name of the Club officiating below",
+          type: "select",
+          options: []
+        },
+        {
+          label: "First Name:",
+          name: "first_name",
+          placeholder: "Enter your first name",
+          type: "text",
+          required: true
+        },
+        {
+          label: "Last Name:",
+          name: "last_name",
+          placeholder: "Enter your last name",
+          type: "text",
+          required: true
+        },
+        {
+          label: "Middle Name:",
+          name: "middle_name",
+          placeholder: "Enter your middle name",
+          type: "text",
+          required: false
+        },
+        {
+          label: "Email:",
+          name: "email",
+          placeholder: "Personal email only",
+          type: "email",
+          required: true
+        },
+        {
+          label: "Password:",
+          name: "password",
+          placeholder: "Enter your password",
+          required: true,
+          type: "password",
+        },
+        {
+          label: "Confirm Password:",
+          name: "confirm_password",
+          placeholder: "Confirm your password",
+          required: true,
+          type: "password",
+        },
+        {
+          label: "Grade:",
+          name: "year",
+          placeholder: "Select your grade year",
+          type: "select",
+          required: true,
+          options: [
+            { id: "", name: "Select your grade" },
+            { id: "11", name: "Grade 11" },
+            { id: "12", name: "Grade 12" }
+          ]
+        },
+        {
+          label: "Section:",
+          name: "section",
+          placeholder: "Enter your section",
+          type: "text"
+        },
+        {
+          name: "image",
+          type: "file",
+          placeholder: "Image",
+          label: "Image:"
+        }
+      ]
+    }
+  },
+  {
     id: "login",
     path: "/login",
     class: "modal--login",
@@ -9,7 +93,7 @@ export const modals = [
       subtitle: "as MODERATOR",
       fields: [
         {
-          label: "CLUB NAME:",
+          label: "Club Name:",
           name: "club",
           required: true,
           placeholderText: "Select the name of the Club officiating below",
@@ -17,14 +101,14 @@ export const modals = [
           options: []
         },
         {
-          label: "EMAIL:",
+          label: "Email:",
           name: "email",
           placeholder: "Personal email only",
           type: "email",
           required: true
         },
         {
-          label: "PASSWORD:",
+          label: "Password:",
           name: "password",
           placeholder: "Enter your password",
           required: true,
@@ -55,13 +139,13 @@ export const modals = [
           name: "name",
           required: true,
           type: "text",
-          placeholder: "Name *"
+          placeholder: "Name"
         },
         {
           name: "description",
           required: true,
           type: "textarea",
-          placeholder: "Description *"
+          placeholder: "Description"
         },
         {
           name: "mission",
@@ -102,13 +186,13 @@ export const modals = [
           name: "name",
           required: true,
           type: "text",
-          placeholder: "Name *"
+          placeholder: "Name"
         },
         {
           name: "description",
           required: true,
           type: "textarea",
-          placeholder: "Description *"
+          placeholder: "Description"
         },
         {
           name: "mission",
@@ -155,13 +239,13 @@ export const modals = [
           name: "forum_name",
           required: true,
           type: "text",
-          placeholder: "Title *"
+          placeholder: "Title"
         },
         {
           name: "forum_description",
           required: true,
           type: "textarea",
-          placeholder: "Description *"
+          placeholder: "Description"
         },
         {
           name: "forum_image",
@@ -193,13 +277,13 @@ export const modals = [
           name: "forum_name",
           required: true,
           type: "text",
-          placeholder: "Title *"
+          placeholder: "Title"
         },
         {
           name: "forum_description",
           required: true,
           type: "textarea",
-          placeholder: "Description *"
+          placeholder: "Description"
         },
         {
           name: "forum_image",
@@ -224,13 +308,13 @@ export const modals = [
           name: "forum_name",
           required: true,
           type: "text",
-          placeholder: "Title *"
+          placeholder: "Title"
         },
         {
           name: "forum_description",
           required: true,
           type: "textarea",
-          placeholder: "Description *"
+          placeholder: "Description"
         },
         {
           name: "forum_image",

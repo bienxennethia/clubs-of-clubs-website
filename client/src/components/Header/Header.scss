@@ -26,6 +26,8 @@
 
   @include bp-tablet {
     align-items: stretch;
+    margin: 0 auto;
+    max-width: t-rem(1440);
   }
 }
 
@@ -39,11 +41,7 @@
     height: auto;
 
     @include bp-desktop {
-      width: t-rem(120);
-    }
-
-    @include bp-xl-desktop {
-      width: t-rem(140);
+      width: t-rem(100);
     }
   }
 
@@ -78,7 +76,20 @@
 }
 
 .navigation__item {
-  a {
+  button {
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+
+    @include bp-tablet {
+      svg {
+        width: t-rem(40) !important;
+        height: auto;
+      }
+    }
+  }
+  a,
+  button {
     position: relative;
     height: 100%;
     color: $white;
@@ -101,20 +112,17 @@
     }
 
     @include bp-desktop {
-      padding: 0 t-rem(30);
-
-      svg {
-        width: t-rem(96);
-      }
+      padding: 0 t-rem(20);
     }
 
     @include bp-xl-desktop {
-      padding: 0 t-rem(60);
+      padding: 0 t-rem(30);
     }
   }
 
   a:hover,
-  a.active {
+  a.active,
+  button:hover {
 
    span {
     font-size: t-rem(26);
@@ -138,6 +146,11 @@
       border-radius: t-rem(5);
     }
    }
+  }
+
+  a.disabled {
+    opacity: 0.5; /* Example styling for a disabled NavLink */
+    pointer-events: none; /* Disables pointer events on the NavLink */
   }
 }
 
@@ -175,6 +188,12 @@
 
   .navigation__item {
     margin: t-rem(10) t-rem(20);
+
+    button {
+      display: block;
+      width: 100%;
+      text-align: left;
+    }
   }
 
   .navigation__link--icon {
@@ -182,7 +201,7 @@
   }
 
   .menu-icon.open .bar:nth-child(1) {
-    transform: rotate(-45deg) translate(t-rem(-5), t-rem(-6));
+    transform: rotate(-45deg) translate(t-rem(-6), t-rem(4));
   }
 
   .menu-icon.open .bar:nth-child(2) {

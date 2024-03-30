@@ -6,7 +6,7 @@ import InputField from "./InputField";
 import SelectField from "./SelectField";
 import { useCommonState } from "../../data/commonState";
 const Modal = () => {
-  const { modalIdOpen, modalContent, closeModal, response, toggleSave, clearFields, isDeleteModal, deleteModal } = useCommonState();
+  const { modalIdOpen, modalContent, closeModal, response, toggleSave, clearFields, isDeleteModal, deleteModal, toggleModal } = useCommonState();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleKeyDown = (event) => {
     if (event.key === 'Escape') {
@@ -33,6 +33,25 @@ const Modal = () => {
   const toggleDelete = async () => {
     closeModal();
     deleteModal();
+  };
+
+  const registerHandler = async () => {
+    toggleModal('signup');
+  };
+
+  const getBtnText = () => {
+    switch (modalContent?.id) {
+      case "addClub":
+      case "addForum":
+        return "Add";
+      case "editClub":
+      case "editForum":
+        return "Update";
+      case "login":
+        return "Login";
+      default:
+        return "Register";
+    }
   };
 
   return (
@@ -65,7 +84,12 @@ const Modal = () => {
                     <div className="fields-modal__field field" key={field.name}>
                       {
                         field.label && (
-                          <label className="fields-modal__label">{field.label}
+                          <label className="fields-modal__label">
+                          <span className="fields-modal__label-text">{field.label} 
+                          {
+                            field.required && <span className="fields-modal__required">*</span>
+                          }
+                          </span> 
                           {
                             field.placeholderText && <span>({field.placeholderText})</span>
                           }</label>
@@ -78,13 +102,16 @@ const Modal = () => {
                           <InputField field={field} />
                         )
                       }
+                      <span className="fields-modal__error"></span>
                     </div>
                   ))}
                   <div className="modal__footer">
                     <p className="modal__response">{response?.message}</p>
                   </div>
                   <div className="modal__actions">
-                    <button className="modal__btn" onClick={saveModalHandler}>{modalContent?.id.includes('add') ? 'Save' : 'Update'}</button>
+                    {modalContent?.id === "login" && <button className="modal__btn" onClick={registerHandler}>Register</button> 
+                    }
+                    <button className="modal__btn" onClick={saveModalHandler}>{getBtnText()}</button>
                     <button className="modal__btn clear" onClick={clearFieldsHandler}>Clear</button>
                   </div>
               </div>
