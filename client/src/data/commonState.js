@@ -40,7 +40,13 @@ export const CommonStateProvider = ({ children }) => {
 
   useEffect(() => {
     const verifyLoggedIn = getWithExpiry('isLoggedIn');
-    setIsLoggedIn(verifyLoggedIn === true);
+    if (verifyLoggedIn === null) {
+      const verifyVisitor = getWithExpiry('isVisitor');
+      setIsLoggedIn(false);
+      setIsVisitor(verifyVisitor === true);
+    } else {
+      setIsLoggedIn(verifyLoggedIn === true);
+    }
     const fetchClubTypes = async () => {
       try {
         const result = await getClubTypes();
@@ -232,7 +238,8 @@ export const CommonStateProvider = ({ children }) => {
           setTimeout(() => {
             closeModal();
           }, 3000);
-          setWithExpiry('isLoggedIn', true, 2 * 24 * 60 * 60 * 1000);
+          setWithExpiry('isLoggedIn', true, 1 * 24 * 60 * 60 * 1000);
+          localStorage.removeItem('isVisitor');
         } else {
           setResponse({id: currentPage, message: message});
         }
@@ -339,6 +346,7 @@ export const CommonStateProvider = ({ children }) => {
       isLoggedIn, setIsLoggedIn,
       isVisitor, setIsVisitor,
       user, setUser,
+      setWithExpiry,
       toggleModal, closeModal, toggleSave, clearFields, deleteModal, visitorBtn }}>
       {children}
     </CommonStateContext.Provider>

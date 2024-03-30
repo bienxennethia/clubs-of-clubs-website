@@ -204,7 +204,6 @@ export const deleteForum = (forumId) => {
 };
 
 export const login = (params) => {
-  console.log("params", params);
   const url = `${apiUrl}/login`;
 
   return fetch(url, {

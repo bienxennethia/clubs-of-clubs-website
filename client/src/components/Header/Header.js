@@ -11,7 +11,7 @@ import { ReactComponent as ProfileIcon } from "../../icons/profile.svg";
 import {useCommonState} from "../../data/commonState";
 
 const Header = () => {
-  const { isLoggedIn, isVisitor } = useCommonState();
+  const { isLoggedIn, isVisitor, setModalIdOpen } = useCommonState();
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isMobile, setMobile] = useState(false);
   const location = useLocation();
@@ -40,6 +40,14 @@ const Header = () => {
 
   const closeMenu = () => {
     return isMobile ? setMenuOpen(false) : null;
+  };
+
+  const profileBtn = () => {
+    if (isLoggedIn) {
+      setModalIdOpen("login");
+    } else {
+      setModalIdOpen("signup");
+    }
   };
 
   return (
@@ -80,10 +88,10 @@ const Header = () => {
                   </NavLink>
                 </li>
               ))}
-              { isLoggedIn && <li className='navigation__item'>
-                <button type="button" className="navigation__link" disabled={!isLoggedIn} onClick={closeMenu} title='Profile'>
+              { (isLoggedIn || isVisitor) && <li className='navigation__item'>
+                <button type="button" className="navigation__link" onClick={profileBtn} title={isLoggedIn ? "Profile" : "Login"}>
                   <div className="navigation__link">
-                    <span className='navigation__link--text'>PROFILE</span>
+                    <span className='navigation__link--text'>{isLoggedIn ? "PROFILE" : "LOGIN"}</span>
                     <ProfileIcon className="navigation__link--icon logo"/>
                   </div>
                 </button>
