@@ -268,9 +268,8 @@ router.post('/login', async (req, res) => {
 
     const clubQuery = 'SELECT * FROM clublist WHERE user_id = $1 AND club_id = $2';
     const clubResult = await pool.query(clubQuery, [user.user_id, club_id]);
-    const club = clubResult.rows[0];
 
-    if (!club) {
+    if (!clubResult) {
       return res.status(403).json({ message: 'Please verify the information provided and try again.' });
     }
 
@@ -280,7 +279,7 @@ router.post('/login', async (req, res) => {
     res.cookie('user_token', token, { maxAge: 2 * 24 * 60 * 60 * 1000, httpOnly: true }); // Expires in 7 days
 
     // Return token and user details
-    res.status(200).json({ user, ...club });
+    res.status(200).json({ user, clublist: clubResult });
   } catch (error) {
     console.error('Error logging in:', error);
     res.status(500).json({ message: 'Internal server error' });
@@ -303,7 +302,11 @@ router.get('/user', async (req, res) => {
   
   try {
     const { rows } = await pool.query(query, values);
-    res.json(rows);
+    
+    const clubQuery = 'SELECT * FROM clublist WHERE user_id = $1';
+    const clubResult = await pool.query(clubQuery, [club_id]);
+
+    res.json({user: rows, clubList: clubResult});
   } catch (err) {
     console.error('Error executing PostgreSQL query:', err);
     res.status(500).json({ message: 'Internal server error' });
