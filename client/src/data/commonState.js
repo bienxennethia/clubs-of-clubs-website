@@ -346,6 +346,12 @@ export const CommonStateProvider = ({ children }) => {
     return item;
   }
 
+  const logout = () => {
+    setIsLoggedIn(false);
+    setUsers(null);
+    localStorage.removeItem('isLoggedIn');
+  };
+
   return (
     <CommonStateContext.Provider value={{ 
       currentPage, setCurrentPage, 
@@ -366,7 +372,7 @@ export const CommonStateProvider = ({ children }) => {
       isLoggedIn, setIsLoggedIn,
       isVisitor, setIsVisitor,
       users, setUsers,
-      setWithExpiry,
+      setWithExpiry, logout,
       toggleModal, closeModal, toggleSave, clearFields, deleteModal, visitorBtn }}>
       {children}
     </CommonStateContext.Provider>

@@ -76,6 +76,14 @@
 }
 
 .navigation__item {
+  &.mobile {
+    display: block;
+
+    @include bp-tablet {
+      display: none;
+    }
+  }
+
   button {
     background-color: transparent;
     border: 0;
@@ -121,9 +129,10 @@
   }
 
   a:hover,
-  a.active,
+  a.active:not(.profile--link, .logout--link),
   button:hover,
-  button.active {
+  button.active,
+  button.hovered {
 
    span {
     font-size: t-rem(26);
@@ -154,8 +163,6 @@
     pointer-events: none; /* Disables pointer events on the NavLink */
   }
 }
-
-
 
 .navigation__link--text {
   @include bp-tablet {
@@ -216,5 +223,56 @@
   .menu-icon.open .bar {
     transform: rotate(0deg);
     transition: all 0.3s ease;
+  }
+}
+
+.mini-dialog {
+  position: absolute;
+  top: calc(100% - 20px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  padding: 10px 0;
+}
+
+.mini-dialog ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mini-dialog li {
+  cursor: pointer;
+
+  a {
+    color: $maroon;
+    padding: 8px 20px;
+    text-wrap: nowrap;
+
+    &::after,
+    &.active::after,
+    &:hover:after {
+      content: none;
+    }
+  }
+}
+
+.mini-dialog li:hover {
+  background-color: #f0f0f0;
+}
+
+.navigation__item.link--profile {
+  position: relative;
+}
+
+
+@media only screen and (max-width: t-rem(639)) {
+  .mini-dialog,
+  .navigation__item.link--profile {
+    display: none;
   }
 }

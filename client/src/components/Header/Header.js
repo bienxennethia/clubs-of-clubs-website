@@ -11,10 +11,11 @@ import { ReactComponent as ProfileIcon } from "../../icons/profile.svg";
 import {useCommonState} from "../../data/commonState";
 
 const Header = () => {
-  const { isLoggedIn, isVisitor, setModalIdOpen, modalIdOpen } = useCommonState();
+  const { isLoggedIn, isVisitor, setModalIdOpen, modalIdOpen, logout } = useCommonState();
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isMobile, setMobile] = useState(false);
   const location = useLocation();
+  const [isProfileHovered, setProfileHovered] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -48,6 +49,11 @@ const Header = () => {
     } else {
       setModalIdOpen("login");
     }
+  };
+
+  const logoutBtn = () => {
+    logout();
+    window.location.reload();
   };
 
   return (
@@ -88,15 +94,46 @@ const Header = () => {
                   </NavLink>
                 </li>
               ))}
-              { (isLoggedIn || isVisitor) && <li className='navigation__item'>
-                <button type="button" className={`navigation__link ${modalIdOpen === 'profile' ? "active" : ""}`} onClick={profileBtn} title={isLoggedIn ? "Profile" : "Login"}>
+              { (isLoggedIn || isVisitor) && <li className='navigation__item link--profile'>
+                <button type="button" className={`${modalIdOpen === 'profile' || isProfileHovered ? "active" : ""}`} title={isLoggedIn ? "Profile" : "Login"} onMouseEnter={() => setProfileHovered(true)}
+                    onMouseLeave={() => setProfileHovered(false)} >
                   <div className="navigation__link">
                     <span className='navigation__link--text'>{isLoggedIn ? "PROFILE" : "LOGIN"}</span>
                     <ProfileIcon className="navigation__link--icon logo"/>
                   </div>
                 </button>
+                { isProfileHovered && (
+                    <div className="mini-dialog" onMouseEnter={() => setProfileHovered(true)} onMouseLeave={() => setProfileHovered(false)} >
+                      <ul>
+                        <li>
+                          <NavLink to="" onClick={profileBtn} className={`profile--link`}>Profile</NavLink>
+                        </li>
+                        <li>
+                          <NavLink to="" onClick={logoutBtn} className={`logout--link`}>Log Out</NavLink>
+                        </li>
+                      </ul>
+                    </div>
+                  )}
               </li>
               }
+              { isLoggedIn && (
+                <React.Fragment>
+                  <li className='navigation__item mobile'>
+                    <NavLink to="#" onClick={profileBtn} className={`profile--link`}>
+                      <div className="navigation__link">
+                        <span className='navigation__link--text'>PROFILE</span>
+                      </div>
+                    </NavLink>
+                  </li>
+                  <li className='navigation__item mobile'>
+                    <NavLink to="#" onClick={logoutBtn} className={`logout--link`}>
+                      <div className="navigation__link">
+                        <span className='navigation__link--text'>LOG OUT</span>
+                      </div>
+                    </NavLink>
+                  </li>
+                </React.Fragment>
+              )}
             </ul>
           </div>
         </nav>
