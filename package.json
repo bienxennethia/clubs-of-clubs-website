@@ -1,0 +1,14 @@
+{
+  "name": "club-for-clubs",
+  "version": "1.0.0",
+  "description": "Club for Cubs website",
+  "scripts": {
+    "start:server": "cd server && npm start",
+    "start:client": "cd client && npm start",
+    "start": "concurrently \"npm run start:server\" \"npm run start:client\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "concurrently": "^7.0.0"
+  }
+}
