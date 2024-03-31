@@ -1,11 +1,17 @@
 {
   "version": 2,
   "builds": [
-    { "src": "/server/**", "use": "@vercel/node" },
-    { "src": "/client/**", "use": "@vercel/static" }
+    { "src": "/server/**", "use": "@vercel/node" }
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/server/$1" },
-    { "src": "/(.*)", "dest": "/client/$1" }
+    {
+      "src": "/(.*)",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "client",
+        "buildCommand": "cd client && npm install && npm run build"
+      }
+    }
   ]
 }
