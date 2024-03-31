@@ -95,7 +95,7 @@ const Header = () => {
                 </li>
               ))}
               { (isLoggedIn || isVisitor) && <li className='navigation__item link--profile'>
-                <button type="button" className={`${modalIdOpen === 'profile' || isProfileHovered ? "active" : ""}`} title={isLoggedIn ? "Profile" : "Login"} onMouseEnter={() => setProfileHovered(true)}
+                <button type="button" onClick={() => {}} className={`${modalIdOpen === 'profile' || isProfileHovered ? "active" : ""}`} title={isLoggedIn ? "Profile" : "Login"} onMouseEnter={() => setProfileHovered(true)}
                     onMouseLeave={() => setProfileHovered(false)} >
                   <div className="navigation__link">
                     <span className='navigation__link--text'>{isLoggedIn ? "PROFILE" : "LOGIN"}</span>
@@ -106,25 +106,25 @@ const Header = () => {
                     <div className="mini-dialog" onMouseEnter={() => setProfileHovered(true)} onMouseLeave={() => setProfileHovered(false)} >
                       <ul>
                         <li>
-                          <NavLink to="" onClick={profileBtn} className={`profile--link`}>Profile</NavLink>
+                          <button type="button" onClick={profileBtn} className={`profile--link`}>{isLoggedIn ? "Profile" : "Login"}</button>
                         </li>
-                        <li>
-                          <NavLink to="" onClick={logoutBtn} className={`logout--link`}>Log Out</NavLink>
-                        </li>
+                        { isLoggedIn && <li>
+                            <button type="button" onClick={logoutBtn} className={`logout--link`}>Log Out</button>
+                          </li>
+                        }
                       </ul>
                     </div>
                   )}
               </li>
               }
+              <li className='navigation__item mobile'>
+                <NavLink to="#" onClick={profileBtn} className={`profile--link`}>
+                  <div className="navigation__link">
+                    <span className='navigation__link--text'>{isLoggedIn ? "PROFILE" : "LOGIN"}</span>
+                  </div>
+                </NavLink>
+              </li>
               { isLoggedIn && (
-                <React.Fragment>
-                  <li className='navigation__item mobile'>
-                    <NavLink to="#" onClick={profileBtn} className={`profile--link`}>
-                      <div className="navigation__link">
-                        <span className='navigation__link--text'>PROFILE</span>
-                      </div>
-                    </NavLink>
-                  </li>
                   <li className='navigation__item mobile'>
                     <NavLink to="#" onClick={logoutBtn} className={`logout--link`}>
                       <div className="navigation__link">
@@ -132,7 +132,6 @@ const Header = () => {
                       </div>
                     </NavLink>
                   </li>
-                </React.Fragment>
               )}
             </ul>
           </div>

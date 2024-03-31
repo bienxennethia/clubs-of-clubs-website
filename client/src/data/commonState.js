@@ -49,7 +49,7 @@ export const CommonStateProvider = ({ children }) => {
     if (verifyLoggedIn === null) {
       const verifyVisitor = getWithExpiry('isVisitor');
       setIsLoggedIn(false);
-      setIsVisitor(verifyVisitor === true);
+      setIsVisitor(verifyVisitor?.value === true);
     } else {
       fetchUsers({user_id: verifyLoggedIn?.user?.user_id});
       setIsLoggedIn(verifyLoggedIn?.value === true);
