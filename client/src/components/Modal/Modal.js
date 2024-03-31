@@ -112,7 +112,7 @@ const Modal = () => {
                   <div className="modal__actions">
                     {modalContent?.id === "login" && <button className="modal__btn" onClick={registerHandler}>Register</button> 
                     }
-                    <button className="modal__btn" onClick={saveModalHandler}>{getBtnText()}</button>
+                    <button className="modal__btn" disabled={modalIdOpen === 'profile'} onClick={saveModalHandler}>{getBtnText()}</button>
                     <button className="modal__btn clear" onClick={clearFieldsHandler}>Clear</button>
                   </div>
               </div>
