@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     { "src": "/server/**", "use": "@vercel/node" },
-    { "src": "/client/**", "use": "@vercel/static" }
+    { "src": "/client/package.json", "use": "@vercel/static-build", "config": { "buildCommand": "npm install && npm run build" } }
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/server/$1" },
